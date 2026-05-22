@@ -56,21 +56,24 @@ export default function Outcomes() {
       <div className="max-w-6xl mx-auto">
         {/* eyebrow */}
         <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-4">
-          — After 90 minutes —
+          本セミナーで学べること
         </p>
 
-        {/* 主見出し */}
+        {/* === コアメッセージ === */}
         <h2
           id="outcomes-heading"
-          className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center"
+          className="font-serif text-3xl sm:text-5xl md:text-6xl font-semibold leading-[1.15] text-center max-w-4xl mx-auto"
+          style={{ letterSpacing: "-0.01em" }}
         >
-          2 時間後、<span className="text-coral">3 つのもの</span>を持ち帰ります
+          何の<span className="text-sumi/50">ツールを使うか</span>じゃなくて、
+          <br />
+          <span className="text-coral">どう使うか</span> です。
         </h2>
 
-        <p className="mt-6 text-base leading-relaxed text-sumi/75 text-center max-w-2xl mx-auto">
-          抽象的な「学び」ではなく、
+        <p className="mt-8 text-base leading-relaxed text-sumi/75 text-center max-w-2xl mx-auto">
+          ツール紹介で 2 時間使うことはしません。
           <br className="hidden sm:block" />
-          経営判断にそのまま使える「線引き」と「数字」を
+          「自社の業務に、AI をどう乗せるか」 — その判断軸を持ち帰っていただきます。
         </p>
 
         {/* 3 outcomes — アイコンなし、番号 + 見出し + 本文 */}

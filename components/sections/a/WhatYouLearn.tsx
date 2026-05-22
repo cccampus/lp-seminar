@@ -1,6 +1,8 @@
 /**
  * Plan A §3: 本セミナーで学べる内容
- * 経営者目線の「何が分かるか」3 つ + 当日 2 時間の流れを 1 文で
+ *
+ * コアメッセージ: 「何のツールを使うかじゃなくて、どう使うかです」
+ * 経営者目線の「何が分かるか」3 つ
  */
 
 const learnings = [
@@ -17,7 +19,7 @@ const learnings = [
   {
     n: "03",
     h: "実装担当・外部パートナーに渡せる「判断用ノート」",
-    b: "セミナー資料 + 導入チェックリストを後日配布。社内の担当者と話す時に、そのまま渡せる形でお持ち帰りいただきます。",
+    b: "セミナー資料 + Claude Code 導入チェックリストを後日配布。社内の担当者と話す時に、そのまま渡せる形で。",
   },
 ];
 
@@ -32,16 +34,24 @@ export default function WhatYouLearn() {
         <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-4">
           本セミナーで学べること
         </p>
+
+        {/* === コアメッセージ：ツール論ではなく、使い方論 === */}
         <h2
           id="learn-heading"
-          className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center max-w-3xl mx-auto"
+          className="font-serif text-3xl sm:text-5xl md:text-6xl font-semibold leading-[1.15] text-center max-w-4xl mx-auto"
+          style={{ letterSpacing: "-0.01em" }}
         >
-          2 時間後、<span className="text-coral">3 つのもの</span>を持ち帰ります
+          何の<span className="text-sumi/50">ツールを使うか</span>じゃなくて、
+          <br />
+          <span className="text-coral">どう使うか</span> です。
         </h2>
-        <p className="mt-6 text-base leading-relaxed text-sumi/75 text-center max-w-xl mx-auto">
-          抽象的な「学び」ではなく、経営判断にそのまま使える「線引き」と「数字」を
+        <p className="mt-8 text-base sm:text-lg leading-relaxed text-sumi/75 text-center max-w-2xl mx-auto">
+          ツール紹介で 2 時間使うことはしません。
+          <br className="hidden sm:inline" />
+          「自社の業務に、AI をどう乗せるか」 — その判断軸を持ち帰っていただきます。
         </p>
 
+        {/* 3 つの学べる内容 */}
         <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10">
           {learnings.map((o) => (
             <article key={o.n} className="flex flex-col">
@@ -57,28 +67,6 @@ export default function WhatYouLearn() {
               <p className="mt-4 text-sm sm:text-base leading-relaxed text-sumi/80">{o.b}</p>
             </article>
           ))}
-        </div>
-
-        {/* 当日の流れ — 簡易タイムテーブル */}
-        <div className="mt-24 max-w-3xl mx-auto border-t border-sumi/15 pt-12">
-          <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-sumi/55 mb-6 text-center">
-            当日の流れ
-          </p>
-          <ol className="space-y-3 text-sm sm:text-base">
-            {[
-              ["11:00", "オープニング — なぜ今 Claude Code か"],
-              ["11:15", "Claude Code 全体像 — 経営者の言語で"],
-              ["11:30", "実演 — LP・スライド・モック・業務自動化"],
-              ["12:15", "経営者の判断軸 — 任せる線引き / 内製 vs 外注"],
-              ["12:40", "Q&A — 事前質問 + 当日疑問"],
-              ["12:55", "クローズ — 次の一歩"],
-            ].map(([t, body]) => (
-              <li key={t} className="grid grid-cols-[80px_1fr] gap-x-6 items-baseline border-b border-sumi/8 pb-3">
-                <span className="font-mono text-sm text-coral font-semibold tracking-[0.1em]">{t}</span>
-                <span className="text-sumi/85 leading-relaxed">{body}</span>
-              </li>
-            ))}
-          </ol>
         </div>
       </div>
     </section>
