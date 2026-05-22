@@ -43,7 +43,7 @@ export default function MobileStickyCTA() {
         {/* 左: 日時 + 価格 */}
         <div className="flex flex-col">
           <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-sumi/55">
-            5/31 (土) 11:00 · Zoom
+            5/31 (日) 11:00 · Zoom
           </span>
           <span className="font-serif text-base font-semibold text-sumi-deep mt-0.5">
             ¥5,000 <span className="text-xs font-normal text-sumi/55">/ 先着 30 名</span>

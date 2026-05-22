@@ -9,6 +9,7 @@ import FAQ from "@/components/sections/FAQ";
 import BeforeRegister from "@/components/sections/BeforeRegister";
 import FinalCTA from "@/components/sections/FinalCTA";
 import Footer from "@/components/sections/Footer";
+import NextSession from "@/components/sections/NextSession";
 import MobileStickyCTA from "@/components/MobileStickyCTA";
 import VariantSwitcher from "@/components/VariantSwitcher";
 
@@ -31,6 +32,7 @@ export default function Home() {
       <Detail />
       <FAQ />
       <BeforeRegister />
+      <NextSession />
       <FinalCTA />
       <Footer />
       <VariantSwitcher current="default" />

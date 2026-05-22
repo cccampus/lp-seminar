@@ -9,9 +9,9 @@ import Image from "next/image";
  */
 export default function Footer() {
   const links = [
-    { label: "プライバシー", href: "#" },
-    { label: "特商法", href: "#" },
-    { label: "お問い合わせ", href: "mailto:hello@cccampus.jp" },
+    { label: "プライバシーポリシー", href: "/privacy" },
+    { label: "特定商取引法", href: "/terms" },
+    { label: "お問い合わせ", href: "/contact" },
   ];
 
   return (
@@ -26,49 +26,25 @@ export default function Footer() {
       />
 
       <div className="relative mx-auto flex max-w-5xl flex-col">
-        {/* ブランドエリア */}
+        {/* ブランドエリア（タグライン部分は本番公開前まで非表示）— ロゴだけ控えめに */}
         <div className="flex flex-col items-center gap-4 text-center">
           <a
             href="#"
             className="group relative inline-flex items-center justify-center"
             aria-label="Claude Code Campus"
           >
-            <div
-              className="pointer-events-none absolute inset-0 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
-              style={{
-                background:
-                  "radial-gradient(circle at 50% 50%, rgba(217, 119, 87, 0.55), rgba(217, 119, 87, 0) 70%)",
-              }}
-              aria-hidden
-            />
             <Image
               src="/assets/ccc_logo_4C.png"
-              alt=""
+              alt="Claude Code Campus"
               width={144}
               height={144}
-              className="relative h-12 w-12 object-contain sm:h-14 sm:w-14"
-              style={{ filter: "drop-shadow(0 0 18px rgba(217, 119, 87, 0.30))" }}
+              className="relative h-10 w-10 object-contain sm:h-12 sm:w-12 opacity-70"
             />
           </a>
-
-          <h3
-            className="font-serif text-2xl sm:text-3xl font-semibold text-cream"
-            style={{ letterSpacing: "-0.01em" }}
-          >
-            Claude Code Campus
-          </h3>
-
-          <p className="font-mono text-[11px] sm:text-xs uppercase text-cream/55 tracking-[0.4em]">
-            — Business Implementation School —
-          </p>
-
-          <p className="mt-6 max-w-[640px] text-base leading-[1.7] text-cream/75 sm:text-lg">
-            あなたの組織に、Claude Code を実装する
-          </p>
         </div>
 
         {/* 区切り */}
-        <div className="my-8 h-px w-full bg-cream/10 sm:my-10" aria-hidden />
+        <div className="my-6 h-px w-full bg-cream/10 sm:my-8" aria-hidden />
 
         {/* ユーティリティ行 */}
         <div className="flex flex-col items-center gap-5 sm:flex-row sm:justify-between">

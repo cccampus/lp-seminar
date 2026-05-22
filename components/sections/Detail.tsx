@@ -69,7 +69,7 @@ export default function Detail() {
         <p className="mt-6 text-base leading-relaxed text-sumi/75 text-center max-w-2xl mx-auto">
           実演 + 解説 + 質疑応答。
           <br className="hidden sm:block" />
-          経営判断に必要な解像度をその場で持ち帰っていただきます
+          判断に必要な感覚をその場で持ち帰っていただきます
         </p>
 
         {/* 2 カラム */}
@@ -115,7 +115,7 @@ export default function Detail() {
                     Date
                   </dt>
                   <dd className="font-serif text-xl font-semibold">
-                    2026 / 05 / 31 (土)
+                    2026 / 05 / 31 (日)
                   </dd>
                 </div>
                 <div>

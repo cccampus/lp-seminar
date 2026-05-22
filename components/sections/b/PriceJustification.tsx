@@ -44,7 +44,7 @@ export default function PriceJustification() {
           2 時間で、<span className="text-coral">外注前の判断精度</span> を上げる投資
         </h2>
         <p className="mt-6 text-base leading-relaxed text-sumi/75 text-center max-w-xl mx-auto">
-          経営判断の解像度が上がるだけで、後の 1 つの決定が変わります。
+          判断の感覚が上がるだけで、後の 1 つの決定が変わります。
           それで十分に元が取れる金額に設定しています。
         </p>
 

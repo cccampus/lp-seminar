@@ -11,7 +11,7 @@ const beforeItems = [
 
 const afterItems = [
   "小さな業務は、自分の手で検証・実装できる",
-  "外注前に「内製の輪郭」が、自分で描ける",
+  "外注前に「自分でできる範囲」が、自分で描ける",
   "意思決定の速度と、AI 投資の精度が一段階上がる",
 ];
 
@@ -34,7 +34,7 @@ export default function BeforeAfter() {
         </h2>
         <p className="mt-6 text-base leading-relaxed text-sumi/75 text-center max-w-xl mx-auto">
           2 時間で、自社業務に AI が乗る景色を見せます。<br className="hidden sm:inline" />
-          意思決定の解像度を、その場で持ち帰っていただきます。
+          判断の感覚を、その場で持ち帰っていただきます。
         </p>
 
         {/* === Before / After 対比 === */}

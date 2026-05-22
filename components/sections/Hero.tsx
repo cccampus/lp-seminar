@@ -57,7 +57,7 @@ export default function Hero() {
 
         {/* サブコピー */}
         <p className="mt-6 max-w-xl text-sm sm:text-base leading-relaxed text-cream/75">
-          AI を「使う側」から、「実装する側」へ。
+          AI に「使われる側」から、「使う側」へ。
           <br className="hidden sm:block" />
           2 時間で、自社業務に AI が乗る景色を見せます。
         </p>
@@ -66,7 +66,7 @@ export default function Hero() {
         <div className="mt-10 flex flex-col sm:flex-row gap-5 sm:gap-9 items-center font-mono text-xs sm:text-sm tracking-[0.15em] uppercase text-cream/85">
           <div className="flex items-baseline gap-2">
             <span className="text-coral font-semibold">DATE</span>
-            <span>2026 / 05 / 31 (土)</span>
+            <span>2026 / 05 / 31 (日)</span>
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-coral font-semibold">TIME</span>

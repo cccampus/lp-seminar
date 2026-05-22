@@ -1,7 +1,7 @@
 /**
- * Outcomes — 90 分後に持ち帰るもの
+ * Outcomes — 2 時間後に持ち帰るもの
  * Stripe Sessions 方式: "After this 90min, you will be able to..." の3点 Outcome
- * 経営者は「思想」ではなく「意思決定の輪郭」を持ち帰りたい
+ * 経営者は「思想」ではなく「判断の手応え」を持ち帰りたい
  */
 
 type Outcome = {
@@ -64,7 +64,7 @@ export default function Outcomes() {
           id="outcomes-heading"
           className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center"
         >
-          90 分後、<span className="text-coral">3 つのもの</span>を持ち帰ります
+          2 時間後、<span className="text-coral">3 つのもの</span>を持ち帰ります
         </h2>
 
         <p className="mt-6 text-base leading-relaxed text-sumi/75 text-center max-w-2xl mx-auto">

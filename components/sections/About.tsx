@@ -23,16 +23,16 @@ export default function About() {
           id="about-heading"
           className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center max-w-3xl mx-auto"
         >
-          AI を「使う側」から、
+          AI に「使われる側」から、
           <br />
-          <span className="text-coral">「実装する側」</span>へ
+          <span className="text-coral">「使う側」</span>へ
         </h2>
 
         {/* リード */}
         <p className="mt-8 text-base leading-loose text-sumi/80 text-center max-w-2xl mx-auto">
           ChatGPT を業務に使い始めて、もう 2 年。
           <br />
-          いま本当に問われているのは、<span className="font-medium">「実装力」</span>です
+          いま本当に問われているのは、<span className="font-medium">「使いこなす力」</span>です
         </p>
 
         {/* === 3 つの実務的な変化 === */}
@@ -73,7 +73,7 @@ export default function About() {
               <p className="mt-3 text-sm sm:text-base leading-relaxed text-sumi/75 max-w-3xl">
                 Claude Code が業務に入り始めた結果としての数字です。
                 単なる AI チャットではなく、
-                <span className="font-medium">実装まで一気通貫</span>でできる
+                <span className="font-medium">業務に乗せるところまで</span>できる
                 ツールに、企業が予算を割り振り始めた、ということ。
                 同じ判断を、自社にも持ち込めるかが今の論点です。
               </p>
@@ -94,7 +94,7 @@ export default function About() {
               </h3>
               <p className="mt-3 text-sm sm:text-base leading-relaxed text-sumi/75 max-w-3xl">
                 米国の IT 投資が日本に波及するまで、約 7 年。
-                いま米国で起きている「実装フェーズへの移行」が、
+                いま米国で起きている「AI を業務に乗せる動き」が、
                 日本に届くのは数年後です。
                 <span className="font-medium">先に判断軸を持つか、波が来てから慌てるか</span>
                 — それが、5 年後のポジションを決めます。
@@ -125,9 +125,9 @@ export default function About() {
             波が来てから、慌てるか
           </h3>
           <p className="mt-6 text-base leading-relaxed text-sumi/75">
-            このセミナーでは、<span className="font-medium">90 分で Claude Code が業務に乗る景色</span>
+            このセミナーでは、<span className="font-medium">2 時間で Claude Code が業務に乗る景色</span>
             を経営者の言語でお見せします。
-            実演 + 自社事例 + 経営者にとっての位置取り — 持ち帰れる解像度を、その場で。
+            実演 + 自社事例 + 経営者にとっての位置取り — 持ち帰れる感覚を、その場で。
           </p>
         </div>
       </div>

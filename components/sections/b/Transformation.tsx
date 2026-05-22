@@ -10,12 +10,12 @@ const after = [
     body: "Claude Code を自分の Mac で 1 回でも動かした体験を持つ。社員・パートナーの提案を、感覚で評価できるようになります。",
   },
   {
-    h: "外注前に「内製の輪郭」が描ける",
+    h: "外注前に「自分でできる範囲」が描ける",
     body: "LP 1 枚・社内ツール・業務スクリプト — 何を内製し、何を外注に残すかの判断軸を、経営者自身が持てるようになります。",
   },
   {
     h: "投資判断の速度と精度が上がる",
-    body: "AI 関連の予算・人員配置・ベンダー選定に、社内に「実装感覚を持つ意思決定者」が居る状態に。決裁のリードタイムが短縮します。",
+    body: "AI 関連の予算・人員配置・ベンダー選定に、社内に「AI を触ったことのある意思決定者」が居る状態に。決裁のリードタイムが短縮します。",
   },
 ];
 
@@ -34,15 +34,15 @@ export default function Transformation() {
     >
       <div className="max-w-6xl mx-auto">
         <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-4">
-          90 分後の、あなた
+          2 時間後の、あなた
         </p>
         <h2
           id="trans-heading"
           className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center max-w-3xl mx-auto"
         >
-          AI を <span className="text-coral">「使う側」</span> から、
+          AI に <span className="text-coral">「使われる側」</span> から、
           <br />
-          <span className="text-coral">「実装する側」</span> へ
+          <span className="text-coral">「使う側」</span> へ
         </h2>
         <p className="mt-6 text-base leading-relaxed text-sumi/75 text-center max-w-xl mx-auto">
           コードは書きません。書くのは、自社業務の「判断軸」と「段取り」です

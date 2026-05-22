@@ -47,7 +47,7 @@ export default function FinalCTA() {
           id="apply-heading"
           className="font-serif text-3xl sm:text-5xl font-semibold leading-tight"
         >
-          90 分で、
+          2 時間で、
           <br />
           自社の <span className="text-coral italic font-normal">次の一手</span> を持ち帰る
         </h2>
@@ -62,7 +62,7 @@ export default function FinalCTA() {
         <div className="mt-12 flex flex-col sm:flex-row gap-4 sm:gap-8 items-center justify-center font-mono text-xs sm:text-sm tracking-[0.15em] uppercase text-cream/80">
           <div className="flex items-baseline gap-2">
             <span className="text-coral font-semibold">DATE</span>
-            <span>2026 / 05 / 31 (土)</span>
+            <span>2026 / 05 / 31 (日)</span>
           </div>
           <span className="hidden sm:inline text-cream/30">·</span>
           <div className="flex items-baseline gap-2">

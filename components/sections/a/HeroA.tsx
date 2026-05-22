@@ -41,7 +41,7 @@ export default function HeroA() {
 
           {/* サブコピー */}
           <p className="mt-8 text-base sm:text-lg leading-relaxed text-sumi/80 max-w-xl">
-            AI を「使う側」から、「実装する側」へ。
+            AI に「使われる側」から、「使う側」へ。
             <br />
             2 時間で、自社業務に AI が乗る景色を見せます。
           </p>
@@ -50,7 +50,7 @@ export default function HeroA() {
           <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-5 sm:gap-6 max-w-2xl">
             <div className="flex flex-col gap-1">
               <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral font-semibold">DATE</span>
-              <span className="font-serif text-base font-semibold">5/31 (土)</span>
+              <span className="font-serif text-base font-semibold">5/31 (日)</span>
             </div>
             <div className="flex flex-col gap-1">
               <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral font-semibold">TIME</span>

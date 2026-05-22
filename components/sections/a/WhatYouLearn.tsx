@@ -1,6 +1,6 @@
 /**
  * Plan A §3: 本セミナーで学べる内容
- * 経営者目線の「何が分かるか」3 つ + 当日 90 分の流れを 1 文で
+ * 経営者目線の「何が分かるか」3 つ + 当日 2 時間の流れを 1 文で
  */
 
 const learnings = [
@@ -36,7 +36,7 @@ export default function WhatYouLearn() {
           id="learn-heading"
           className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center max-w-3xl mx-auto"
         >
-          90 分後、<span className="text-coral">3 つのもの</span>を持ち帰ります
+          2 時間後、<span className="text-coral">3 つのもの</span>を持ち帰ります
         </h2>
         <p className="mt-6 text-base leading-relaxed text-sumi/75 text-center max-w-xl mx-auto">
           抽象的な「学び」ではなく、経営判断にそのまま使える「線引き」と「数字」を

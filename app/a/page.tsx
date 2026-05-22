@@ -2,6 +2,7 @@ import HeroA from "@/components/sections/a/HeroA";
 import BeforeAfter from "@/components/sections/a/BeforeAfter";
 import WhatYouLearn from "@/components/sections/a/WhatYouLearn";
 import Speaker from "@/components/sections/Speaker";
+import NextSession from "@/components/sections/NextSession";
 import FinalCTA from "@/components/sections/FinalCTA";
 import Footer from "@/components/sections/Footer";
 import MobileStickyCTA from "@/components/MobileStickyCTA";
@@ -25,6 +26,7 @@ export default function PlanA() {
       <BeforeAfter />
       <WhatYouLearn />
       <Speaker />
+      <NextSession />
       <FinalCTA />
       <Footer />
       <VariantSwitcher current="a" />
@@ -36,5 +38,5 @@ export default function PlanA() {
 export const metadata = {
   title: "経営者・次期リーダーのための Claude Code 実践セミナー — Vol.1",
   description:
-    "2026/05/31 (土) 11:00-13:00 オンライン開催。AI を使う側から実装する側へ。経営判断にそのまま使える 90 分。",
+    "2026/05/31 (日) 11:00-13:00 オンライン開催。AI に使われる側から、AI を使う側へ。経営判断にそのまま使える 2 時間。",
 };

@@ -1,25 +1,29 @@
 /**
- * Plan B §2: こんな悩みありませんか？
- * Codex 強い注意：個人向け教材の煽り口調 NG。経営課題の言語に寄せる。
- * CCC NG ワード（CLAUDE.md 参照）は絶対回避。
+ * Plan B §2: こんな悩み、ありませんか
+ *
+ * Takka 指示：
+ *   - 危機感を誘う（ビジュアル：sumi 寄り背景 + 大文字疑問）
+ *   - 「実装する」系の硬い言葉を排除
+ *   - 経営者「何から始めたらいいか分からない」「何ができるか分からない」共感
+ *   - 副業臭 NG、教科書的すぎる経営課題語も避ける
  */
 
 const pains = [
   {
-    q: "「AI で業務が変わる」と聞くが、何から始めればいいか分からない",
-    body: "メディアは「AI が変える」と煽るが、自社の業務に落とした時の輪郭が見えない。判断材料が、まだ社内に蓄積されていない。",
+    q: "何から始めたら、いいのか分からない",
+    body: "周りは「もう AI 使ってる」と言うけれど、自社の何をどう変えればいいのか、入り口が見えない。",
   },
   {
-    q: "AI 活用が、社員個々の試行錯誤になっている",
-    body: "現場が ChatGPT を触っているが、組織として何が業務に乗っているか、誰も把握できていない。属人化のリスクと、ROI 不明のまま時間が過ぎていく。",
+    q: "AI で「何ができるのか」が分からない",
+    body: "ChatGPT は触ったが、それ以上の使い方が分からない。自分の業務にどう乗せるかの当たりが付かない。",
   },
   {
-    q: "サービス改修・試作が、外部パートナー前提になっている",
-    body: "LP 1 枚、社内ツール 1 個、業務フロー自動化、すべて外注。月◯十万円 / リードタイム 2〜4 週間。経営者として「内製の選択肢」を持ちたいが、判断材料がない。",
+    q: "現場が AI を触っているが、把握できない",
+    body: "社員が ChatGPT を使い始めた。でも、組織として何が動いていて、何を採用すべきか、経営側の判断軸がない。",
   },
   {
-    q: "意思決定者として、「実装の感覚」が掴めていない",
-    body: "AI 投資の議論は社内で進むが、自分が触ったことがないので、社員や外部パートナーの提案を評価する基準が持てない。経営判断の精度が、外部の言葉に依存している。",
+    q: "投資すべきか、様子見すべきか、決められない",
+    body: "AI 関連の予算や導入の話が回ってくるが、判断する根拠が手元にない。気づいたら 1 年遅れていた、にはなりたくない。",
   },
 ];
 
@@ -28,42 +32,84 @@ export default function PainPoints() {
     <section
       id="pain"
       aria-labelledby="pain-heading"
-      className="relative w-full bg-cream text-sumi-deep py-24 sm:py-32 px-6"
+      className="relative w-full bg-sumi-deep text-cream overflow-hidden py-24 sm:py-32 px-6"
     >
-      <div className="max-w-5xl mx-auto">
-        <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-4">
-          こんな状況、ありませんか
-        </p>
-        <h2
-          id="pain-heading"
-          className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center max-w-3xl mx-auto"
-        >
-          AI 活用は進んでいる。でも、<span className="text-coral">経営者の手応えが薄い</span>
-        </h2>
-        <p className="mt-6 text-base leading-relaxed text-sumi/75 text-center max-w-xl mx-auto">
-          経営者・意思決定者 30 名以上の声を集約して、共通する 4 つの「停滞点」を整理しました
+      {/* ambient コーラル光（弱） */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 55% 45% at 92% 8%, rgba(217,119,87,0.18) 0%, transparent 60%), " +
+            "radial-gradient(ellipse 50% 40% at 8% 95%, rgba(184,93,64,0.14) 0%, transparent 55%)",
+        }}
+        aria-hidden
+      />
+      {/* grain */}
+      <div
+        className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-[0.05]"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>\")",
+        }}
+        aria-hidden
+      />
+
+      <div className="relative max-w-5xl mx-auto">
+        <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-6">
+          こんな悩み、ありませんか
         </p>
 
-        <div className="mt-20 space-y-12 sm:space-y-14">
+        {/* 大見出し：危機感の主張 */}
+        <h2
+          id="pain-heading"
+          className="font-serif text-3xl sm:text-5xl md:text-6xl font-semibold leading-[1.15] text-center"
+          style={{ letterSpacing: "-0.01em" }}
+        >
+          周りは <span className="text-coral italic">動き始めて</span> いる。<br />
+          自分だけ、足元が見えない。
+        </h2>
+        <p className="mt-8 text-base sm:text-lg leading-relaxed text-cream/75 text-center max-w-2xl mx-auto">
+          経営者・意思決定者が、いま日々抱えている 4 つの「停滞」。
+          <br className="hidden sm:inline" />
+          このセミナーは、その入り口を 1 回で外すために設計しています。
+        </p>
+
+        {/* === 4 つの停滞 === */}
+        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-px bg-cream/8 border border-cream/8">
           {pains.map((p, i) => (
-            <article key={i} className="grid grid-cols-[auto_1fr] gap-x-6 sm:gap-x-10 items-start">
+            <article
+              key={i}
+              className="relative bg-sumi-deep p-8 sm:p-10 group hover:bg-sumi-deep/80 transition-colors"
+            >
+              {/* 上端 coral 細線 */}
+              <span className="absolute top-0 left-0 h-px w-12 bg-coral" aria-hidden />
+
               <p
-                className="font-serif text-4xl sm:text-5xl font-semibold text-coral/85 leading-none pt-1"
-                style={{ letterSpacing: "-0.04em" }}
+                className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral font-semibold mb-4"
               >
                 {String(i + 1).padStart(2, "0")}
               </p>
-              <div>
-                <h3 className="font-serif text-lg sm:text-xl font-semibold leading-snug">
-                  {p.q}
-                </h3>
-                <p className="mt-3 text-sm sm:text-base leading-relaxed text-sumi/75 max-w-2xl">
-                  {p.body}
-                </p>
-              </div>
+
+              <h3
+                className="font-serif text-2xl sm:text-3xl font-semibold leading-[1.25] mb-5"
+                style={{ letterSpacing: "-0.01em" }}
+              >
+                <span className="text-coral italic">?</span>{" "}{p.q}
+              </h3>
+
+              <p className="text-sm sm:text-base leading-relaxed text-cream/70">
+                {p.body}
+              </p>
             </article>
           ))}
         </div>
+
+        {/* 締めの 1 行 */}
+        <p className="mt-16 text-center text-base sm:text-lg leading-relaxed text-cream/80 max-w-2xl mx-auto">
+          「<span className="text-coral">入り口</span>」さえ掴めれば、
+          <br className="hidden sm:inline" />
+          後は、自分のペースで進めます。
+        </p>
       </div>
     </section>
   );
