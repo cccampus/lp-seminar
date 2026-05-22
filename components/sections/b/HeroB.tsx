@@ -125,7 +125,7 @@ export default function HeroB() {
 
           {/* 講師 2 名サムネ — 端末の下に小さく */}
           <div className="mt-6 flex gap-4 justify-center lg:justify-start">
-            {[{ src: "/images/kiyo_v2.png", name: "Kiyo" }, { src: "/images/takka_v2.png", name: "Takka" }].map((s) => (
+            {[{ src: "/images/kiyo.jpg", name: "Kiyo" }, { src: "/images/takka.jpg", name: "Takka" }].map((s) => (
               <div key={s.name} className="flex items-center gap-3">
                 <div className="relative w-12 h-12 overflow-hidden rounded-full border border-cream/20">
                   <Image src={s.src} alt={s.name} width={500} height={500} className="block h-full w-full object-cover" priority />

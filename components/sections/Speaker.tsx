@@ -22,7 +22,7 @@ type Speaker = {
 
 const speakers: Speaker[] = [
   {
-    photo: "/images/kiyo_v2.png",
+    photo: "/images/kiyo.jpg",
     alt: "Kiyo のポートレート",
     name: "Kiyo",
     role: "経営者 × AI 実装家",
@@ -42,7 +42,7 @@ const speakers: Speaker[] = [
     ],
   },
   {
-    photo: "/images/takka_v2.png",
+    photo: "/images/takka.jpg",
     alt: "Takka のポートレート",
     name: "Takka",
     role: "クリエイティブ × AI 実装家",

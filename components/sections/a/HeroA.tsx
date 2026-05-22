@@ -113,7 +113,7 @@ export default function HeroA() {
             <div className="relative">
               <div className="aspect-square overflow-hidden border border-sumi/15 bg-sumi/[0.03]">
                 <Image
-                  src="/images/kiyo_v2.png"
+                  src="/images/kiyo.jpg"
                   alt="講師 Kiyo"
                   width={500}
                   height={500}
@@ -128,7 +128,7 @@ export default function HeroA() {
             <div className="relative">
               <div className="aspect-square overflow-hidden border border-sumi/15 bg-sumi/[0.03]">
                 <Image
-                  src="/images/takka_v2.png"
+                  src="/images/takka.jpg"
                   alt="講師 Takka"
                   width={500}
                   height={500}
