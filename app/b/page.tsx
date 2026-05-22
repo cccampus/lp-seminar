@@ -5,6 +5,8 @@ import Speaker from "@/components/sections/Speaker";
 import PriceJustification from "@/components/sections/b/PriceJustification";
 import FinalCTA from "@/components/sections/FinalCTA";
 import Footer from "@/components/sections/Footer";
+import MobileStickyCTA from "@/components/MobileStickyCTA";
+import VariantSwitcher from "@/components/VariantSwitcher";
 
 /**
  * 案 B — 痛み → 変化 → 価値（実装証拠押し）
@@ -28,6 +30,8 @@ export default function PlanB() {
       <PriceJustification />
       <FinalCTA />
       <Footer />
+      <VariantSwitcher current="b" />
+      <MobileStickyCTA />
     </>
   );
 }

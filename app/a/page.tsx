@@ -4,6 +4,8 @@ import WhatYouLearn from "@/components/sections/a/WhatYouLearn";
 import Speaker from "@/components/sections/Speaker";
 import FinalCTA from "@/components/sections/FinalCTA";
 import Footer from "@/components/sections/Footer";
+import MobileStickyCTA from "@/components/MobileStickyCTA";
+import VariantSwitcher from "@/components/VariantSwitcher";
 
 /**
  * 案 A — B2B 直球（editorial 純化）
@@ -25,6 +27,8 @@ export default function PlanA() {
       <Speaker />
       <FinalCTA />
       <Footer />
+      <VariantSwitcher current="a" />
+      <MobileStickyCTA />
     </>
   );
 }
