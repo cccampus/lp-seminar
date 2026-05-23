@@ -11,6 +11,7 @@ import NextSession from "@/components/sections/NextSession";
 import FinalCTA from "@/components/sections/FinalCTA";
 import Footer from "@/components/sections/Footer";
 import MobileStickyCTA from "@/components/MobileStickyCTA";
+import VariantSwitcher from "@/components/VariantSwitcher";
 
 /**
  * Variant C — Cinematic 実験版
@@ -37,6 +38,7 @@ export default function CinematicPage() {
       <NextSession />
       <FinalCTA />
       <Footer />
+      <VariantSwitcher current="c" />
       <MobileStickyCTA />
     </>
   );
