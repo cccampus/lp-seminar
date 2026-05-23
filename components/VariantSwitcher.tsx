@@ -4,13 +4,14 @@
  * 関係者の A/B 比較用。本番公開時は削除 or feature flag で隠す。
  */
 
-type Variant = "default" | "a" | "b" | "c";
+type Variant = "default" | "a" | "b" | "c" | "d";
 
 const variants: { key: Variant; label: string; href: string }[] = [
   { key: "default", label: "Default", href: "/" },
   { key: "a", label: "A · editorial", href: "/a" },
   { key: "b", label: "B · 実装証拠", href: "/b" },
   { key: "c", label: "C · cinematic", href: "/c" },
+  { key: "d", label: "D · cinematic V2", href: "/d" },
 ];
 
 export default function VariantSwitcher({ current }: { current: Variant }) {
