@@ -25,6 +25,7 @@ import {
   useReducedMotion,
 } from "motion/react";
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 const FORM_URL = "https://forms.google.com/CCC-SEMINAR-VOL1"; // 仮
 
@@ -37,6 +38,9 @@ export default function HeroCinematicV2() {
     target: sectionRef,
     offset: ["start start", "end start"],
   });
+  // 背景画像: ゆっくり下に流す（depth 感）
+  const bgImageY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const bgImageScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.12]);
   // 主背景タイポ（CLAUDE CODE）: 上に流す + scale
   const bgTypeY = useTransform(scrollYProgress, [0, 1], [0, -300]);
   const bgTypeScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
@@ -90,6 +94,29 @@ export default function HeroCinematicV2() {
       aria-label="Hero V2 (cinematic, depth-enhanced)"
       style={{ perspective: "1500px" }}
     >
+      {/* ============================================================
+          LAYER -1 - 背景画像（Codex GPT Image 2 生成）
+          実写風 dark stage + 中央 coral spotlight + 床反射
+          slow scroll parallax + 軽い scale で depth 強化
+         ============================================================ */}
+      <motion.div
+        style={
+          prefersReduced
+            ? undefined
+            : { y: bgImageY, scale: bgImageScale }
+        }
+        className="absolute inset-0 pointer-events-none"
+      >
+        <Image
+          src="/images/hero/cinematic_hero_bg.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+      </motion.div>
+
       {/* ============================================================
           LAYER 0a - スポットライト 3 重 radial（強・中・弱で立体光源）
          ============================================================ */}
