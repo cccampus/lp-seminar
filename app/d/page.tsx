@@ -31,6 +31,16 @@ export default function CinematicV2Page() {
   return (
     <>
       <HeroCinematicV2 />
+      {/* === Bridge: hero (sumi-deep) → TrustStrip (cream) の dark→light を smooth fade ===
+          単独 div で /d 限定。既存セクション無修正。 */}
+      <div
+        aria-hidden
+        className="h-32 sm:h-44 md:h-56 w-full pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, var(--color-sumi-deep) 0%, var(--color-sumi-deep) 18%, rgba(31,31,31,0.85) 45%, rgba(217,119,87,0.06) 75%, var(--color-cream) 100%)",
+        }}
+      />
       <TrustStrip />
       <About />
       <Outcomes />
