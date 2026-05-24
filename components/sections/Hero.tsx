@@ -44,15 +44,15 @@ export default function Hero() {
       <div className="relative z-10 w-full h-full flex flex-col items-center justify-center text-center px-6">
         {/* eyebrow / Vol タグ */}
         <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-6">
-          — Claude Code Campus · 第 1 回 公開セミナー —
+          Claude Code Campus · 第 1 回 公開セミナー
         </p>
 
         {/* 主タイトル */}
         <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-semibold leading-tight max-w-3xl">
-          経営者のための、
+          経営者、次期リーダーのための、
           <br />
           <span className="text-coral italic font-normal">Claude Code</span>
-          {" "}実装入門。
+          {" "}実践セミナー
         </h1>
 
         {/* サブコピー */}

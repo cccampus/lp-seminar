@@ -61,7 +61,7 @@ const faqs: Item[] = [
     a: (
       <>
         本セミナーは <span className="font-medium">2 時間の入口</span>
-        です。深く実装まで進めたい方向けには、別途
+        です。深く使いこなしたい方向けには、別途
         <span className="font-medium">本コース</span>（カリキュラム形式）
         をご用意しています。セミナー末尾でご案内します。
       </>

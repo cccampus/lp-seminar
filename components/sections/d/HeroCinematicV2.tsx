@@ -82,8 +82,8 @@ export default function HeroCinematicV2() {
     return () => window.removeEventListener("mousemove", handleMouse);
   }, [prefersReduced, mouseX, mouseY]);
 
-  const titleLine1 = ["経", "営", "者", "の", "た", "め", "の", "、"];
-  const titleLine3 = ["実", "装", "入", "門", "。"];
+  const titleLine1 = ["経", "営", "者", "、", "次", "期", "リ", "ー", "ダ", "ー", "の", "た", "め", "の", "、"];
+  const titleLine3 = ["実", "践", "セ", "ミ", "ナ", "ー"];
 
   const easeOutQuint: [number, number, number, number] = [0.16, 1, 0.3, 1];
 

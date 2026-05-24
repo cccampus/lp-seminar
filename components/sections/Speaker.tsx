@@ -25,10 +25,10 @@ const speakers: Speaker[] = [
     photo: "/images/kiyo.jpg",
     alt: "Kiyo のポートレート",
     name: "Kiyo",
-    role: "経営者 × AI 実装家",
+    role: "経営者 × AI 実践家",
     body: (
       <>
-        パーソナルジム経営から AI 実装家へ転身。集客・業務自動化・CRM 構築を
+        パーソナルジム経営から AI 実践家へ転身。集客・業務自動化・CRM 構築を
         <span className="font-medium">経営者目線</span>で設計してきた。
         現場で人を雇い、回し、辞めさせる側を経験した上での「人と AI の両立」を、
         理屈ではなく実体験ベースで伝える。
@@ -45,7 +45,7 @@ const speakers: Speaker[] = [
     photo: "/images/takka.jpg",
     alt: "Takka のポートレート",
     name: "Takka",
-    role: "クリエイティブ × AI 実装家",
+    role: "クリエイティブ × AI 実践家",
     body: (
       <>
         TVCM 制作・事業開発を経て、クリエイティブと AI を実務に落とす立場に。
@@ -81,11 +81,11 @@ export default function Speaker() {
           id="speaker-heading"
           className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center"
         >
-          話すのは、<span className="text-coral">実装してきた</span>二人
+          話すのは、<span className="text-coral">実践してきた</span>二人
         </h2>
 
         <p className="mt-6 text-base leading-relaxed text-sumi/75 text-center max-w-2xl mx-auto">
-          経営の視点と、現場の実装の視点 — 両側を同時に持つ二人が、対等に登壇します
+          経営の視点と、現場で手を動かす視点 — 両側を同時に持つ二人が、対等に登壇します
         </p>
 
         {/* === 2 講師: editorial 縦組み === */}
@@ -142,7 +142,7 @@ export default function Speaker() {
                 {/* === 実装してきたもの === */}
                 <div className="mt-8 max-w-2xl">
                   <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-sumi/55 mb-4">
-                    実装してきたもの
+                    手がけてきたもの
                   </p>
                   <ul className="space-y-2.5 text-sm text-sumi">
                     {s.works.map((w) => (
