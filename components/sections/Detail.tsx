@@ -2,6 +2,7 @@
  * Detail — 開催情報（タイムテーブル削除版）
  * Takka 指示: 当日のスケジュールは不要、開催情報のみ
  */
+import DarkSection from "@/components/ui/DarkSection";
 
 const included = [
   "アーカイブ動画（後日 7 日間視聴可）",
@@ -11,10 +12,11 @@ const included = [
 
 export default function Detail() {
   return (
-    <section
+    <DarkSection
       id="detail"
       aria-labelledby="detail-heading"
-      className="relative w-full bg-cream text-sumi-deep py-24 sm:py-32 px-6"
+      bgImage="/images/backdrop/bd_b.jpg"
+      className="py-24 sm:py-32 px-6"
     >
       <div className="max-w-3xl mx-auto">
         <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-4">
@@ -27,7 +29,7 @@ export default function Detail() {
           開催の <span className="text-coral">詳細</span>
         </h2>
 
-        <div className="mt-16 rounded-2xl border border-sumi/15 bg-cream-warm p-8 sm:p-12">
+        <div className="mt-16 rounded-2xl border border-cream/15 bg-cream/[0.04] p-8 sm:p-12">
           <dl className="space-y-7">
             <div>
               <dt className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral font-semibold mb-1.5">
@@ -40,7 +42,7 @@ export default function Detail() {
                 Time
               </dt>
               <dd className="font-serif text-xl font-semibold">
-                11:00 – 13:00 <span className="text-sm font-normal text-sumi/65">（2 時間）</span>
+                11:00 – 13:00 <span className="text-sm font-normal text-cream/65">（2 時間）</span>
               </dd>
             </div>
             <div>
@@ -48,7 +50,7 @@ export default function Detail() {
                 Format
               </dt>
               <dd className="font-serif text-xl font-semibold">Online · Zoom</dd>
-              <p className="mt-1.5 text-xs text-sumi/55">
+              <p className="mt-1.5 text-xs text-cream/55">
                 Zoom URL は申込確認後に個別配布いたします
               </p>
             </div>
@@ -57,7 +59,7 @@ export default function Detail() {
                 Price
               </dt>
               <dd className="font-serif text-xl font-semibold">
-                ¥5,000 <span className="text-sm font-normal text-sumi/65">（税込）</span>
+                ¥5,000 <span className="text-sm font-normal text-cream/65">（税込）</span>
               </dd>
             </div>
             <div>
@@ -69,11 +71,11 @@ export default function Detail() {
           </dl>
 
           {/* 含まれるもの */}
-          <div className="mt-10 border-t border-sumi/10 pt-7">
-            <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-sumi/55 mb-4">
+          <div className="mt-10 border-t border-cream/10 pt-7">
+            <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-cream/55 mb-4">
               Included
             </p>
-            <ul className="space-y-2.5 text-sm text-sumi">
+            <ul className="space-y-2.5 text-sm text-cream">
               {included.map((item) => (
                 <li key={item} className="flex gap-3">
                   <span className="mt-2 h-px w-4 shrink-0 bg-coral" aria-hidden />
@@ -84,6 +86,6 @@ export default function Detail() {
           </div>
         </div>
       </div>
-    </section>
+    </DarkSection>
   );
 }

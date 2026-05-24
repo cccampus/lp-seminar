@@ -36,7 +36,7 @@ export default function PlanA() {
 }
 
 export const metadata = {
-  title: "経営者・次期リーダーのための Claude Code 実践セミナー — Vol.1",
+  title: "経営者・次期リーダーのための Claude Code 実践セミナー",
   description:
     "2026/05/31 (日) 11:00-13:00 オンライン開催。AI に使われる側から、AI を使う側へ。経営判断にそのまま使える 2 時間。",
 };

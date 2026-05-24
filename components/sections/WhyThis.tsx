@@ -4,6 +4,8 @@
  * - 番号 + 見出し + 本文（アイコン NG、リサーチ agent 指摘の AI slop 回避）
  * - 行長を意図的にばらす（短/中/長の混在）
  */
+import DarkSection from "@/components/ui/DarkSection";
+import RevealHeading from "@/components/ui/RevealHeading";
 
 const reasons = [
   {
@@ -25,10 +27,11 @@ const reasons = [
 
 export default function WhyThis() {
   return (
-    <section
+    <DarkSection
       id="why-this"
       aria-labelledby="whythis-heading"
-      className="relative w-full bg-cream-warm text-sumi-deep py-24 sm:py-32 px-6"
+      bgImage="/images/backdrop/bd_b.jpg"
+      className="py-24 sm:py-32 px-6"
     >
       <div className="max-w-5xl mx-auto">
         {/* eyebrow */}
@@ -37,14 +40,15 @@ export default function WhyThis() {
         </p>
 
         {/* 主見出し */}
-        <h2
+        <RevealHeading
+          as="h2"
           id="whythis-heading"
           className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center"
         >
           ほかの AI セミナーと、
           <br />
           <span className="text-coral">違うところ</span>
-        </h2>
+        </RevealHeading>
 
         {/* 3 reasons — 縦並びのエディトリアル */}
         <div className="mt-20 space-y-16 sm:space-y-20">
@@ -65,7 +69,7 @@ export default function WhyThis() {
                 <h3 className="font-serif text-xl sm:text-3xl font-semibold leading-snug">
                   {r.title}
                 </h3>
-                <p className="mt-4 text-sm sm:text-base leading-relaxed text-sumi/80 max-w-2xl">
+                <p className="mt-4 text-sm sm:text-base leading-relaxed text-cream/80 max-w-2xl">
                   {r.body}
                 </p>
               </div>
@@ -73,6 +77,6 @@ export default function WhyThis() {
           ))}
         </div>
       </div>
-    </section>
+    </DarkSection>
   );
 }

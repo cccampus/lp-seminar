@@ -33,7 +33,7 @@ export default function HeroB() {
         {/* === 左：コピー === */}
         <div>
           <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-6">
-            Vol.1 · 公開セミナー
+            公開セミナー
           </p>
 
           <h1

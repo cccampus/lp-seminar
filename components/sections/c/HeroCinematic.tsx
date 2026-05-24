@@ -138,7 +138,7 @@ export default function HeroCinematic() {
         className="absolute top-6 sm:top-8 left-0 right-0 flex justify-between items-center px-6 sm:px-10 z-20"
       >
         <p className="font-mono text-[9px] sm:text-[10px] tracking-[0.32em] uppercase text-coral">
-          ── Vol.&nbsp;01 / 2026.05.31
+          ── 2026.05.31&nbsp;SUN / ONLINE
         </p>
         <p className="hidden sm:block font-mono text-[10px] tracking-[0.32em] uppercase text-cream/45">
           Claude Code Campus
@@ -310,7 +310,7 @@ export default function HeroCinematic() {
         transition={{ delay: 2.5, duration: 0.8 }}
         className="absolute bottom-6 sm:bottom-8 right-6 sm:right-10 z-20 hidden sm:block font-mono text-[10px] tracking-[0.26em] uppercase text-cream/40"
       >
-        ¥&nbsp;3,000&nbsp;/&nbsp;Limited&nbsp;30
+        ¥&nbsp;5,000&nbsp;/&nbsp;Limited&nbsp;30
       </motion.div>
     </section>
   );

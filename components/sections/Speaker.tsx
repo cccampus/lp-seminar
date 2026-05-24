@@ -7,6 +7,7 @@ import Image from "next/image";
  * - 写真: square crop / Sumi 背景フレーム
  * - 円形クロップ＋グラデ縁は廃止（典型的 AI slop パターン）
  */
+import DarkSection from "@/components/ui/DarkSection";
 
 type Speaker = {
   photo: string;
@@ -45,30 +46,37 @@ const speakers: Speaker[] = [
     photo: "/images/takka.jpg",
     alt: "Takka のポートレート",
     name: "Takka",
-    role: "クリエイティブ × AI 実践家",
+    role: "AI アーティスト 兼 実業家",
     body: (
       <>
-        TVCM 制作・事業開発を経て、クリエイティブと AI を実務に落とす立場に。
-        動画・画像生成、LP・スライド・モック制作を Claude Code で
-        <span className="font-medium">一気通貫</span>で回している。
-        制作会社や代理店との折衝で消耗していた工程を、自分の手元に取り戻すための実装。
+        大手上場企業を経て、AI 企業の役員を経験。現在は
+        <span className="font-medium">クリエイティブと AI を実務に落とす</span>立場に。
+        デジタルハリウッドで講師を務め、AI アーティストとしてコンテスト受賞歴も。
+        昨年はニュース番組にも出演。動画・画像生成から LP・スライド・モック制作までを
+        Claude Code で一気通貫で回している。
       </>
     ),
-    credits: ["TVCM 制作", "事業開発", "Claude Code Campus 主宰"],
+    credits: [
+      "大手上場企業 出身",
+      "AI 企業 役員経験",
+      "デジタルハリウッド 講師",
+      "AIアート コンテスト受賞",
+    ],
     works: [
       "クライアント LP の制作リードタイムを 1/4 に短縮",
       "スライド 140 枚を Claude Code で一括生成・更新する仕組みを構築",
-      "Seedance / Kling 等の動画生成 API を業務フローに統合",
+      "動画・画像生成 API を業務フローに統合し、制作を内製化",
     ],
   },
 ];
 
 export default function Speaker() {
   return (
-    <section
+    <DarkSection
       id="speaker"
       aria-labelledby="speaker-heading"
-      className="relative w-full bg-cream-warm text-sumi-deep py-24 sm:py-32 px-6"
+      bgImage="/images/backdrop/bd_a.jpg"
+      className="py-24 sm:py-32 px-6"
     >
       <div className="relative max-w-5xl mx-auto">
         {/* eyebrow */}
@@ -84,7 +92,7 @@ export default function Speaker() {
           話すのは、<span className="text-coral">実践してきた</span>二人
         </h2>
 
-        <p className="mt-6 text-base leading-relaxed text-sumi/75 text-center max-w-2xl mx-auto">
+        <p className="mt-6 text-base leading-relaxed text-cream/75 text-center max-w-2xl mx-auto">
           経営の視点と、現場で手を動かす視点 — 両側を同時に持つ二人が、対等に登壇します
         </p>
 
@@ -97,7 +105,7 @@ export default function Speaker() {
             >
               {/* === 写真 — square crop / Sumi 細枠 === */}
               <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-[260px] md:h-[260px] mx-auto md:mx-0">
-                <div className="absolute inset-0 border border-sumi/15 bg-sumi/[0.03]" aria-hidden />
+                <div className="absolute inset-0 border border-cream/15 bg-cream/[0.04]" aria-hidden />
                 <Image
                   src={s.photo}
                   alt={s.alt}
@@ -123,31 +131,34 @@ export default function Speaker() {
                   >
                     {String(idx + 1).padStart(2, "0")}
                   </span>
-                  <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-sumi/55">
+                  <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-cream/55">
                     {s.role}
                   </span>
                 </div>
                 <h3
-                  className="mt-3 font-serif text-3xl sm:text-4xl font-semibold text-sumi-deep"
+                  className="mt-3 font-serif text-3xl sm:text-4xl font-semibold text-cream"
                   style={{ letterSpacing: "-0.01em" }}
                 >
                   {s.name}
                 </h3>
 
                 {/* bio */}
-                <p className="mt-6 text-base leading-relaxed text-sumi max-w-2xl">
+                <p className="mt-6 text-base leading-relaxed text-cream max-w-2xl">
                   {s.body}
                 </p>
 
                 {/* === 実装してきたもの === */}
                 <div className="mt-8 max-w-2xl">
-                  <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-sumi/55 mb-4">
+                  <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-cream/55 mb-4">
                     手がけてきたもの
                   </p>
-                  <ul className="space-y-2.5 text-sm text-sumi">
+                  <ul className="space-y-2.5 text-sm text-cream">
                     {s.works.map((w) => (
-                      <li key={w} className="flex gap-3">
-                        <span className="mt-2 h-px w-4 shrink-0 bg-coral" aria-hidden />
+                      <li key={w} className="flex gap-3.5">
+                        <span
+                          className="mt-[0.55em] h-[5px] w-[5px] shrink-0 rounded-full bg-coral"
+                          aria-hidden
+                        />
                         <span>{w}</span>
                       </li>
                     ))}
@@ -155,10 +166,10 @@ export default function Speaker() {
                 </div>
 
                 {/* === クレジット行 — 点区切り === */}
-                <p className="mt-8 text-xs text-sumi/65">
+                <p className="mt-8 text-xs text-cream/65">
                   {s.credits.map((c, i) => (
                     <span key={c}>
-                      {i > 0 && <span className="text-sumi/30 mx-2">·</span>}
+                      {i > 0 && <span className="text-cream/30 mx-2">·</span>}
                       {c}
                     </span>
                   ))}
@@ -168,6 +179,6 @@ export default function Speaker() {
           ))}
         </div>
       </div>
-    </section>
+    </DarkSection>
   );
 }

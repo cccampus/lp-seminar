@@ -26,11 +26,18 @@ import {
 } from "motion/react";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
+
+// SplitText 登録（モジュールトップで一度だけ）。ScrollTrigger は LenisProvider 側で登録済み
+gsap.registerPlugin(SplitText);
 
 const FORM_URL = "https://forms.google.com/CCC-SEMINAR-VOL1"; // 仮
 
 export default function HeroCinematicV2() {
   const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const prefersReduced = useReducedMotion();
 
   // === スクロール parallax ===
@@ -82,8 +89,25 @@ export default function HeroCinematicV2() {
     return () => window.removeEventListener("mousemove", handleMouse);
   }, [prefersReduced, mouseX, mouseY]);
 
-  const titleLine1 = ["経", "営", "者", "、", "次", "期", "リ", "ー", "ダ", "ー", "の", "た", "め", "の", "、"];
-  const titleLine3 = ["実", "践", "セ", "ミ", "ナ", "ー"];
+  // === 見出し: GSAP SplitText の chars reveal（mask なし = 折り返しを固定化しない） ===
+  // mask:'lines' はブラウザの折り返しをそのまま行マスク化して「実践セミナ/ー」のような
+  // 不自然な改行を固定化するため不使用。折り返しは markup 側の keep-all + <br> で制御する。
+  useGSAP(
+    () => {
+      if (prefersReduced || !titleRef.current) return;
+      const split = SplitText.create(titleRef.current, { type: "chars" });
+      gsap.from(split.chars, {
+        yPercent: 100,
+        opacity: 0,
+        duration: 0.9,
+        ease: "expo.out",
+        stagger: 0.026,
+        delay: 0.45,
+      });
+      // SplitText インスタンスは useGSAP の context が自動 revert（Strict Mode 二重実行対策）
+    },
+    { scope: titleRef, dependencies: [prefersReduced] },
+  );
 
   const easeOutQuint: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -300,7 +324,7 @@ export default function HeroCinematicV2() {
         className="absolute top-6 sm:top-8 left-0 right-0 flex justify-between items-center px-6 sm:px-10 z-30"
       >
         <p className="font-mono text-[9px] sm:text-[10px] tracking-[0.32em] uppercase text-coral">
-          ── Vol.&nbsp;01 / 2026.05.31
+          ── 2026.05.31&nbsp;SUN / ONLINE
         </p>
         <p className="hidden sm:block font-mono text-[10px] tracking-[0.32em] uppercase text-cream/45">
           Claude Code Campus
@@ -327,74 +351,37 @@ export default function HeroCinematicV2() {
           公&nbsp;開&nbsp;セ&nbsp;ミ&nbsp;ナ&nbsp;ー
         </motion.p>
 
-        <h1 className="font-serif text-[2.6rem] sm:text-6xl md:text-7xl font-semibold leading-[1.12] max-w-4xl">
+        {/* キャッチコピー（positioning）。keep-all + 意味の切れ目だけで改行（孤立行禁止） */}
+        <h1
+          ref={titleRef}
+          className="font-serif text-[2.6rem] sm:text-6xl md:text-7xl font-semibold leading-[1.16] max-w-4xl [word-break:keep-all]"
+        >
           <span className="block">
-            {titleLine1.map((char, i) => (
-              <motion.span
-                key={`l1-${i}`}
-                initial={
-                  prefersReduced
-                    ? false
-                    : { opacity: 0, y: 50, filter: "blur(6px)" }
-                }
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{
-                  delay: 0.85 + i * 0.05,
-                  duration: 0.9,
-                  ease: easeOutQuint,
-                }}
-                className="inline-block"
-              >
-                {char}
-              </motion.span>
-            ))}
+            <span className="text-cream/55">使われる側</span>から、
           </span>
-
-          <motion.span
-            initial={
-              prefersReduced
-                ? false
-                : { opacity: 0, y: 70, filter: "blur(10px)" }
-            }
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ delay: 1.35, duration: 1.1, ease: easeOutQuint }}
-            className="block text-coral italic font-normal"
-          >
-            Claude&nbsp;Code
-            <span className="text-cream not-italic font-semibold">
-              {" "}
-              {titleLine3.map((char, i) => (
-                <motion.span
-                  key={`l3-${i}`}
-                  initial={
-                    prefersReduced
-                      ? false
-                      : { opacity: 0, y: 50, filter: "blur(6px)" }
-                  }
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  transition={{
-                    delay: 1.7 + i * 0.05,
-                    duration: 0.9,
-                    ease: easeOutQuint,
-                  }}
-                  className="inline-block"
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </span>
-          </motion.span>
+          <span className="block">
+            <span className="text-coral italic font-normal">使う側</span>へ。
+          </span>
         </h1>
+
+        {/* 正式タイトル（小） */}
+        <motion.p
+          initial={prefersReduced ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.9, duration: 0.8, ease: easeOutQuint }}
+          className="mt-7 sm:mt-8 text-sm sm:text-base text-cream/70 [word-break:keep-all]"
+        >
+          経営者のための、
+          <span className="text-cream/90">Claude&nbsp;Code 実践セミナー</span>
+        </motion.p>
 
         <motion.p
           initial={prefersReduced ? false : { opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.05, duration: 0.9, ease: easeOutQuint }}
-          className="mt-8 sm:mt-10 max-w-xl text-sm sm:text-base leading-relaxed text-cream/72"
+          transition={{ delay: 2.1, duration: 0.9, ease: easeOutQuint }}
+          className="mt-4 max-w-xl text-sm sm:text-base leading-relaxed text-cream/60"
         >
-          AI に「使われる側」から、「使う側」へ。
-          <br className="hidden sm:block" />
-          2 時間で、自社業務に AI が乗る景色を見せます。
+          2 時間で、AI が自社の業務に乗る景色を、お見せします。
         </motion.p>
 
         <motion.a
@@ -462,6 +449,17 @@ export default function HeroCinematicV2() {
         }}
       />
 
+      {/* 下端シーム消し: Hero 最下部を完全な sumi-deep へ落として次セクションとシームレス接続
+          （z-10 = bg/床より上・中央コンテンツ(z-20)/メタ(z-30) より下なので文字は隠れない） */}
+      <div
+        aria-hidden
+        className="absolute bottom-0 left-0 right-0 h-[20vh] pointer-events-none z-10"
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent 0%, rgba(31,31,31,0.6) 55%, var(--color-sumi-deep) 100%)",
+        }}
+      />
+
       {/* ============================================================
           UI - SCROLL TO EXPLORE
          ============================================================ */}
@@ -504,7 +502,7 @@ export default function HeroCinematicV2() {
         transition={{ delay: 2.5, duration: 0.8 }}
         className="absolute bottom-6 sm:bottom-8 right-6 sm:right-10 z-30 hidden sm:block font-mono text-[10px] tracking-[0.26em] uppercase text-cream/45"
       >
-        ¥&nbsp;3,000&nbsp;/&nbsp;Limited&nbsp;30
+        ¥&nbsp;5,000&nbsp;/&nbsp;Limited&nbsp;30
       </motion.div>
     </section>
   );

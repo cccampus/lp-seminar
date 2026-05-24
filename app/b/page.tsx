@@ -39,7 +39,7 @@ export default function PlanB() {
 }
 
 export const metadata = {
-  title: "経営者・次期リーダーのための Claude Code 実践セミナー — Vol.1",
+  title: "経営者・次期リーダーのための Claude Code 実践セミナー",
   description:
     "「AI 活用が現場任せ」「試作が外注前提」「AI を触ったことがない」— その停滞点を、2 時間で外す。2026/05/31 オンライン開催 ¥5,000。",
 };

@@ -3,8 +3,10 @@
  * - 主 CTA: 個人申込 ¥5,000
  * - 副 CTA: 法人 2 名以上の相談（mailto）
  *   → 「法人で参加できる」選択肢を見せるだけで価格感が変わる（リサーチ agent 指摘）
- * - Hero と対の dark セクション + ambient coral 光 + grain
+ * - Hero と対の dark セクション + cinematic 背景画像 + ambient coral 光 + grain
  */
+import Image from "next/image";
+
 const GOOGLE_FORM_URL = "https://forms.google.com/CCC-SEMINAR-VOL1"; // 仮
 const CORPORATE_MAIL = "hello@cccampus.jp";
 
@@ -15,12 +17,33 @@ export default function FinalCTA() {
       aria-labelledby="apply-heading"
       className="relative w-full bg-sumi-deep text-cream overflow-hidden py-32 sm:py-40 px-6"
     >
-      {/* ambient コーラル光 */}
+      {/* cinematic 背景画像（Krea Flux 1.1 Pro 生成 / 右上 coral spotlight + 床反射）
+          Hero と対の dark stage。sumi-deep 上に opacity で馴染ませる */}
+      <div className="absolute inset-0 pointer-events-none opacity-60" aria-hidden>
+        <Image
+          src="/images/finalcta/cinematic_cta_bg.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
+
+      {/* コントラスト確保: 中央を僅かに沈める overlay（テキスト可読性） */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 50% 40% at 92% 8%, rgba(217,119,87,0.22) 0%, transparent 60%), " +
+            "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(31,31,31,0.55) 0%, rgba(31,31,31,0.15) 60%, transparent 100%)",
+        }}
+        aria-hidden
+      />
+
+      {/* ambient コーラル光（左下のみ — 右上は背景画像の spotlight に委ねる） */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
             "radial-gradient(ellipse 45% 38% at 8% 95%, rgba(184,93,64,0.18) 0%, transparent 60%)",
         }}
         aria-hidden
@@ -58,22 +81,28 @@ export default function FinalCTA() {
           申込確認後、Zoom URL と事前資料をお送りします
         </p>
 
-        {/* メタ情報 */}
-        <div className="mt-12 flex flex-col sm:flex-row gap-4 sm:gap-8 items-center justify-center font-mono text-xs sm:text-sm tracking-[0.15em] uppercase text-cream/80">
-          <div className="flex items-baseline gap-2">
-            <span className="text-coral font-semibold">DATE</span>
-            <span>2026 / 05 / 31 (日)</span>
-          </div>
-          <span className="hidden sm:inline text-cream/30">·</span>
-          <div className="flex items-baseline gap-2">
-            <span className="text-coral font-semibold">TIME</span>
-            <span>11:00 – 13:00</span>
-          </div>
-          <span className="hidden sm:inline text-cream/30">·</span>
-          <div className="flex items-baseline gap-2">
-            <span className="text-coral font-semibold">PRICE</span>
-            <span>¥5,000</span>
-          </div>
+        {/* メタ情報 — 小さい coral ラベル + 大きな serif 値で可読性UP */}
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-3 max-w-2xl mx-auto divide-y sm:divide-y-0 sm:divide-x divide-cream/12">
+          {[
+            { k: "DATE", v: "2026.05.31", sub: "日" },
+            { k: "TIME", v: "11:00–13:00", sub: "2時間" },
+            { k: "PRICE", v: "¥5,000", sub: "税込" },
+          ].map((m) => (
+            <div key={m.k} className="py-5 sm:py-0 sm:px-6 flex flex-col items-center gap-2.5">
+              <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral font-semibold">
+                {m.k}
+              </span>
+              <span
+                className="font-serif text-2xl sm:text-3xl font-semibold text-cream leading-none [word-break:keep-all]"
+                style={{ letterSpacing: "-0.01em" }}
+              >
+                {m.v}
+                <span className="ml-1.5 align-baseline text-base font-normal text-cream/50">
+                  （{m.sub}）
+                </span>
+              </span>
+            </div>
+          ))}
         </div>
 
         {/* === 主 CTA === */}
@@ -103,7 +132,7 @@ export default function FinalCTA() {
             個別にご相談ください
           </p>
           <a
-            href={`mailto:${CORPORATE_MAIL}?subject=CCC%20Vol.1%20%E6%B3%95%E4%BA%BA%E5%8F%82%E5%8A%A0%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87`}
+            href={`mailto:${CORPORATE_MAIL}?subject=CCC%20%E3%82%BB%E3%83%9F%E3%83%8A%E3%83%BC%20%E6%B3%95%E4%BA%BA%E5%8F%82%E5%8A%A0%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87`}
             className="mt-5 inline-flex items-center gap-2 text-coral-light hover:text-coral font-medium link-underline"
           >
             {CORPORATE_MAIL}

@@ -1,50 +1,89 @@
 /**
- * TrustStrip — Hero 直下の信頼帯
- * - 経営者LPで Hero とコンテンツの間に挟む「数字＋ロゴ列」相当の役割
- * - 過去回がない単発 Vol.1 なので、CCC 自体の数値ではなく
- *   「Claude Code は Anthropic 公式の開発エージェントである」という外部ファクトを引用
- * - Coral グラデ/glow/blur NG（Anthropic / Stripe ベンチに合わせ Sumi 一色で）
+ * TrustStrip — 「世界での位置づけ」信頼セクション（ダーク・シネマティック版）
+ * - 全面ダーク統一に合わせ sumi ステージ化。可読性のため文字・余白を大きく
+ * - 外部ファクト（Anthropic 公式 / 収益規模 / Fortune 500 採用）を大きな数字で見せる
+ * - 背景に enterprise の cinematic 画像（Krea gpt-image-2）を低 opacity で敷く
  */
-export default function TrustStrip() {
-  const facts = [
-    {
-      k: "Anthropic 公式",
-      v: "Claude Code は Anthropic が提供する開発エージェント",
-    },
-    {
-      k: "$8.9B+ 規模",
-      v: "Anthropic の年間収益（2026 推計、4 か月で 2.5 倍）",
-    },
-    {
-      k: "Fortune 500 採用",
-      v: "PwC・JPMorgan 他、米国大手の業務に組み込み済み",
-    },
-  ];
+import Image from "next/image";
 
+const FACTS = [
+  {
+    fig: "Anthropic 公式",
+    body: "Claude Code は、Anthropic が提供する開発エージェント。",
+  },
+  {
+    fig: "$8.9B+",
+    body: "Anthropic の年間収益（2026 推計・4 か月で 2.5 倍）。",
+  },
+  {
+    fig: "Fortune 500",
+    body: "PwC・JPMorgan 他、米国大手の業務に組み込み済み。",
+  },
+];
+
+export default function TrustStrip() {
   return (
     <section
       aria-label="Claude Code に関する信頼情報"
-      className="relative w-full bg-cream border-y border-sumi/12 py-10 sm:py-12 px-6"
+      className="relative w-full overflow-hidden bg-sumi-deep text-cream isolate py-24 sm:py-32 px-6"
     >
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-y-8 sm:gap-x-12">
-          {facts.map((f, i) => (
+      {/* 背景: enterprise cinematic（低 opacity） */}
+      <div className="absolute inset-0 pointer-events-none opacity-30" aria-hidden>
+        <Image
+          src="/images/trust/enterprise_bg.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
+      {/* コントラスト確保の暗幕 */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(31,31,31,0.92) 0%, rgba(31,31,31,0.72) 50%, rgba(31,31,31,0.92) 100%)",
+        }}
+        aria-hidden
+      />
+      {/* 上部 coral スポット */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 45% at 50% 0%, rgba(217,119,87,0.14) 0%, transparent 60%)",
+        }}
+        aria-hidden
+      />
+
+      <div className="relative z-10 max-w-5xl mx-auto">
+        <p className="font-mono text-[11px] tracking-[0.4em] uppercase text-coral text-center mb-14 sm:mb-16">
+          世界での、位置づけ
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-10">
+          {FACTS.map((f, i) => (
             <div
               key={i}
-              className={`flex flex-col gap-2 ${
-                i > 0 ? "sm:border-l sm:border-sumi/12 sm:pl-12" : ""
+              className={`flex flex-col gap-4 text-center sm:text-left ${
+                i > 0 ? "sm:border-l sm:border-cream/12 sm:pl-10" : ""
               }`}
             >
-              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral font-semibold">
-                {f.k}
+              <p
+                className="font-serif text-3xl sm:text-4xl font-semibold text-coral leading-none [word-break:keep-all]"
+                style={{ letterSpacing: "-0.02em" }}
+              >
+                {f.fig}
               </p>
-              <p className="text-sm leading-relaxed text-sumi-deep">{f.v}</p>
+              <p className="text-base sm:text-lg leading-relaxed text-cream/85 [word-break:keep-all]">
+                {f.body}
+              </p>
             </div>
           ))}
         </div>
 
         {/* 出典 */}
-        <p className="mt-8 sm:mt-10 text-xs text-sumi/55 max-w-3xl">
+        <p className="mt-16 text-sm leading-relaxed text-cream/45 max-w-3xl mx-auto text-center sm:text-left">
           出典：Anthropic 公式発表（2026 年）、PwC / JPMorgan 公式リリース。
           本セミナーは Anthropic 公式イベントではありません — 同社の技術を独立して教える立場で構成しています。
         </p>

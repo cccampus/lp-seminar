@@ -3,6 +3,7 @@
  * - <details> + <summary> でアコーディオン（JS 不要、a11y 良好）
  * - 質問は経営者・意思決定者目線で 6 項目
  */
+import DarkSection from "@/components/ui/DarkSection";
 
 type Item = { q: string; a: React.ReactNode };
 
@@ -57,13 +58,12 @@ const faqs: Item[] = [
     ),
   },
   {
-    q: "Claude Code Campus のコース受講と何が違いますか？",
+    q: "当日の資料はもらえますか？",
     a: (
       <>
-        本セミナーは <span className="font-medium">2 時間の入口</span>
-        です。深く使いこなしたい方向けには、別途
-        <span className="font-medium">本コース</span>（カリキュラム形式）
-        をご用意しています。セミナー末尾でご案内します。
+        当日使用するスライドの PDF と、
+        <span className="font-medium">Claude Code 導入チェックリスト</span>
+        を後日配布します。社内共有や、導入判断の材料としてお使いいただけます。
       </>
     ),
   },
@@ -71,10 +71,11 @@ const faqs: Item[] = [
 
 export default function FAQ() {
   return (
-    <section
+    <DarkSection
       id="faq"
       aria-labelledby="faq-heading"
-      className="relative w-full bg-cream-warm text-sumi-deep py-24 sm:py-32 px-6"
+      bgImage="/images/backdrop/bd_a.jpg"
+      className="py-24 sm:py-32 px-6"
     >
       <div className="max-w-3xl mx-auto">
         {/* eyebrow */}
@@ -90,12 +91,12 @@ export default function FAQ() {
           よくある<span className="text-coral">ご質問</span>
         </h2>
 
-        <p className="mt-6 text-base leading-relaxed text-sumi/75 text-center max-w-xl mx-auto">
+        <p className="mt-6 text-base leading-relaxed text-cream/75 text-center max-w-xl mx-auto">
           ここにない疑問は、申込フォームの「事前質問」欄からどうぞ
         </p>
 
         {/* リスト */}
-        <ul className="mt-16 divide-y divide-sumi/15 border-t border-b border-sumi/15">
+        <ul className="mt-16 divide-y divide-sumi/15 border-t border-b border-cream/15">
           {faqs.map((f, i) => (
             <li key={i}>
               <details className="group py-6">
@@ -113,7 +114,7 @@ export default function FAQ() {
                     +
                   </span>
                 </summary>
-                <div className="mt-4 pl-14 pr-8 text-sm sm:text-base leading-relaxed text-sumi/85">
+                <div className="mt-4 pl-14 pr-8 text-sm sm:text-base leading-relaxed text-cream/85">
                   {f.a}
                 </div>
               </details>
@@ -121,6 +122,6 @@ export default function FAQ() {
           ))}
         </ul>
       </div>
-    </section>
+    </DarkSection>
   );
 }

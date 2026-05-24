@@ -1,4 +1,3 @@
-import Image from "next/image";
 
 /**
  * Footer — スリム構成
@@ -26,27 +25,7 @@ export default function Footer() {
       />
 
       <div className="relative mx-auto flex max-w-5xl flex-col">
-        {/* ブランドエリア（タグライン部分は本番公開前まで非表示）— ロゴだけ控えめに */}
-        <div className="flex flex-col items-center gap-4 text-center">
-          <a
-            href="#"
-            className="group relative inline-flex items-center justify-center"
-            aria-label="Claude Code Campus"
-          >
-            <Image
-              src="/assets/ccc_logo_4C.png"
-              alt="Claude Code Campus"
-              width={144}
-              height={144}
-              className="relative h-10 w-10 object-contain sm:h-12 sm:w-12 opacity-70"
-            />
-          </a>
-        </div>
-
-        {/* 区切り */}
-        <div className="my-6 h-px w-full bg-cream/10 sm:my-8" aria-hidden />
-
-        {/* ユーティリティ行 */}
+        {/* ユーティリティ行（CCC ロゴのブランドエリアは削除） */}
         <div className="flex flex-col items-center gap-5 sm:flex-row sm:justify-between">
           <nav aria-label="Footer">
             <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-cream/70 sm:justify-start">

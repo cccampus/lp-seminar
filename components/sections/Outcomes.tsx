@@ -3,6 +3,8 @@
  * Stripe Sessions 方式: "After this 90min, you will be able to..." の3点 Outcome
  * 経営者は「思想」ではなく「判断の手応え」を持ち帰りたい
  */
+import DarkSection from "@/components/ui/DarkSection";
+import RevealHeading from "@/components/ui/RevealHeading";
 
 type Outcome = {
   k: string;
@@ -48,10 +50,11 @@ const outcomes: Outcome[] = [
 
 export default function Outcomes() {
   return (
-    <section
+    <DarkSection
       id="outcomes"
       aria-labelledby="outcomes-heading"
-      className="relative w-full bg-cream text-sumi-deep py-24 sm:py-32 px-6"
+      bgImage="/images/backdrop/bd_a.jpg"
+      className="py-24 sm:py-32 px-6"
     >
       <div className="max-w-6xl mx-auto">
         {/* eyebrow */}
@@ -60,17 +63,18 @@ export default function Outcomes() {
         </p>
 
         {/* === コアメッセージ === */}
-        <h2
+        <RevealHeading
+          as="h2"
           id="outcomes-heading"
           className="font-serif text-3xl sm:text-5xl md:text-6xl font-semibold leading-[1.15] text-center max-w-4xl mx-auto"
           style={{ letterSpacing: "-0.01em" }}
         >
-          何の<span className="text-sumi/50">ツールを使うか</span>じゃなくて、
+          何の<span className="text-cream/50">ツールを使うか</span>じゃなくて、
           <br />
           <span className="text-coral">どう使うか</span> です。
-        </h2>
+        </RevealHeading>
 
-        <p className="mt-8 text-base leading-relaxed text-sumi/75 text-center max-w-2xl mx-auto">
+        <p className="mt-8 text-base leading-relaxed text-cream/75 text-center max-w-2xl mx-auto">
           ツール紹介で 2 時間使うことはしません。
           <br className="hidden sm:block" />
           「自社の業務に、AI をどう乗せるか」 — その判断軸を持ち帰っていただきます。
@@ -89,7 +93,7 @@ export default function Outcomes() {
               </p>
 
               {/* タグ */}
-              <p className="mt-5 font-mono text-[10px] tracking-[0.4em] uppercase text-sumi/55">
+              <p className="mt-5 font-mono text-[10px] tracking-[0.4em] uppercase text-cream/55">
                 {o.k}
               </p>
 
@@ -99,13 +103,13 @@ export default function Outcomes() {
               </h3>
 
               {/* 本文 */}
-              <p className="mt-4 text-sm sm:text-base leading-relaxed text-sumi/80">
+              <p className="mt-4 text-sm sm:text-base leading-relaxed text-cream/80">
                 {o.body}
               </p>
             </article>
           ))}
         </div>
       </div>
-    </section>
+    </DarkSection>
   );
 }

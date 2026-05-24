@@ -6,7 +6,6 @@ import WhyThis from "@/components/sections/WhyThis";
 import Speaker from "@/components/sections/Speaker";
 import Detail from "@/components/sections/Detail";
 import FAQ from "@/components/sections/FAQ";
-import BeforeRegister from "@/components/sections/BeforeRegister";
 import NextSession from "@/components/sections/NextSession";
 import FinalCTA from "@/components/sections/FinalCTA";
 import Footer from "@/components/sections/Footer";
@@ -34,7 +33,6 @@ export default function CinematicPage() {
       <Speaker />
       <Detail />
       <FAQ />
-      <BeforeRegister />
       <NextSession />
       <FinalCTA />
       <Footer />
