@@ -12,14 +12,13 @@ import NextSession from "@/components/sections/NextSession";
 import FinalCTA from "@/components/sections/FinalCTA";
 import Footer from "@/components/sections/Footer";
 import MobileStickyCTA from "@/components/MobileStickyCTA";
-import VariantSwitcher from "@/components/VariantSwitcher";
 
 /**
- * Claude Code Campus 第 1 回 公開セミナー LP（本番 = cinematic V2 採用）
+ * Claude Code Campus 公開セミナー LP（本番）
  *
- * 最終デザイン: D (HeroCinematicV2) — dark stage + 巨大背景タイポ parallax
- *   + 文字 char reveal + glow orbs + 床反射。GPT Image 背景統合。
- * 旧バリアント /a /b /c /d は参考用に残置（VariantSwitcher で比較可）。
+ * デザイン: dark cinematic（reel 準拠）。HeroCinematicV2 + 全セクションダークステージ。
+ * 比較バリアント（旧 /a /b /c /d + VariantSwitcher）は `variants` ブランチに分離。
+ * main は共有用のクリーンな本番のみ。
  */
 export default function Home() {
   return (
@@ -37,7 +36,6 @@ export default function Home() {
       <NextSession />
       <FinalCTA />
       <Footer />
-      <VariantSwitcher current="default" />
       <MobileStickyCTA />
     </>
   );
