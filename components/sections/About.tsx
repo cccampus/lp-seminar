@@ -87,12 +87,9 @@ export default function About() {
           <span className="text-coral">「使う側」</span>へ
         </GlitchText>
 
-        {/* manifesto リード（ドロップキャップ） */}
-        <p className="mt-10 font-serif text-lg sm:text-xl leading-[1.95] text-cream/85">
-          <span className="float-left mr-3 font-bold text-coral-light text-[3.2em] leading-[0.74]">
-            C
-          </span>
-          hatGPT を業務に使い始めて、もう 2 年。多くの会社が「触ってはいる」。
+        {/* manifesto リード（ドロップキャップは左はみ出しが出るため廃止・通常段落に） */}
+        <p className="mt-10 max-w-2xl mx-auto font-serif text-lg sm:text-xl leading-[1.95] text-cream/85 text-center">
+          ChatGPT を業務に使い始めて、もう 2 年。多くの会社が「触ってはいる」。
           いま本当に問われているのは、
           <span className="text-coral-light font-medium">使いこなす力</span> です。
           世界では、その差がもう数字になって表れはじめています。
