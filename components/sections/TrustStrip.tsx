@@ -27,8 +27,8 @@ export default function TrustStrip() {
       aria-label="Claude Code に関する信頼情報"
       className="relative w-full overflow-hidden bg-sumi-deep text-cream isolate py-24 sm:py-32 px-6"
     >
-      {/* 背景: enterprise cinematic（低 opacity） */}
-      <div className="absolute inset-0 pointer-events-none opacity-30" aria-hidden>
+      {/* 背景: enterprise cinematic（もう少し見せる） */}
+      <div className="absolute inset-0 pointer-events-none opacity-55" aria-hidden>
         <Image
           src="/images/trust/enterprise_bg.jpg"
           alt=""
@@ -37,12 +37,12 @@ export default function TrustStrip() {
           className="object-cover"
         />
       </div>
-      {/* コントラスト確保の暗幕 */}
+      {/* コントラスト確保の暗幕（画像が見える程度に薄め） */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(31,31,31,0.92) 0%, rgba(31,31,31,0.72) 50%, rgba(31,31,31,0.92) 100%)",
+            "linear-gradient(to bottom, rgba(31,31,31,0.82) 0%, rgba(31,31,31,0.5) 50%, rgba(31,31,31,0.85) 100%)",
         }}
         aria-hidden
       />

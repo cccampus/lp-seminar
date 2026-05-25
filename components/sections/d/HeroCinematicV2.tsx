@@ -314,22 +314,7 @@ export default function HeroCinematicV2() {
         }}
       />
 
-      {/* ============================================================
-          UI - Top meta bar
-         ============================================================ */}
-      <motion.div
-        initial={prefersReduced ? false : { opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.8, ease: easeOutQuint }}
-        className="absolute top-6 sm:top-8 left-0 right-0 flex justify-between items-center px-6 sm:px-10 z-30"
-      >
-        <p className="font-mono text-[9px] sm:text-[10px] tracking-[0.32em] uppercase text-coral">
-          ── 2026.05.31&nbsp;SUN / ONLINE
-        </p>
-        <p className="hidden sm:block font-mono text-[10px] tracking-[0.32em] uppercase text-cream/45">
-          Claude Code Campus
-        </p>
-      </motion.div>
+      {/* 上部メタバーは廃止（固定 Header に統合。日付は変動しうるため出さない） */}
 
       {/* ============================================================
           CENTER - Main content（mouse parallax + scroll fade）

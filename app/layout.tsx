@@ -8,6 +8,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "@/components/providers/LenisProvider";
+import Header from "@/components/Header";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -77,7 +78,10 @@ export default function RootLayout({
       className={`${poppins.variable} ${notoSansJP.variable} ${notoSerifJP.variable} ${lora.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream text-sumi-deep overflow-x-hidden">
-        <LenisProvider>{children}</LenisProvider>
+        <LenisProvider>
+          <Header />
+          {children}
+        </LenisProvider>
       </body>
     </html>
   );
