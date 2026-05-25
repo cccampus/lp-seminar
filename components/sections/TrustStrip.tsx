@@ -6,7 +6,7 @@
  */
 import Image from "next/image";
 
-const FACTS = [
+const FACTS: { fig: string; body: string; chart?: boolean }[] = [
   {
     fig: "Anthropic 公式",
     body: "Claude Code は、Anthropic が提供する開発エージェント。",
@@ -14,12 +14,48 @@ const FACTS = [
   {
     fig: "$8.9B+",
     body: "Anthropic の年間収益（2026 推計・4 か月で 2.5 倍）。",
+    chart: true,
   },
   {
     fig: "Fortune 500",
     body: "PwC・JPMorgan 他、米国大手の業務に組み込み済み。",
   },
 ];
+
+/** 収益 2.5 倍の成長を示す coral のミニ・データビズ（画像でなく code 製＝正確・鮮明） */
+function GrowthChart() {
+  return (
+    <svg
+      viewBox="0 0 200 64"
+      className="mt-1 h-12 w-full max-w-[200px] mx-auto sm:mx-0"
+      aria-hidden
+      preserveAspectRatio="none"
+    >
+      <defs>
+        <linearGradient id="ts-grow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#d97757" stopOpacity="0.35" />
+          <stop offset="100%" stopColor="#d97757" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      {/* 面 */}
+      <path
+        d="M4 54 L68 48 L130 28 L196 8 L196 64 L4 64 Z"
+        fill="url(#ts-grow)"
+      />
+      {/* 線 */}
+      <path
+        d="M4 54 L68 48 L130 28 L196 8"
+        fill="none"
+        stroke="#d97757"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {/* 終点 */}
+      <circle cx="196" cy="8" r="3.5" fill="#e89478" />
+    </svg>
+  );
+}
 
 export default function TrustStrip() {
   return (
@@ -57,9 +93,9 @@ export default function TrustStrip() {
       />
 
       <div className="relative z-10 max-w-5xl mx-auto">
-        <p className="font-mono text-[11px] tracking-[0.4em] uppercase text-coral text-center mb-14 sm:mb-16">
-          世界での、位置づけ
-        </p>
+        <h2 className="font-serif text-2xl sm:text-4xl font-semibold leading-tight text-center text-cream mb-12 sm:mb-16 [word-break:keep-all]">
+          世界での、<span className="text-coral">位置づけ</span>
+        </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-10">
           {FACTS.map((f, i) => (
@@ -78,6 +114,7 @@ export default function TrustStrip() {
               <p className="text-base sm:text-lg leading-relaxed text-cream/85 [word-break:keep-all]">
                 {f.body}
               </p>
+              {f.chart && <GrowthChart />}
             </div>
           ))}
         </div>

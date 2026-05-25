@@ -12,8 +12,9 @@
  * - 画像は将来 Takka の実成果物スクショに差し替え（現状は cinematic プレースホルダ）
  */
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import GlitchText from "@/components/ui/GlitchText";
 import StageScene from "@/components/ui/StageScene";
 
@@ -56,9 +57,84 @@ const ITEMS: Item[] = [
 
 const easeOutQuint: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-export default function Showcase() {
+/** 成果物 1 点。スクロール parallax（画像が背景より速く動く＝奥行き）+ reveal */
+function ShowcaseItem({ it }: { it: Item }) {
+  const ref = useRef<HTMLElement>(null);
   const prefersReduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const imgY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
 
+  return (
+    <motion.article
+      ref={ref}
+      initial={prefersReduced ? false : { opacity: 0, y: 60, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+      transition={{ duration: 1.0, ease: easeOutQuint }}
+      className="relative"
+    >
+      {/* 主役画像 — 全縁を闇へ溶かし（箱に見せない）、画像は parallax で奥行き */}
+      <div
+        className="relative mx-auto w-full max-w-3xl aspect-[3/2] overflow-hidden"
+        style={{
+          WebkitMaskImage:
+            "radial-gradient(ellipse 82% 86% at 50% 44%, #000 48%, transparent 100%)",
+          maskImage:
+            "radial-gradient(ellipse 82% 86% at 50% 44%, #000 48%, transparent 100%)",
+        }}
+      >
+        <motion.div
+          style={prefersReduced ? undefined : { y: imgY }}
+          className="absolute inset-[-8%]"
+        >
+          <Image
+            src={it.src}
+            alt={it.alt}
+            fill
+            sizes="(min-width: 768px) 768px, 100vw"
+            className="object-cover"
+            loading="lazy"
+          />
+        </motion.div>
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to bottom, transparent 60%, rgba(31,31,31,0.9) 100%)",
+          }}
+          aria-hidden
+        />
+      </div>
+
+      {/* ラベル（reel の製品プレート相当・最小文字） */}
+      <div className="mt-6 flex items-baseline justify-center gap-5">
+        <span
+          className="font-serif text-4xl sm:text-5xl font-semibold text-coral leading-none"
+          style={{ letterSpacing: "-0.04em" }}
+        >
+          {it.n}
+        </span>
+        <div className="text-left">
+          <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-cream/55">
+            {it.label}
+          </p>
+          <p className="mt-2 font-serif text-lg sm:text-2xl text-cream leading-snug [word-break:keep-all]">
+            {it.line}
+          </p>
+          <p className="mt-2.5 inline-flex items-center gap-2.5 font-mono text-[10px] tracking-[0.2em] uppercase text-coral-light">
+            <span className="h-[5px] w-[5px] rounded-full bg-coral" aria-hidden />
+            {it.use}
+          </p>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
+export default function Showcase() {
   return (
     <StageScene
       id="showcase"
@@ -85,68 +161,8 @@ export default function Showcase() {
 
         {/* === 成果物 showcase === */}
         <div className="mt-20 space-y-24 sm:space-y-32">
-          {ITEMS.map((it, i) => (
-            <motion.article
-              key={it.n}
-              initial={
-                prefersReduced ? false : { opacity: 0, y: 60, scale: 0.97 }
-              }
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-              transition={{ duration: 1.0, ease: easeOutQuint }}
-              className="relative"
-            >
-              {/* 主役画像（スポットの当たる被写体）— 四角い箱に見えないよう全縁を section の闇へ溶かす */}
-              <div
-                className="relative mx-auto w-full max-w-3xl aspect-[3/2]"
-                style={{
-                  WebkitMaskImage:
-                    "radial-gradient(ellipse 82% 86% at 50% 44%, #000 48%, transparent 100%)",
-                  maskImage:
-                    "radial-gradient(ellipse 82% 86% at 50% 44%, #000 48%, transparent 100%)",
-                }}
-              >
-                <Image
-                  src={it.src}
-                  alt={it.alt}
-                  fill
-                  sizes="(min-width: 768px) 768px, 100vw"
-                  className="object-cover"
-                  loading="lazy"
-                />
-                {/* 下端をさらに sumi へ（床と一体化） */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background:
-                      "linear-gradient(to bottom, transparent 60%, rgba(31,31,31,0.9) 100%)",
-                  }}
-                  aria-hidden
-                />
-              </div>
-
-              {/* ラベル（reel の製品プレート相当・最小文字） */}
-              <div className="mt-6 flex items-baseline justify-center gap-5">
-                <span
-                  className="font-serif text-4xl sm:text-5xl font-semibold text-coral leading-none"
-                  style={{ letterSpacing: "-0.04em" }}
-                >
-                  {it.n}
-                </span>
-                <div className="text-left">
-                  <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-cream/55">
-                    {it.label}
-                  </p>
-                  <p className="mt-2 font-serif text-lg sm:text-2xl text-cream leading-snug [word-break:keep-all]">
-                    {it.line}
-                  </p>
-                  <p className="mt-2 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] uppercase text-coral-light">
-                    <span className="h-px w-4 bg-coral/60" aria-hidden />
-                    {it.use}
-                  </p>
-                </div>
-              </div>
-            </motion.article>
+          {ITEMS.map((it) => (
+            <ShowcaseItem key={it.n} it={it} />
           ))}
         </div>
 
