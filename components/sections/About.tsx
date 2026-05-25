@@ -89,9 +89,13 @@ export default function About() {
 
         {/* manifesto リード（ドロップキャップは左はみ出しが出るため廃止・通常段落に） */}
         <p className="mt-10 max-w-2xl mx-auto font-serif text-lg sm:text-xl leading-[1.95] text-cream/85 text-center">
-          ChatGPT を業務に使い始めて、もう 2 年。多くの会社が「触ってはいる」。
+          ChatGPT を業務に使い始めて、もう 2 年。
+          <br />
+          多くの会社が「触ってはいる」。
+          <br />
           いま本当に問われているのは、
           <span className="text-coral-light font-medium">使いこなす力</span> です。
+          <br />
           世界では、その差がもう数字になって表れはじめています。
         </p>
 
