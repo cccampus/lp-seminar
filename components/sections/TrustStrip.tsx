@@ -119,8 +119,26 @@ export default function TrustStrip() {
           ))}
         </div>
 
+        {/* 導入・関連企業（cream ワードマーク。公式ロゴ素材があれば差し替え可） */}
+        <div className="mt-16 sm:mt-20 border-t border-cream/10 pt-12">
+          <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-cream/40 text-center mb-8">
+            業務への組み込みが進む企業
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 sm:gap-x-14">
+            {["Anthropic", "PwC", "J.P. Morgan", "Goldman Sachs"].map((n) => (
+              <span
+                key={n}
+                className="font-serif text-xl sm:text-2xl text-cream/65 transition-colors duration-200 hover:text-cream/90"
+                style={{ letterSpacing: "0.01em" }}
+              >
+                {n}
+              </span>
+            ))}
+          </div>
+        </div>
+
         {/* 出典 */}
-        <p className="mt-16 text-sm leading-relaxed text-cream/45 max-w-3xl mx-auto text-center sm:text-left">
+        <p className="mt-14 text-sm leading-relaxed text-cream/45 max-w-3xl mx-auto text-center sm:text-left">
           出典：Anthropic 公式発表（2026 年）、PwC / JPMorgan 公式リリース。
           本セミナーは Anthropic 公式イベントではありません — 同社の技術を独立して教える立場で構成しています。
         </p>
