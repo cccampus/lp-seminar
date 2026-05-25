@@ -143,10 +143,6 @@ export default function Showcase() {
       className="py-28 sm:py-40 px-6"
     >
       <div className="max-w-5xl mx-auto">
-        {/* eyebrow + 見出し */}
-        <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-6">
-          Claude Code がつくるもの
-        </p>
         <GlitchText
           as="h2"
           id="showcase-heading"

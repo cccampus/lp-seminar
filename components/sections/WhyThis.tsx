@@ -34,11 +34,6 @@ export default function WhyThis() {
       className="py-24 sm:py-32 px-6"
     >
       <div className="max-w-5xl mx-auto">
-        {/* eyebrow */}
-        <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-4">
-          — Why this seminar, specifically —
-        </p>
-
         {/* 主見出し */}
         <RevealHeading
           as="h2"

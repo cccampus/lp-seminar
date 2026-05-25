@@ -78,10 +78,6 @@ export default function FAQ() {
       className="py-24 sm:py-32 px-6"
     >
       <div className="max-w-3xl mx-auto">
-        {/* eyebrow */}
-        <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-4">
-          — FAQ —
-        </p>
 
         {/* 主見出し */}
         <h2

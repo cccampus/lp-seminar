@@ -27,9 +27,6 @@ export default function NextSession() {
       className="py-20 sm:py-24 px-6 border-t border-cream/10"
     >
       <div className="max-w-4xl mx-auto">
-        <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-4">
-          開催スケジュール
-        </p>
         <h2 className="font-serif text-2xl sm:text-4xl font-semibold leading-tight text-center max-w-2xl mx-auto [word-break:keep-all]">
           <span className="text-coral">順次</span>、開催枠を増やしています
         </h2>

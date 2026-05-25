@@ -125,7 +125,7 @@ export default function TrustStrip() {
             業務への組み込みが進む企業
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 sm:gap-x-14">
-            {["Anthropic", "PwC", "J.P. Morgan", "Goldman Sachs"].map((n) => (
+            {["Anthropic", "PwC", "J.P. Morgan", "Goldman Sachs", "日立", "楽天"].map((n) => (
               <span
                 key={n}
                 className="font-serif text-xl sm:text-2xl text-cream/65 transition-colors duration-200 hover:text-cream/90"

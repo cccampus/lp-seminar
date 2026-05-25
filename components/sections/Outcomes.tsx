@@ -57,10 +57,6 @@ export default function Outcomes() {
       className="py-24 sm:py-32 px-6"
     >
       <div className="max-w-6xl mx-auto">
-        {/* eyebrow */}
-        <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-4">
-          本セミナーで学べること
-        </p>
 
         {/* === コアメッセージ === */}
         <RevealHeading

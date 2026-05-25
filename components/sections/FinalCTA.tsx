@@ -60,10 +60,6 @@ export default function FinalCTA() {
       />
 
       <div className="relative max-w-3xl mx-auto text-center">
-        {/* eyebrow */}
-        <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-6">
-          申込
-        </p>
 
         {/* 主見出し */}
         <h2

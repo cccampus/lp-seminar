@@ -75,10 +75,6 @@ export default function About() {
       className="py-28 sm:py-40 px-6"
     >
       <div className="max-w-3xl mx-auto">
-        {/* eyebrow */}
-        <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-6">
-          いま、何が起きているか
-        </p>
 
         {/* 主見出し — glitch reveal */}
         <GlitchText
@@ -116,7 +112,7 @@ export default function About() {
                 {f.n}
               </p>
               <div>
-                <h3 className="font-serif text-xl sm:text-2xl font-semibold leading-snug text-cream [word-break:keep-all]">
+                <h3 className="font-serif text-xl sm:text-2xl font-semibold leading-snug text-cream">
                   {f.title}
                 </h3>
                 <p className="mt-3 text-sm sm:text-base leading-relaxed text-cream/70 max-w-2xl">

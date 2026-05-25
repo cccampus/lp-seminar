@@ -327,15 +327,6 @@ export default function HeroCinematicV2() {
         }
         className="relative z-20 w-full h-full flex flex-col items-center justify-center text-center px-6"
       >
-        <motion.p
-          initial={prefersReduced ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.8, ease: easeOutQuint }}
-          className="font-mono text-[10px] sm:text-[11px] tracking-[0.48em] uppercase text-coral/85 mb-6 sm:mb-8"
-        >
-          公&nbsp;開&nbsp;セ&nbsp;ミ&nbsp;ナ&nbsp;ー
-        </motion.p>
-
         {/* キャッチコピー（positioning）。keep-all + 意味の切れ目だけで改行（孤立行禁止） */}
         <h1
           ref={titleRef}

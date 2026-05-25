@@ -19,9 +19,6 @@ export default function Detail() {
       className="py-24 sm:py-32 px-6"
     >
       <div className="max-w-3xl mx-auto">
-        <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-4">
-          開催情報
-        </p>
         <h2
           id="detail-heading"
           className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center"

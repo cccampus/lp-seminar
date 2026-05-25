@@ -80,11 +80,6 @@ export default function Speaker() {
       className="py-24 sm:py-32 px-6"
     >
       <div className="relative max-w-5xl mx-auto">
-        {/* eyebrow */}
-        <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral text-center mb-4">
-          話す人
-        </p>
-
         {/* 主見出し */}
         <h2
           id="speaker-heading"
