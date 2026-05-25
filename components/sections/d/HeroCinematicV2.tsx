@@ -33,7 +33,7 @@ import { SplitText } from "gsap/SplitText";
 // SplitText 登録（モジュールトップで一度だけ）。ScrollTrigger は LenisProvider 側で登録済み
 gsap.registerPlugin(SplitText);
 
-const FORM_URL = "https://forms.google.com/CCC-SEMINAR-VOL1"; // 仮
+const FORM_URL = "#apply";
 
 export default function HeroCinematicV2() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -362,8 +362,6 @@ export default function HeroCinematicV2() {
 
         <motion.a
           href={FORM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
           initial={prefersReduced ? false : { opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 2.3, duration: 0.7, ease: easeOutQuint }}
@@ -478,7 +476,7 @@ export default function HeroCinematicV2() {
         transition={{ delay: 2.5, duration: 0.8 }}
         className="absolute bottom-6 sm:bottom-8 right-6 sm:right-10 z-30 hidden sm:block font-mono text-[10px] tracking-[0.26em] uppercase text-cream/45"
       >
-        ¥&nbsp;5,000&nbsp;/&nbsp;Limited&nbsp;30
+        ¥&nbsp;5,000&nbsp;tax&nbsp;excl.&nbsp;/&nbsp;Limited&nbsp;30
       </motion.div>
     </section>
   );

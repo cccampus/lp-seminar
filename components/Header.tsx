@@ -12,7 +12,7 @@
 import { useState } from "react";
 import { useLenis } from "lenis/react";
 
-const FORM_URL = "https://forms.google.com/CCC-SEMINAR-VOL1"; // 仮
+const FORM_URL = "#apply";
 
 const NAV = [
   { label: "なぜ今", id: "about" },
@@ -75,8 +75,7 @@ export default function Header() {
         {/* 右: 申込 CTA */}
         <a
           href={FORM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={goTo("apply")}
           className="inline-flex items-center gap-2 rounded-full bg-coral px-4 py-2 font-mono text-[10px] tracking-[0.2em] uppercase text-cream transition-transform duration-200 hover:scale-[1.04] sm:px-5"
         >
           申込

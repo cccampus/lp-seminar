@@ -8,7 +8,6 @@
  */
 export default function Footer() {
   const links = [
-    { label: "プライバシーポリシー", href: "/privacy" },
     { label: "特定商取引法", href: "/terms" },
     { label: "お問い合わせ", href: "/contact" },
   ];

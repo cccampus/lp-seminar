@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
  *   - editorial を損なわない最小限の bg-cream + border-coral
  */
 
-const FORM_URL = "https://forms.google.com/CCC-SEMINAR-VOL1";
+const FORM_URL = "#apply";
 
 export default function MobileStickyCTA() {
   const [visible, setVisible] = useState(false);
@@ -46,15 +46,13 @@ export default function MobileStickyCTA() {
             5/31 (日) 11:00 · Zoom
           </span>
           <span className="font-serif text-base font-semibold text-sumi-deep mt-0.5">
-            ¥5,000 <span className="text-xs font-normal text-sumi/55">/ 先着 30 名</span>
+            ¥5,000 <span className="text-xs font-normal text-sumi/55">税抜 / 先着 30 名</span>
           </span>
         </div>
 
         {/* 右: CTA */}
         <a
           href={FORM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
           className="shrink-0 inline-flex items-center gap-2 px-5 py-3 bg-coral text-cream font-medium text-sm rounded-full
             hover:bg-coral-deep transition-colors duration-200 shadow-[0_4px_14px_rgba(217,119,87,0.35)]"
         >

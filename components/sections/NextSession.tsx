@@ -69,7 +69,7 @@ export default function NextSession() {
               </p>
               <p className="mt-3 font-serif text-lg text-cream/80">{s.time}</p>
               <p className="mt-1 font-mono text-[10px] tracking-[0.3em] uppercase text-cream/55">
-                Online · Zoom · ¥5,000
+                Online · Zoom · ¥5,000（税抜）
               </p>
             </div>
           ))}

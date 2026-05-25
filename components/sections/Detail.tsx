@@ -56,8 +56,11 @@ export default function Detail() {
                 Price
               </dt>
               <dd className="font-serif text-xl font-semibold">
-                ¥5,000 <span className="text-sm font-normal text-cream/65">（税込）</span>
+                ¥5,000 <span className="text-sm font-normal text-cream/65">（税抜）</span>
               </dd>
+              <p className="mt-1.5 text-xs text-cream/55">
+                別途消費税を申し受けます
+              </p>
             </div>
             <div>
               <dt className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral font-semibold mb-1.5">

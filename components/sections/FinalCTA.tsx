@@ -1,24 +1,52 @@
+"use client";
+
 /**
- * FinalCTA — 最後の申込導線（二段階）
- * - 主 CTA: 個人申込 ¥5,000
+ * FinalCTA — 最後の申込導線（Stripe Checkout 連携）
+ * - 申込ボタン → 同意チェック必須 → POST /api/checkout → Stripe Checkout へ
  * - 副 CTA: 法人 2 名以上の相談（mailto）
- *   → 「法人で参加できる」選択肢を見せるだけで価格感が変わる（リサーチ agent 指摘）
  * - Hero と対の dark セクション + cinematic 背景画像 + ambient coral 光 + grain
  */
 import Image from "next/image";
+import { useState } from "react";
 
-const GOOGLE_FORM_URL = "https://forms.google.com/CCC-SEMINAR-VOL1"; // 仮
-const CORPORATE_MAIL = "hello@cccampus.jp";
+const CORPORATE_MAIL = "noreply@isshin-ai.co.jp";
 
 export default function FinalCTA() {
+  const [agreed, setAgreed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleApply() {
+    setError(null);
+    if (!agreed) {
+      setError("特定商取引法・返金不可条件への同意が必要です");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ agreedTerms: true }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || "決済セッションの生成に失敗しました");
+      }
+      window.location.href = data.url;
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "エラーが発生しました");
+      setSubmitting(false);
+    }
+  }
+
   return (
     <section
       id="apply"
       aria-labelledby="apply-heading"
       className="relative w-full bg-sumi-deep text-cream overflow-hidden py-32 sm:py-40 px-6"
     >
-      {/* cinematic 背景画像（Krea Flux 1.1 Pro 生成 / 右上 coral spotlight + 床反射）
-          Hero と対の dark stage。sumi-deep 上に opacity で馴染ませる */}
+      {/* cinematic 背景画像 */}
       <div className="absolute inset-0 pointer-events-none opacity-60" aria-hidden>
         <Image
           src="/images/finalcta/cinematic_cta_bg.jpg"
@@ -29,7 +57,6 @@ export default function FinalCTA() {
         />
       </div>
 
-      {/* コントラスト確保: 中央を僅かに沈める overlay（テキスト可読性） */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -39,7 +66,6 @@ export default function FinalCTA() {
         aria-hidden
       />
 
-      {/* ambient コーラル光（左下のみ — 右上は背景画像の spotlight に委ねる） */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -49,7 +75,6 @@ export default function FinalCTA() {
         aria-hidden
       />
 
-      {/* Grain */}
       <div
         className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-[0.04]"
         style={{
@@ -60,8 +85,6 @@ export default function FinalCTA() {
       />
 
       <div className="relative max-w-3xl mx-auto text-center">
-
-        {/* 主見出し */}
         <h2
           id="apply-heading"
           className="font-serif text-3xl sm:text-5xl font-semibold leading-tight"
@@ -74,15 +97,15 @@ export default function FinalCTA() {
         <p className="mt-8 text-base sm:text-lg leading-relaxed text-cream/75 max-w-xl mx-auto">
           先着 30 名。
           <br className="hidden sm:block" />
-          申込確認後、Zoom URL と事前資料をお送りします
+          決済完了後、Zoom URL と事前資料をご登録メールへお送りします
         </p>
 
-        {/* メタ情報 — 小さい coral ラベル + 大きな serif 値で可読性UP */}
+        {/* メタ情報 */}
         <div className="mt-14 grid grid-cols-1 sm:grid-cols-3 max-w-2xl mx-auto divide-y sm:divide-y-0 sm:divide-x divide-cream/12">
           {[
             { k: "DATE", v: "2026.05.31", sub: "日" },
             { k: "TIME", v: "11:00–13:00", sub: "2時間" },
-            { k: "PRICE", v: "¥5,000", sub: "税込" },
+            { k: "PRICE", v: "¥5,000", sub: "税抜・別途消費税" },
           ].map((m) => (
             <div key={m.k} className="py-5 sm:py-0 sm:px-6 flex flex-col items-center gap-2.5">
               <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral font-semibold">
@@ -101,20 +124,67 @@ export default function FinalCTA() {
           ))}
         </div>
 
+        {/* === 同意チェック === */}
+        <div className="mt-14 max-w-xl mx-auto">
+          <label
+            htmlFor="agree-terms"
+            className="flex items-start gap-3 text-left cursor-pointer group"
+          >
+            <input
+              id="agree-terms"
+              type="checkbox"
+              checked={agreed}
+              onChange={(e) => {
+                setAgreed(e.target.checked);
+                if (e.target.checked) setError(null);
+              }}
+              className="mt-1 h-5 w-5 shrink-0 appearance-none rounded border-2 border-cream/40 bg-transparent
+                checked:bg-coral checked:border-coral
+                focus-visible:ring-2 focus-visible:ring-coral-light focus-visible:ring-offset-2 focus-visible:ring-offset-sumi-deep
+                relative cursor-pointer
+                checked:after:content-['✓'] checked:after:absolute checked:after:inset-0 checked:after:flex
+                checked:after:items-center checked:after:justify-center checked:after:text-cream checked:after:text-sm checked:after:font-bold"
+            />
+            <span className="text-sm text-cream/85 leading-relaxed">
+              <a
+                href="/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-coral hover:text-coral-light underline underline-offset-2"
+              >
+                特定商取引法に基づく表記
+              </a>
+              {" "}を確認し、
+              <strong className="text-cream font-semibold">
+                返金不可・キャンセル不可
+              </strong>
+              の条件に同意します
+            </span>
+          </label>
+        </div>
+
+        {/* エラー表示 */}
+        {error && (
+          <p className="mt-5 text-sm text-coral-light max-w-xl mx-auto">
+            {error}
+          </p>
+        )}
+
         {/* === 主 CTA === */}
-        <a
-          href={GOOGLE_FORM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-12 inline-flex items-center gap-3 px-10 py-4 bg-coral text-cream font-medium text-base rounded-full
-            hover:bg-coral-deep transition-colors duration-200 shadow-[0_12px_36px_rgba(217,119,87,0.4)]"
+        <button
+          type="button"
+          onClick={handleApply}
+          disabled={submitting}
+          className="mt-8 inline-flex items-center gap-3 px-10 py-4 bg-coral text-cream font-medium text-base rounded-full
+            hover:bg-coral-deep transition-colors duration-200 shadow-[0_12px_36px_rgba(217,119,87,0.4)]
+            disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          個人で参加する
+          {submitting ? "決済画面へ移動中…" : "申し込む"}
           <span className="font-mono text-xs tracking-[0.2em]">↗</span>
-        </a>
+        </button>
 
         <p className="mt-5 font-mono text-[10px] tracking-[0.2em] uppercase text-cream/45">
-          Google フォームでお申し込みください
+          Stripe 安全決済 · クレジットカード対応
         </p>
 
         {/* === 副 CTA — 法人2名以上 === */}

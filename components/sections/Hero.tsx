@@ -4,7 +4,7 @@
  * - 上に grain + 暗黒オーバーレイで読みやすさ確保
  * - 中央: 初回セミナーの位置づけ + タイトル + 日時 + フォーム CTA
  */
-const GOOGLE_FORM_URL = "https://forms.google.com/CCC-SEMINAR-VOL1"; // 仮 — 確定したら差し替え
+const APPLY_HREF = "#apply";
 
 export default function Hero() {
   return (
@@ -78,15 +78,13 @@ export default function Hero() {
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-coral font-semibold">PRICE</span>
-            <span>¥5,000</span>
+            <span>¥5,000（税抜）</span>
           </div>
         </div>
 
         {/* CTA */}
         <a
-          href={GOOGLE_FORM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={APPLY_HREF}
           className="mt-10 inline-flex items-center gap-3 px-9 py-4 bg-coral text-cream font-medium text-base rounded-full
             hover:bg-coral-deep transition-colors duration-200 shadow-[0_12px_36px_rgba(217,119,87,0.4)]"
         >
