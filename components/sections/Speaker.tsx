@@ -8,7 +8,7 @@ import DarkSection from "@/components/ui/DarkSection";
  */
 const speakers = [
   {
-    name: "陳 紀洋",
+    name: "Kiyo",
     reading: "きよう",
     photo: "/images/kiyo.jpg",
     role: "Speaker 01",

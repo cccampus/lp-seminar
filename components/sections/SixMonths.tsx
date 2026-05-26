@@ -12,13 +12,17 @@ import { useState } from "react";
 import SixMonthsA from "./SixMonthsA";
 import SixMonthsB from "./SixMonthsB";
 import SixMonthsC from "./SixMonthsC";
+import SixMonthsD from "./SixMonthsD";
+import SixMonthsE from "./SixMonthsE";
 
-type Variant = "A" | "B" | "C";
+type Variant = "A" | "B" | "C" | "D" | "E";
 
 const VARIANT_LABELS: Record<Variant, string> = {
-  A: "A: 罫線エディトリアル",
+  A: "A: 罫線",
   B: "B: 比較表",
-  C: "C: 大型タイポ語り",
+  C: "C: 大型タイポ",
+  D: "D: TracingBeam",
+  E: "E: EditorialList",
 };
 
 export default function SixMonths() {
@@ -57,6 +61,8 @@ export default function SixMonths() {
       {variant === "A" && <SixMonthsA />}
       {variant === "B" && <SixMonthsB />}
       {variant === "C" && <SixMonthsC />}
+      {variant === "D" && <SixMonthsD />}
+      {variant === "E" && <SixMonthsE />}
     </div>
   );
 }
