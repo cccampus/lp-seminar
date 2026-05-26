@@ -479,3 +479,34 @@ button:focus-visible {
   animation: scroll-chevron-float 1.8s ease-in-out infinite;
   will-change: transform, opacity;
 }
+
+/* Voices — 自動マーキー（無限横スクロール）。
+   トラックを 2 連結し -50% へ平行移動 → seamless ループ。
+   prefers-reduced-motion は上部の共通ブロックで停止される。 */
+@keyframes voices-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.voices-marquee {
+  display: flex;
+  width: max-content;
+  animation: voices-marquee 60s linear infinite;
+  will-change: transform;
+}
+
+/* hover で一時停止 */
+.voices-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* reduced-motion: アニメ完全停止（中央寄せ済みの自然な静止状態に） */
+@media (prefers-reduced-motion: reduce) {
+  .voices-marquee {
+    animation: none;
+  }
+}

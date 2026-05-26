@@ -26,23 +26,40 @@ const speakers = [
       "大手企業の研修講師としても、現場に立ってきました。",
       "「使ってきた経営者」と「教えるプロ」、両方の視点で、あなたの2時間を設計します。",
     ],
+    achievements: [] as string[],
   },
   {
-    name: "鈴木 崇哲",
+    name: "Takka",
     reading: "たっか",
     photo: "/images/takka.jpg",
     role: "Speaker 02",
     intro: [
-      "大手企業の新規事業開発部の部長です。",
-      "TVCM 制作を、長くやってきました。",
-      "半年前まで、AI で何ができるかも知りませんでした。",
+      "ほんの少し前まで、AI で何ができるのかも知らない、",
+      "ふつうの会社員でした。",
+      "いまは、AI で「作る側」に回っています。",
     ],
     body: [
-      "CG 映像系の専門学校で4年、大学でも講師を務めてきました。",
-      "「制作のプロ」と「教えるプロ」の経験を持ったまま、",
-      "AI で動画も LP も記事も全部作る側に移ったところです。",
+      "本業は、大手企業の新規事業開発プロデューサー。",
+      "大型ゲーム IP の周年記念イベント、バーチャルアイドル、ゲーム開発など、",
+      "エンタメの最前線で企画・制作を手がけてきました。",
+      "2024年6月に AI へ本格的に取り組み始め、",
+      "TVCM 制作・自主制作・コンテスト出展へと一気に広げています。",
     ],
-    closing: ["その6ヶ月で何が変わったか、リアルにお話しします。"],
+    achievements: [
+      "「COLOTEK」（日本コロムビア主催）優秀賞 — 美空ひばりさんの MV 制作に参加",
+      "国際アワード「Chroma Awards」（ElevenLabs 主催／Google Cloud 協賛・Film / Animation & Anime 部門）佳作",
+      "国内有数の大規模 AI コミュニティで、2周年「最も活躍したメンバー」として表彰（2025年8月）",
+      "AI 関連企業の役員を経験（2025年）",
+      "ラジオ・ニュース番組・日経新聞 一面 などメディア出演・掲載（2025年）",
+      "デジタルハリウッド大学 卒業生／CG・映像制作 講師。大手企業 複数社で数十時間以上の研修講師、滋慶学園でも登壇",
+      "複数の Creative Partnership Program（CPP）に参加",
+    ] as string[],
+    closing: [
+      "AI を“ツール”ではなく「表現言語」として捉え、",
+      "複数の AI を統合・設計（オーケストレーション）して、",
+      "映像・ブランド・体験までを横断して作っています。",
+      "ふつうの会社員が、どう変わったのか。リアルにお話しします。",
+    ],
   },
 ];
 
@@ -65,7 +82,8 @@ export default function Speaker() {
         >
           教えるのは、
           <br />
-          半年前まで AI を使えなかった2人です。
+          半年前まで AI を使えなかった
+          <span className="whitespace-nowrap">2人です。</span>
         </h2>
 
         <div className="space-y-20 sm:space-y-24">
@@ -117,6 +135,22 @@ export default function Speaker() {
                     <p key={j}>{p}</p>
                   ))}
                 </div>
+                {s.achievements.length > 0 && (
+                  <ul className="border-t border-cream/10 pt-6 space-y-2.5">
+                    {s.achievements.map((a, j) => (
+                      <li
+                        key={j}
+                        className="flex gap-3 text-sm leading-relaxed text-cream/85"
+                      >
+                        <span
+                          className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-coral"
+                          aria-hidden
+                        />
+                        <span>{a}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <div className="border-t border-cream/10 pt-6 space-y-2 text-cream/80">
                   {s.closing.map((p, j) => (
                     <p key={j}>{p}</p>

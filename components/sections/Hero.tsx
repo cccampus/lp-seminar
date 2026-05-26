@@ -1,4 +1,5 @@
 import Image from "next/image";
+import RevealHeading from "@/components/ui/RevealHeading";
 
 /**
  * Hero — v3.2 コピー / cinematic V2 ダークステージ
@@ -75,14 +76,16 @@ export default function Hero() {
       {/* === Content === */}
       <div className="relative z-10 w-full min-h-[80vh] flex flex-col items-center justify-center text-center px-6 pt-20">
         {/* eyebrow */}
-        <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-coral/85 mb-8">
+        <p className="font-mono text-sm sm:text-base tracking-[0.3em] uppercase text-coral/90 mb-8">
           Claude Code 実践セミナー
         </p>
 
         {/* 主タイトル */}
-        <h1
+        <RevealHeading
+          as="h1"
+          stagger={0.026}
           className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.4] mx-auto"
-          style={{ letterSpacing: "0.02em", wordBreak: "keep-all" }}
+          style={{ letterSpacing: "0.02em" }}
         >
           <span className="block">半年前、私もAIを使えませんでした。</span>
           <span className="block mt-2 sm:mt-3">
@@ -92,7 +95,7 @@ export default function Hero() {
             </span>
             。
           </span>
-        </h1>
+        </RevealHeading>
 
         {/* サブコピー */}
         <p className="mt-8 max-w-xl text-base sm:text-lg leading-relaxed text-cream/80">

@@ -139,22 +139,37 @@ export default function Voices() {
             <br />
             リアルな声。
           </h2>
-          <p className="mt-5 text-sm sm:text-base text-cream/55 text-center">
-            横にスライドしてご覧ください →
-          </p>
         </div>
       </div>
 
-      {/* 横スライド・カルーセル */}
-      <div className="relative">
+      {/* 自動マーキー（無限横スクロール）。
+          voices を 2 周分レンダリングし、CSS で -50% まで平行移動 → seamless ループ。
+          スクロールバー・ドラッグ操作は廃止。hover で一時停止、reduced-motion で停止。 */}
+      <div className="relative" aria-label="参加者の声（自動スクロール）">
+        {/* 左右フェードマスク（端を sumi-deep に溶かす） */}
         <div
-          className="flex gap-5 sm:gap-7 overflow-x-auto px-6 sm:px-12 pb-8 snap-x snap-mandatory scroll-px-6"
-          style={{ scrollbarWidth: "thin" }}
-        >
-          {voices.map((v, i) => (
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 sm:w-24"
+          style={{
+            background:
+              "linear-gradient(to right, var(--color-sumi-deep) 0%, transparent 100%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 sm:w-24"
+          style={{
+            background:
+              "linear-gradient(to left, var(--color-sumi-deep) 0%, transparent 100%)",
+          }}
+        />
+
+        <div className="voices-marquee">
+          {[...voices, ...voices].map((v, i) => (
             <article
               key={i}
-              className="shrink-0 w-[88vw] sm:w-[420px] snap-start rounded-2xl border border-cream/15 bg-cream/[0.04] p-7 sm:p-8"
+              aria-hidden={i >= voices.length ? true : undefined}
+              className="mx-2.5 sm:mx-3.5 shrink-0 w-[88vw] sm:w-[420px] rounded-2xl border border-cream/15 bg-cream/[0.04] p-7 sm:p-8"
             >
               {/* メタ */}
               <div className="mb-5 pb-5 border-b border-cream/10">
