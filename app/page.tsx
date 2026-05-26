@@ -1,8 +1,6 @@
-import { Suspense } from "react";
 import Hero from "@/components/sections/Hero";
 import Wave from "@/components/sections/Wave";
 import SixMonths from "@/components/sections/SixMonths";
-import SixMonthsA from "@/components/sections/SixMonthsA";
 import Outcomes from "@/components/sections/Outcomes";
 import Voices from "@/components/sections/Voices";
 import Speaker from "@/components/sections/Speaker";
@@ -24,9 +22,7 @@ export default function Home() {
     <>
       <Hero />
       <Wave />
-      <Suspense fallback={<SixMonthsA />}>
-        <SixMonths />
-      </Suspense>
+      <SixMonths />
       <Outcomes />
       <Voices />
       <Speaker />
