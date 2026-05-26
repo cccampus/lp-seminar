@@ -1,22 +1,16 @@
 "use client";
 
 /**
- * SixMonths Variant E — EditorialList (黄金パターン)
+ * SixMonths Variant E — TracingBeam + EditorialList (hp-ai/about Chapter 流用)
  *
- * 4項目を貫く幾何学SVG beam:
- *   左→右→左→右と直角に折れながら下る zigzag path。
- *   スクロール進捗で stroke-dashoffset を 0 まで描く。
- *   各 dot は path の折れノード位置に絶対配置。
- *
- * 行ごとに:
- *   - 背景巨大番号（parallax）
- *   - 番号ラベル + 文字単位 stagger reveal 見出し
- *   - Before → After
- *   - 終端 coral line draw
+ * isshin-ai.co.jp/about の Chapter NN 構造を真似る:
+ *   - TracingBeam で左に「縦線+短い斜め2回」のL字パス
+ *   - 各章: Chapter NN ラベル → 巨大見出し → 本文 → 末尾 line
+ *   - スクロール連動で beam が描画される
  */
 import Image from "next/image";
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion } from "motion/react";
+import { TracingBeam } from "@/components/aceternity/TracingBeam";
 
 const beforeAfter = [
   { label: "LP・SEO記事制作", before: "外注で月30万", after: "自分で1時間以内" },
@@ -25,171 +19,67 @@ const beforeAfter = [
   { label: "仕訳や契約書作成", before: "外注で月10万", after: "自分で30分以内" },
 ];
 
-/**
- * Zigzag SVG Beam — 4ノード分の直角折れ path
- * viewBox: 0..60 (横) × 0..ROW*4 (縦)
- * dot 位置: 左ノード=x12, 右ノード=x48
- * dot Y座標: 行ごとに ROW * i + DOT_OFFSET
- */
-const ROW = 130;           // 1項目の行高 (px)
-const DOT_X_LEFT = 12;
-const DOT_X_RIGHT = 48;
-const DOT_OFFSET = 36;     // 行頭からdotまでのオフセット
-const VBW = 60;
-const VBH = ROW * 4;
-
-// 4ノードを左→右→左→右の順でジグザグ繋ぐ
-function buildPath(): string {
-  const segs: string[] = [];
-  segs.push(`M ${DOT_X_LEFT} 0`); // start
-  for (let i = 0; i < 4; i++) {
-    const y = ROW * i + DOT_OFFSET;
-    const x = i % 2 === 0 ? DOT_X_LEFT : DOT_X_RIGHT;
-    const prevX = i % 2 === 0 ? DOT_X_LEFT : DOT_X_RIGHT;
-    if (i === 0) {
-      segs.push(`L ${x} ${y}`);
-    } else {
-      segs.push(`L ${prevX} ${y}`);
-    }
-  }
-  // end: 最終ノードから下に余韻
-  const lastX = (4 - 1) % 2 === 0 ? DOT_X_LEFT : DOT_X_RIGHT;
-  // 修正: 上のループは隣接ノード間の水平→垂直の折れを正しく作るため書き直し
-  segs.length = 0;
-  segs.push(`M ${DOT_X_LEFT} 0`);
-  for (let i = 0; i < 4; i++) {
-    const y = ROW * i + DOT_OFFSET;
-    const xCurr = i % 2 === 0 ? DOT_X_LEFT : DOT_X_RIGHT;
-    if (i > 0) {
-      const xPrev = (i - 1) % 2 === 0 ? DOT_X_LEFT : DOT_X_RIGHT;
-      // 縦方向にi-1のdot から現在のy まで降りる
-      segs.push(`L ${xPrev} ${y}`);
-      // 横方向に xPrev → xCurr へ
-      segs.push(`L ${xCurr} ${y}`);
-    } else {
-      // i=0 はそのまま下に降りる
-      segs.push(`L ${xCurr} ${y}`);
-    }
-  }
-  // 末尾dot から下に余韻
-  segs.push(`L ${lastX} ${VBH}`);
-  return segs.join(" ");
-}
-
-const PATH_D = buildPath();
-
-function EditorialRow({
-  index,
-  item,
-  rowHeight,
-}: {
-  index: number;
-  item: typeof beforeAfter[number];
-  rowHeight: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 0.95", "end 0.2"],
-  });
-  // 巨大背景番号 parallax
-  const numberY = useTransform(scrollYProgress, [0, 1], ["10%", "-30%"]);
-  const numberOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.18, 0.06]);
-  // 終端 coral line draw
-  const endLineWidth = useTransform(scrollYProgress, [0.4, 0.9], ["0%", "100%"]);
-
+function Chapter({ index, item }: { index: number; item: typeof beforeAfter[number] }) {
   const chars = Array.from(item.label);
-  const dotOnLeft = index % 2 === 0;
-
   return (
-    <div
-      ref={ref}
-      className="relative"
-      style={{ height: rowHeight }}
-    >
-      {/* 背景番号 (parallax) */}
-      <motion.span
-        aria-hidden
-        className="absolute right-2 sm:right-6 top-0 font-serif font-bold text-coral select-none pointer-events-none leading-none"
+    <article className="py-12 sm:py-16 first:pt-4 last:pb-0">
+      <p className="font-mono text-[11px] tracking-[0.32em] uppercase text-cream/55 mb-4">
+        Change 0{index + 1}
+      </p>
+      <h3
+        className="font-serif font-semibold text-cream"
         style={{
-          y: numberY,
-          opacity: numberOpacity,
-          fontSize: "clamp(72px, 14vw, 180px)",
-          letterSpacing: "-0.05em",
+          fontSize: "clamp(22px, 3vw, 36px)",
+          letterSpacing: "-0.015em",
+          lineHeight: 1.45,
+          wordBreak: "keep-all",
+          lineBreak: "strict",
         }}
       >
-        {String(index + 1).padStart(2, "0")}
-      </motion.span>
-
-      {/* dot ノード (zigzag path の折れ角に対応) */}
-      <motion.span
-        aria-hidden
-        className="absolute h-2.5 w-2.5 rounded-full bg-coral z-10"
-        style={{
-          left: dotOnLeft ? "8px" : "44px",
-          top: `${DOT_OFFSET - 5}px`,
-          boxShadow: "0 0 8px rgba(217,119,87,0.7), 0 0 16px rgba(217,119,87,0.35)",
-        }}
-        initial={{ scale: 0.5, opacity: 0.3 }}
-        whileInView={{ scale: 1, opacity: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.45, delay: 0.1 }}
-      />
-
-      {/* 本文ブロック (SVG 幅の右側に配置) */}
-      <div className="pl-16 sm:pl-20">
-        <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.32em] uppercase text-coral/85 mb-2">
-          {`0${index + 1}`}
-        </p>
-        <h3
-          className="font-serif text-xl sm:text-3xl font-semibold leading-snug text-cream"
-          style={{ letterSpacing: "-0.015em" }}
-        >
-          {chars.map((c, j) => (
-            <motion.span
-              key={j}
-              initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
-              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: 0.05 + j * 0.025, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-block"
-            >
-              {c === " " ? " " : c}
-            </motion.span>
-          ))}
-        </h3>
-        <div className="mt-3 sm:mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-2">
-          <span className="font-serif text-sm sm:text-base text-cream/55 line-through decoration-coral/40 decoration-1 underline-offset-4">
-            {item.before}
-          </span>
-          <span className="font-mono text-coral text-sm sm:text-base">→</span>
-          <span
-            className="font-serif text-base sm:text-xl font-semibold text-coral"
-            style={{ letterSpacing: "-0.01em" }}
+        {chars.map((c, ci) => (
+          <motion.span
+            key={ci}
+            initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.5, delay: ci * 0.022, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-block"
+            style={{ whiteSpace: c === " " ? "pre" : "normal" }}
           >
-            {item.after}
-          </span>
-        </div>
-        <motion.div
-          aria-hidden
-          className="mt-4 sm:mt-5 h-px bg-coral origin-left"
-          style={{ width: endLineWidth, boxShadow: "0 0 6px rgba(217,119,87,0.5)" }}
-        />
-      </div>
-    </div>
+            {c}
+          </motion.span>
+        ))}
+      </h3>
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="mt-4 sm:mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1"
+      >
+        <span className="font-serif text-sm sm:text-base text-cream/55 line-through decoration-coral/40 decoration-1 underline-offset-4">
+          {item.before}
+        </span>
+        <span className="font-mono text-coral text-sm sm:text-base">→</span>
+        <span
+          className="font-serif text-base sm:text-xl font-semibold text-coral"
+          style={{ letterSpacing: "-0.01em" }}
+        >
+          {item.after}
+        </span>
+      </motion.div>
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 1.0, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        className="mt-6 sm:mt-8 h-px bg-gradient-to-r from-coral/70 via-coral/20 to-transparent origin-left"
+      />
+    </article>
   );
 }
 
 export default function SixMonthsE() {
-  const listRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: listProgress } = useScroll({
-    target: listRef,
-    offset: ["start 0.75", "end 0.25"],
-  });
-  // SVG path 描画進捗 (stroke-dashoffset を 1 → 0 に)
-  // pathLength="1" 指定で扱う
-  const dashOffset = useTransform(listProgress, [0, 1], [1, 0]);
-
   return (
     <section
       id="six-months"
@@ -234,49 +124,19 @@ export default function SixMonthsE() {
             </div>
           </div>
 
-          {/* Before / After — Zigzag Beam EditorialList */}
-          <div ref={listRef} className="relative mt-10 sm:mt-16">
-            {/* SVG zigzag beam — 4ノード貫通 */}
-            <svg
-              aria-hidden
-              className="absolute left-0 top-0 pointer-events-none"
-              width={VBW}
-              height={ROW * 4}
-              viewBox={`0 0 ${VBW} ${VBH}`}
-              preserveAspectRatio="none"
-              style={{ width: VBW, height: ROW * 4 }}
-            >
-              {/* 薄い背景 track */}
-              <path
-                d={PATH_D}
-                fill="none"
-                stroke="rgba(250,249,245,0.12)"
-                strokeWidth="1.4"
-              />
-              {/* progress (scroll連動で描画) */}
-              <motion.path
-                d={PATH_D}
-                fill="none"
-                stroke="var(--color-coral)"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                pathLength={1}
-                style={{
-                  strokeDasharray: 1,
-                  strokeDashoffset: dashOffset,
-                  filter: "drop-shadow(0 0 4px rgba(217,119,87,0.55))",
-                }}
-              />
-            </svg>
-
-            {/* 4項目 */}
-            {beforeAfter.map((item, i) => (
-              <EditorialRow key={i} index={i} item={item} rowHeight={ROW} />
-            ))}
+          {/* Before / After — TracingBeam で章を貫通 (hp-ai/about 流用) */}
+          <div className="mt-10 sm:mt-16">
+            <TracingBeam className="pl-10 sm:pl-16">
+              <div className="divide-y divide-cream/10">
+                {beforeAfter.map((item, i) => (
+                  <Chapter key={i} index={i} item={item} />
+                ))}
+              </div>
+            </TracingBeam>
           </div>
 
           {/* 締め */}
-          <div className="mt-12 space-y-5 text-base sm:text-lg leading-loose text-cream/90">
+          <div className="mt-16 sm:mt-24 space-y-5 text-base sm:text-lg leading-loose text-cream/90">
             <p>
               これは特別な才能でも、IT 知識でもありません。
               <br />
