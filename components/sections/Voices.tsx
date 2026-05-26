@@ -37,15 +37,17 @@ type Voice = {
   age: string; // 架空・代表年代
   role: string; // 一般化役職（docs の通り）
   quote: string; // 匿名コメント（docs の原文）
-  persona: 1 | 2 | 3 | 4; // 架空persona画像
+  // persona は配列の並び順から 1:1 で自動割当（i 番目 → persona_(i+1)）。
+  // 22人ぶんの透過切り抜き画像 persona_01〜persona_22 を全員ユニークに使う。
 };
 
 // 2系統を統合（差し替えではなく追加）:
 //   (A) 元の声 — 架空のビジネスオーナー／士業系（origin/main:components/sections/Voices.tsx より復元）。
 //       役職・年代・コメントは元データの文言を改変せず使用。元データの gender は
-//       「年代・役職」軸の v2 カードに合わせるため initial に統合し、persona(1〜4) を割り当て。
+//       「年代・役職」軸の v2 カードに合わせるため initial に統合。
 //   (B) アンケート6件 — 受講者アンケートの匿名化済み声（映像PD/デザイナー等）。
-// initial は実在特定を避けるための架空イニシャル。persona は 1〜4 を使い回し。
+// initial は実在特定を避けるための架空イニシャル。
+// persona 画像は配列の並び順から 1:1 で自動割当（i 番目 → persona_(i+1)）。22人ユニーク。
 const voices: Voice[] = [
   // ===== (A) 元の声（ビジネスオーナー／士業系）=====
   {
@@ -54,7 +56,6 @@ const voices: Voice[] = [
     role: "飲食店経営10年",
     quote:
       "予約電話の返信文が、ボタン1つで作れるようになった。アナログ人間の自分でも、その日のうちにできた。",
-    persona: 1,
   },
   {
     initial: "A.K.",
@@ -62,7 +63,6 @@ const voices: Voice[] = [
     role: "税理士事務所",
     quote:
       "顧問先の契約書レビューを任せられるようになって、月40時間の時短になりました。",
-    persona: 2,
   },
   {
     initial: "N.W.",
@@ -70,7 +70,6 @@ const voices: Voice[] = [
     role: "建設業2代目",
     quote:
       "現場日報を音声で話すだけで、要約が完成。紙とペンしか使ってこなかった俺が、これは衝撃だった。",
-    persona: 3,
   },
   {
     initial: "R.I.",
@@ -78,7 +77,6 @@ const voices: Voice[] = [
     role: "個人エステサロン",
     quote:
       "インスタ投稿の作業時間が、1/5になりました。こんなに変わるなら、もっと早く来ればよかった。",
-    persona: 4,
   },
   {
     initial: "M.F.",
@@ -86,7 +84,6 @@ const voices: Voice[] = [
     role: "旅館女将",
     quote:
       "お客様への返信を、自分の言葉で作れるように。娘に頼まなくてよくなって、それが一番うれしい。",
-    persona: 2,
   },
   {
     initial: "K.H.",
@@ -94,7 +91,6 @@ const voices: Voice[] = [
     role: "介護施設長",
     quote:
       "補助金申請の書類作成が、半分の時間で完成。申請をあきらめていた制度にも、挑戦できるように。",
-    persona: 3,
   },
   {
     initial: "S.O.",
@@ -102,7 +98,6 @@ const voices: Voice[] = [
     role: "町工場2代目",
     quote:
       "見積書のたたき台が5分で。今までは2時間かけてた仕事が、別物になった。",
-    persona: 1,
   },
   {
     initial: "Y.T.",
@@ -110,7 +105,6 @@ const voices: Voice[] = [
     role: "個人カフェ経営",
     quote:
       "SNS投稿が、苦痛じゃなくなりました。1日5分で済むようになって、本業に集中できる。",
-    persona: 4,
   },
   {
     initial: "E.N.",
@@ -118,7 +112,6 @@ const voices: Voice[] = [
     role: "医療法人事務長",
     quote:
       "院内会議の議事録が、その場で完成。翌日の仕事に持ち越さなくてよくなりました。",
-    persona: 2,
   },
   {
     initial: "D.M.",
@@ -126,7 +119,6 @@ const voices: Voice[] = [
     role: "営業マネージャー",
     quote:
       "顧客ごとの追客メモが、3倍速で作れる。結果として、商談数が増えました。",
-    persona: 3,
   },
   {
     initial: "C.A.",
@@ -134,7 +126,6 @@ const voices: Voice[] = [
     role: "コーチング独立",
     quote:
       "セッション後の振り返り作成が、5分で完了。お客様への提供価値が、明らかに上がりました。",
-    persona: 4,
   },
   {
     initial: "G.S.",
@@ -142,7 +133,6 @@ const voices: Voice[] = [
     role: "行政書士1年目",
     quote:
       "契約書の下読みが、怖くなくなった。駆け出しの自分にも、ベテランと同じ仕事ができる。",
-    persona: 1,
   },
   {
     initial: "W.K.",
@@ -150,7 +140,6 @@ const voices: Voice[] = [
     role: "Webライター",
     quote:
       "取材の文字起こしと構成が、一気にできる。一日に書ける本数が、2倍に増えました。",
-    persona: 2,
   },
   {
     initial: "J.H.",
@@ -158,7 +147,6 @@ const voices: Voice[] = [
     role: "大手メーカー人事マネージャー",
     quote:
       "採用要件の整理と求人票のたたき台が、その場で完成。部内に持ち帰る前に1人で形にできるようになりました。",
-    persona: 4,
   },
   {
     initial: "F.N.",
@@ -166,7 +154,6 @@ const voices: Voice[] = [
     role: "中堅商社・営業企画",
     quote:
       "営業会議の議事録、稟議資料、顧客提案書、全部の下書きが30分で。上司への報告サイクルが、明らかに速くなりました。",
-    persona: 3,
   },
   {
     initial: "B.O.",
@@ -174,7 +161,6 @@ const voices: Voice[] = [
     role: "化学・素材メーカー2代目",
     quote:
       "規制が厳しい業界でも、機密情報を扱わない範囲でAIに任せられる業務がたくさんあった。議事録、社内資料、契約書のたたき台、月60時間は楽になりました。",
-    persona: 1,
   },
   // ===== (B) アンケート6件（受講者アンケート由来）=====
   {
@@ -183,7 +169,6 @@ const voices: Voice[] = [
     role: "映像制作会社・部門マネージャー",
     quote:
       "ベテランクリエイター、プロデューサーこそ参加すべき内容。即実践導入できるノウハウが盛りだくさんです。",
-    persona: 1,
   },
   {
     initial: "S.A.",
@@ -191,21 +176,18 @@ const voices: Voice[] = [
     role: "プロモーション担当",
     quote:
       "表面的な操作説明にとどまらない、本質的な理解が得られる。業界の動向まで解説いただけるのが他にない強みです。",
-    persona: 2,
   },
   {
     initial: "T.N.",
     age: "40代",
     role: "映像ディレクター",
     quote: "系統的でわかりやすく、実例付きの教材が大変役に立ちました。",
-    persona: 3,
   },
   {
     initial: "Y.O.",
     age: "30代",
     role: "クリエイティブディレクター",
     quote: "情報量が多く、刺激的な内容でした。",
-    persona: 4,
   },
   {
     initial: "H.K.",
@@ -213,18 +195,18 @@ const voices: Voice[] = [
     role: "映像プロデューサー",
     quote:
       "紹介されたツールの特徴を実践レベルで教えてもらえたのが、すごく良かった。",
-    persona: 2,
   },
   {
     initial: "M.S.",
     age: "20代",
     role: "デザイナー",
     quote: "期待以上だった。すぐに実務で活かしたいと思える内容。",
-    persona: 1,
   },
 ];
 
-const personaSrc = (n: 1 | 2 | 3 | 4) => `/images/voices/persona_0${n}.png`;
+// 配列 index（0始まり）→ persona_01〜persona_22 を 1:1 で割当。
+const personaSrc = (index: number) =>
+  `/images/voices/persona_${String((index % 22) + 1).padStart(2, "0")}.png`;
 
 export default function Voices() {
   return (
@@ -318,8 +300,11 @@ function SwipeDeck({ voices }: { voices: Voice[] }) {
     [advance]
   );
 
-  // 前面 + 背面2枚を重ねて表示（スタック感）。
-  const stack = [0, 1, 2].map((d) => voices[(index + d) % total]);
+  // 前面 + 背面2枚を重ねて表示（スタック感）。voiceIndex を持たせ persona を 1:1 で対応。
+  const stack = [0, 1, 2].map((d) => {
+    const vi = (index + d) % total;
+    return { voice: voices[vi], voiceIndex: vi };
+  });
   const current = stack[0];
 
   return (
@@ -337,12 +322,12 @@ function SwipeDeck({ voices }: { voices: Voice[] }) {
         {stack
           .slice(1)
           .reverse()
-          .map((v, ri) => {
+          .map((s, ri) => {
             // ri: 0 が一番奥(d=2), 1 が d=1
             const depth = ri === 0 ? 2 : 1;
             return (
               <div
-                key={`bg-${v.initial}-${depth}`}
+                key={`bg-${s.voice.initial}-${depth}`}
                 aria-hidden
                 className="absolute inset-0"
                 style={{
@@ -351,7 +336,7 @@ function SwipeDeck({ voices }: { voices: Voice[] }) {
                   zIndex: 10 - depth,
                 }}
               >
-                <Card voice={v} dimmed />
+                <Card voice={s.voice} voiceIndex={s.voiceIndex} dimmed />
               </div>
             );
           })}
@@ -359,7 +344,7 @@ function SwipeDeck({ voices }: { voices: Voice[] }) {
         {/* 前面（操作対象） */}
         <AnimatePresence initial={false} mode="popLayout">
           <motion.div
-            key={`${index}-${current.initial}`}
+            key={`${index}-${current.voice.initial}`}
             className="absolute inset-0 z-20"
             style={{ zIndex: 20 }}
             drag={prefersReduced ? false : "x"}
@@ -390,7 +375,11 @@ function SwipeDeck({ voices }: { voices: Voice[] }) {
             }
             transition={{ type: "spring", stiffness: 320, damping: 30 }}
           >
-            <Card voice={current} grabbable={!prefersReduced} />
+            <Card
+              voice={current.voice}
+              voiceIndex={current.voiceIndex}
+              grabbable={!prefersReduced}
+            />
           </motion.div>
         </AnimatePresence>
       </div>
@@ -454,16 +443,19 @@ function SwipeDeck({ voices }: { voices: Voice[] }) {
 
 /* -----------------------------------------------------------------
    スマホ用カード本体（切り抜きレイヤー意匠）
-   - パネル全体は sumi。上に cream-warm の明色帯。
-   - persona は明色帯の上に乗り、頭が帯の上端へわずかにはみ出す。
-   - 文字階層: イニシャル → 年代 → 一般化役職 → コメント。
+   - カードは sumi パネル。上部に cream-warm の明色帯（人物が乗る座面）。
+   - 透過 persona は明色帯の上に立ち、頭が帯の上端＝sumi 地へ少しはみ出す
+     （切り抜きを活かしたレイヤー感）。背景が無いので人物の輪郭がそのまま出る。
+   - 文字階層: イニシャル → 年代・役職 → コメント。
    ----------------------------------------------------------------- */
 function Card({
   voice,
+  voiceIndex,
   dimmed = false,
   grabbable = false,
 }: {
   voice: Voice;
+  voiceIndex: number;
   dimmed?: boolean;
   grabbable?: boolean;
 }) {
@@ -474,20 +466,20 @@ function Card({
         (grabbable ? "cursor-grab" : "")
       }
     >
-      {/* 上部・明色帯。頭がここに乗り、わずかに上端へはみ出す（切り抜き風）。 */}
-      <div className="relative h-[230px] shrink-0 overflow-visible bg-cream-warm">
-        <div className="absolute inset-x-0 bottom-0 top-[-26px] overflow-hidden">
-          <Image
-            src={personaSrc(voice.persona)}
-            alt=""
-            aria-hidden
-            width={561}
-            height={701}
-            draggable={false}
-            className="absolute bottom-0 left-1/2 h-[300px] w-auto -translate-x-1/2 object-contain object-bottom"
-            priority={!dimmed}
-          />
-        </div>
+      {/* 上部・明色帯（人物の座面）。帯自体は overflow-hidden で角丸内に収める。 */}
+      <div className="relative h-[224px] shrink-0">
+        <div className="absolute inset-x-0 bottom-0 top-7 overflow-hidden rounded-b-[18px] bg-cream-warm" />
+        {/* 透過人物。帯の上端（top-7 の上の sumi 地）へ頭が飛び出すレイヤー。 */}
+        <Image
+          src={personaSrc(voiceIndex)}
+          alt=""
+          aria-hidden
+          width={464}
+          height={576}
+          draggable={false}
+          className="pointer-events-none absolute bottom-0 left-1/2 h-[244px] w-auto -translate-x-1/2 object-contain object-bottom"
+          priority={!dimmed}
+        />
       </div>
 
       {/* 下部・sumi エリア（プロフィール＋コメント） */}
@@ -522,28 +514,26 @@ function MagazineCard({
 }) {
   return (
     <article className="group overflow-hidden rounded-[28px] bg-sumi transition-transform duration-300 ease-out hover:-translate-y-1">
-      {/* 上部・明色帯（切り抜き人物） */}
+      {/* 上部・明色帯（人物の座面）。透過人物の頭が帯の上端＝sumi 地へ飛び出す。 */}
       <div
         className={
-          "relative shrink-0 overflow-visible bg-cream-warm " +
-          (feature ? "h-[290px]" : "h-[210px]")
+          "relative shrink-0 " + (feature ? "h-[284px]" : "h-[204px]")
         }
       >
-        <div className="absolute inset-x-0 bottom-0 top-[-28px] overflow-hidden">
-          <Image
-            src={personaSrc(voice.persona)}
-            alt=""
-            aria-hidden
-            width={561}
-            height={701}
-            draggable={false}
-            className={
-              "absolute bottom-0 left-1/2 w-auto -translate-x-1/2 object-contain object-bottom " +
-              (feature ? "h-[360px]" : "h-[270px]")
-            }
-          />
-        </div>
-        <span className="absolute right-5 top-4 z-10 font-mono text-[11px] tracking-[0.2em] text-sumi/35">
+        <div className="absolute inset-x-0 bottom-0 top-8 rounded-b-[16px] bg-cream-warm" />
+        <Image
+          src={personaSrc(index)}
+          alt=""
+          aria-hidden
+          width={464}
+          height={576}
+          draggable={false}
+          className={
+            "pointer-events-none absolute bottom-0 left-1/2 w-auto -translate-x-1/2 object-contain object-bottom " +
+            (feature ? "h-[300px]" : "h-[222px]")
+          }
+        />
+        <span className="absolute right-5 top-4 z-10 font-mono text-[11px] tracking-[0.2em] text-cream/40">
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>

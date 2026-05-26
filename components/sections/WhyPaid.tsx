@@ -2,6 +2,7 @@
  * WhyPaid — v3.2 コピー / cinematic V2 ダークトーン
  * 「真剣な仲間と」軸、「6ヶ月後のあなたを買う、最初の初期投資費用」
  */
+import Image from "next/image";
 import DarkSection from "@/components/ui/DarkSection";
 
 export default function WhyPaid() {
@@ -49,24 +50,46 @@ export default function WhyPaid() {
             私たちも責任を持って作る。そのためのお支払いです。
           </p>
 
-          <blockquote className="mt-16 sm:mt-20">
-            <p
-              className="font-serif italic text-xl sm:text-3xl font-medium text-cream/90 leading-relaxed"
-              style={{ letterSpacing: "-0.01em" }}
-            >
-              “人は、手に入れる喜びよりも、
-              <br className="hidden sm:block" />
-              失う痛みのほうを、はるかに大きく感じる。”
-            </p>
-            <footer className="mt-5 text-sm sm:text-base text-cream/55">
-              — ダニエル・カーネマン
-              <span className="text-cream/40">（行動経済学者・ノーベル経済学賞）</span>
-            </footer>
-            <p className="mt-6 text-sm sm:text-base text-cream/70 leading-loose">
-              だから、いちど払った投資は、無駄にしたくなくなる。
-              <br className="hidden sm:block" />
-              <span className="text-coral">その「損をしたくない」気持ちが、人を本気にさせる。</span>
-            </p>
+          <blockquote className="relative mt-16 sm:mt-20 overflow-hidden rounded-2xl px-6 py-12 sm:px-12 sm:py-16">
+            {/* 損失回避を象徴する抽象背景（顔・文字なし）— 引用に奥行きを与える低不透明度の背景素材 */}
+            <Image
+              src="/images/whypaid/loss_aversion.jpg"
+              alt=""
+              aria-hidden="true"
+              fill
+              unoptimized
+              priority={false}
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="pointer-events-none select-none object-cover opacity-20"
+            />
+            {/* 可読性確保用のダーク scrim（引用テキストを最優先） */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(120% 100% at 50% 50%, rgba(20,18,17,0.55) 0%, rgba(20,18,17,0.78) 60%, rgba(20,18,17,0.88) 100%)",
+              }}
+            />
+            <div className="relative z-10">
+              <p
+                className="font-serif italic text-xl sm:text-3xl font-medium text-cream/90 leading-relaxed"
+                style={{ letterSpacing: "-0.01em" }}
+              >
+                “人は、手に入れる喜びよりも、
+                <br className="hidden sm:block" />
+                失う痛みのほうを、はるかに大きく感じる。”
+              </p>
+              <footer className="mt-5 text-sm sm:text-base text-cream/55">
+                — ダニエル・カーネマン
+                <span className="text-cream/40">（行動経済学者・ノーベル経済学賞）</span>
+              </footer>
+              <p className="mt-6 text-sm sm:text-base text-cream/70 leading-loose">
+                だから、いちど払った投資は、無駄にしたくなくなる。
+                <br className="hidden sm:block" />
+                <span className="text-coral">その「損をしたくない」気持ちが、人を本気にさせる。</span>
+              </p>
+            </div>
           </blockquote>
 
           <div className="mt-16 sm:mt-24 text-center">
