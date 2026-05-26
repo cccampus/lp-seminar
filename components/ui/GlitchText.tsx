@@ -55,31 +55,43 @@ export default function GlitchText({
       const shadow = (x: number) =>
         `${x}px 0 #d97757, ${-x}px 0 rgba(250,249,245,0.45)`;
 
-      // 常時グリッチ（周期的に短くフリッカー）
+      // 常時グリッチ：「ギリギリ揺れ続ける」＝低振幅の微ジッターを切れ目なく回し続け、
+      // そこへ時々（やや強い）スライス・RGBずれのバーストを重ねる。過剰にしない。
       if (loop) {
-        gsap.set(el, { opacity: 1 });
-        const lt = gsap.timeline({
+        gsap.set(el, { opacity: 1, willChange: "transform, clip-path" });
+
+        // ① ベースの微ジッター（常時・小振幅）— 短い set を連続させ "ジャサッ" とした質感
+        const base = gsap.timeline({
           repeat: -1,
-          repeatDelay: 3.2,
-          scrollTrigger: { trigger: el, start: "top 90%" },
+          scrollTrigger: { trigger: el, start: "top 92%" },
+        });
+        for (let i = 0; i < 10; i++) {
+          base.set(el, {
+            x: gsap.utils.random(-2.5, 2.5),
+            y: gsap.utils.random(-2.5, 2.5),
+            skewX: gsap.utils.random(-2, 2),
+            textShadow: shadow(gsap.utils.random(0.8, 2.4)),
+          });
+          base.to(el, { duration: gsap.utils.random(0.05, 0.12) });
+        }
+
+        // ② たまに強めのバースト（スライス＋大きめ RGB ずれ）を重ねる
+        const burst = gsap.timeline({
+          repeat: -1,
+          repeatDelay: 2.6,
+          scrollTrigger: { trigger: el, start: "top 92%" },
         });
         for (let i = 0; i < 6; i++) {
-          lt.set(el, {
-            x: gsap.utils.random(-5, 5),
-            skewX: gsap.utils.random(-6, 6),
-            textShadow: shadow(gsap.utils.random(2, 5)),
-            clipPath: `inset(${gsap.utils.random(0, 35)}% 0 ${gsap.utils.random(0, 35)}% 0)`,
+          burst.set(el, {
+            x: gsap.utils.random(-9, 9),
+            y: gsap.utils.random(-9, 9),
+            skewX: gsap.utils.random(-7, 7),
+            textShadow: shadow(gsap.utils.random(3, 7)),
+            clipPath: `inset(${gsap.utils.random(0, 40)}% 0 ${gsap.utils.random(0, 40)}% 0)`,
           });
-          lt.to(el, { duration: 0.05 });
+          burst.to(el, { duration: 0.04 });
         }
-        lt.to(el, {
-          x: 0,
-          skewX: 0,
-          textShadow: shadow(0),
-          clipPath: "inset(0% 0 0% 0)",
-          duration: 0.18,
-          ease: "power2.out",
-        });
+        burst.set(el, { clipPath: "inset(0% 0 0% 0)", x: 0, y: 0, skewX: 0 });
         return;
       }
 

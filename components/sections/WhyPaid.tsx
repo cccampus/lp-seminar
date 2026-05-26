@@ -49,14 +49,37 @@ export default function WhyPaid() {
             私たちも責任を持って作る。そのためのお支払いです。
           </p>
 
-          <div className="border-l-2 border-coral pl-6 py-2 mt-10">
-            <p className="font-serif italic text-xl sm:text-2xl text-cream leading-relaxed">
-              —— 5,000 円は、6 ヶ月後のあなたを買う、
-              <br />
-              <span className="text-coral font-semibold not-italic">
-                最初の初期投資費用
-              </span>
-              です。
+          <blockquote className="mt-16 sm:mt-20">
+            <p
+              className="font-serif italic text-xl sm:text-3xl font-medium text-cream/90 leading-relaxed"
+              style={{ letterSpacing: "-0.01em" }}
+            >
+              “人は、手に入れる喜びよりも、
+              <br className="hidden sm:block" />
+              失う痛みのほうを、はるかに大きく感じる。”
+            </p>
+            <footer className="mt-5 text-sm sm:text-base text-cream/55">
+              — ダニエル・カーネマン
+              <span className="text-cream/40">（行動経済学者・ノーベル経済学賞）</span>
+            </footer>
+            <p className="mt-6 text-sm sm:text-base text-cream/70 leading-loose">
+              だから、いちど払った投資は、無駄にしたくなくなる。
+              <br className="hidden sm:block" />
+              <span className="text-coral">その「損をしたくない」気持ちが、人を本気にさせる。</span>
+            </p>
+          </blockquote>
+
+          <div className="mt-16 sm:mt-24 text-center">
+            <p
+              className="font-serif text-2xl sm:text-4xl font-semibold text-cream leading-snug"
+              style={{ letterSpacing: "-0.02em" }}
+            >
+              5,000 円は、
+              <br className="sm:hidden" />
+              6 ヶ月後のあなたを買う。
+            </p>
+            <p className="mt-6 font-serif text-lg sm:text-2xl text-cream/70 leading-relaxed">
+              <span className="text-coral font-semibold">最初の初期投資費用</span>です。
             </p>
           </div>
         </div>

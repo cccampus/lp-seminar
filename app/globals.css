@@ -510,3 +510,91 @@ button:focus-visible {
     animation: none;
   }
 }
+
+/* Voices v4 — スマホ横スワイプ（scroll-snap）。
+   慣性スクロール有効・スクロールバー非表示。自動アニメは無し（reduced-motion 安全）。
+   ドラッグの変な掴み挙動は入れず、指のスワイプでピタッと止まる素直な実装。 */
+.voices-swipe {
+  -webkit-overflow-scrolling: touch; /* iOS の慣性スワイプ */
+  scroll-padding-inline: 6vw;
+  scrollbar-width: none; /* Firefox */
+  overscroll-behavior-x: contain;
+}
+.voices-swipe::-webkit-scrollbar {
+  display: none; /* Safari / Chrome */
+}
+
+/* ============================================================
+   SplitFlap — 空港の発車標 / フリップ時計（Wave §② 7年）
+   数字そのものを上から起こしてめくる。線・箱・影は足さない（§0）。
+   色は coral（親から継承）。
+   画面に出る数字は常に 1 枚だけ → 数字の重複（"77"）が原理的に起きない。
+   ============================================================ */
+.splitflap-unit {
+  position: relative;
+  display: inline-block;
+  /* 1 桁ぶんの幅。mono 数字の字幅に合わせて余白を抑える */
+  width: 0.62em;
+  height: 1em;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  /* めくりの奥行き（コンテナに perspective を持たせ、子の rotateX を立体に見せる） */
+  perspective: 420px;
+  perspective-origin: center center;
+  vertical-align: baseline;
+}
+
+/* 上半分 / 下半分カード：高さ 0.5em の枠で数字を clip する。
+   枠内に「ユニット高(1em)の数字グリフ(.splitflap-d)」を絶対配置し、上カードは数字の
+   上半分・下カードは下半分が枠に入るよう縦オフセットする。これで上下の継ぎ目が一致する。 */
+.splitflap-half {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 0.5em; /* ユニット高(1em)の半分 */
+  overflow: hidden;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* 数字グリフ：1em 高・横中央。各カードで縦オフセットして上下半分を出す */
+.splitflap-d {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* 上半分カード：上端 0、数字は枠上端から描き始め＝上半分が見える */
+.splitflap-top {
+  top: 0;
+}
+.splitflap-top .splitflap-d {
+  top: 0;
+}
+
+/* 下半分カード：下端、数字を 0.5em 上に押し上げ＝下半分が見える */
+.splitflap-bottom {
+  bottom: 0;
+}
+.splitflap-bottom .splitflap-d {
+  top: -0.5em;
+}
+
+/* 倒れるフラップ（current=prev の上半分）：上端を軸に手前(下)へ倒れる */
+.splitflap-flap-front {
+  z-index: 3;
+  transform-origin: center bottom; /* 上半分カードの「下端（＝中央の継ぎ目）」を支点に手前へ倒す */
+}
+
+/* 落ちてくるフラップ（next の下半分）：下端の継ぎ目を軸に起き上がる */
+.splitflap-flap-back {
+  z-index: 2;
+  transform-origin: center top; /* 下半分カードの「上端（＝中央の継ぎ目）」を支点に落ちてくる */
+}

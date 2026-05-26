@@ -38,15 +38,19 @@ export default function WhyThis() {
             <strong className="text-cream">ただの経営者</strong>です。
           </p>
 
-          <div className="border-l-2 border-coral pl-6 py-2">
-            <p>
-              —— 教えるプロとしての経験を持ち、
+          <div className="my-14 sm:my-20 text-center">
+            <p className="font-serif text-lg sm:text-xl leading-relaxed text-cream/70">
+              教えるプロとしての経験を持ち、
               <br />
-              そして毎日 AI を使ってきた経営者として、
+              そして毎日 AI を使ってきた経営者として。
+            </p>
+            <p
+              className="mt-6 font-serif text-2xl sm:text-3xl font-semibold leading-snug text-cream"
+              style={{ letterSpacing: "-0.01em" }}
+            >
+              経営者の言葉で、経営の判断軸に乗せられる景色を、
               <br />
-              <strong className="text-coral">経営者の言葉で、経営の判断軸に乗せられる景色を、</strong>
-              <br />
-              <strong className="text-coral">2 時間でお見せします。</strong>
+              <span className="text-coral">2 時間で</span>お見せします。
             </p>
           </div>
 

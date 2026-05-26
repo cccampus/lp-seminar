@@ -84,7 +84,7 @@ export default function Hero() {
         <RevealHeading
           as="h1"
           stagger={0.026}
-          className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.4] mx-auto"
+          className="font-serif text-xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.5] sm:leading-[1.4] mx-auto"
           style={{ letterSpacing: "0.02em" }}
         >
           <span className="block">半年前、私もAIを使えませんでした。</span>
@@ -100,7 +100,7 @@ export default function Hero() {
         {/* サブコピー */}
         <p className="mt-8 max-w-xl text-base sm:text-lg leading-relaxed text-cream/80">
           たった6ヶ月で、毎日の仕事がここまでラクになる。
-          <br className="hidden sm:block" />
+          <br />
           その景色を、2時間でお見せします。
         </p>
 
@@ -109,19 +109,25 @@ export default function Hero() {
           * Claude Code は、ChatGPT より仕事向けに進化した次世代の AI です。
         </p>
 
-        {/* メタ情報 */}
-        <div className="mt-10 flex flex-col sm:flex-row gap-4 sm:gap-7 items-center font-mono text-xs sm:text-sm tracking-[0.15em] uppercase text-cream/85">
-          <div className="flex items-baseline gap-2">
-            <span className="text-coral font-semibold">DATE</span>
-            <span>2026 / 05 / 31 (日) · 6 / 3 (火)</span>
+        {/* メタ情報 — カード型で整理（可読性UP） */}
+        <div className="mt-10 w-full max-w-2xl grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-cream/15 rounded-2xl border border-cream/15 bg-cream/[0.04] overflow-hidden">
+          <div className="flex flex-col items-center gap-1.5 px-5 py-5">
+            <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-coral">Date</span>
+            <span className="text-base sm:text-lg text-cream font-semibold">
+              5/31<span className="text-cream/60 text-sm">(日)</span> · 6/3<span className="text-cream/60 text-sm">(火)</span>
+            </span>
           </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-coral font-semibold">FORMAT</span>
-            <span>Online (Zoom)</span>
+          <div className="flex flex-col items-center gap-1.5 px-5 py-5">
+            <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-coral">Format</span>
+            <span className="text-base sm:text-lg text-cream font-semibold">
+              オンライン<span className="text-cream/60 text-sm">(Zoom)</span>
+            </span>
           </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-coral font-semibold">PRICE</span>
-            <span>¥5,000(税抜)</span>
+          <div className="flex flex-col items-center gap-1.5 px-5 py-5">
+            <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-coral">Price</span>
+            <span className="text-base sm:text-lg text-cream font-semibold">
+              ¥5,000<span className="text-cream/60 text-sm">(税抜)</span>
+            </span>
           </div>
         </div>
 
