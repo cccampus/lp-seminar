@@ -48,17 +48,17 @@ const outcomes = [
 export default function Outcomes() {
   return (
     <DarkSection
-      id="outcomes"
-      aria-labelledby="outcomes-heading"
+      id="cases"
+      aria-labelledby="cases-heading"
       bgImage="/images/backdrop/bd_b.jpg"
       className="py-24 sm:py-32 px-6"
     >
       <div className="max-w-5xl mx-auto">
         <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-4 text-center">
-          Outcomes
+          Cases
         </p>
         <h2
-          id="outcomes-heading"
+          id="cases-heading"
           className="font-serif text-xl sm:text-5xl font-semibold leading-tight text-center text-cream mb-6"
           style={{ letterSpacing: "-0.01em" }}
         >

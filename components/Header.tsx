@@ -13,7 +13,7 @@ import { useLenis } from "lenis/react";
 
 const NAV = [
   { label: "Vision", id: "six-months" },
-  { label: "Outcomes", id: "outcomes" },
+  { label: "Cases", id: "cases" },
   { label: "Voices", id: "voices" },
   { label: "Speakers", id: "speaker" },
   { label: "Detail", id: "detail" },
