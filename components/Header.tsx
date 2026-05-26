@@ -50,11 +50,10 @@ export default function Header() {
             e.preventDefault();
             lenis ? lenis.scrollTo(0) : window.scrollTo({ top: 0, behavior: "smooth" });
           }}
-          className="flex items-center gap-2.5 font-mono text-[13px] tracking-[0.22em] uppercase text-cream transition-colors hover:text-coral-light"
+          className="flex items-center gap-2.5 text-[13px] sm:text-sm font-semibold tracking-[0.04em] text-cream transition-colors hover:text-coral-light"
         >
           <span className="text-coral text-[10px]">●</span>
-          <span className="font-semibold">Claude&nbsp;Code</span>
-          <span className="hidden text-cream/55 sm:inline">Seminar</span>
+          Claude&nbsp;Code 実践セミナー
         </a>
 
         {/* 中央〜右: ナビ（PC のみ） */}
@@ -75,9 +74,9 @@ export default function Header() {
         <a
           href="#apply"
           onClick={goTo("apply")}
-          className="inline-flex items-center gap-2 rounded-full bg-coral px-5 py-2.5 font-mono text-[12px] font-semibold tracking-[0.18em] uppercase text-cream shadow-[0_8px_24px_rgba(217,119,87,0.35)] transition-transform duration-200 hover:scale-[1.04] sm:px-6"
+          className="inline-flex items-center gap-2 rounded-full bg-coral px-5 py-2.5 text-[13px] sm:text-sm font-semibold text-cream shadow-[0_8px_24px_rgba(217,119,87,0.35)] transition-transform duration-200 hover:scale-[1.04] sm:px-6"
         >
-          Apply
+          申込
           <span className="translate-y-[-1px] text-sm">→</span>
         </a>
       </div>
