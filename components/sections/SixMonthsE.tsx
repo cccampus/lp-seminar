@@ -22,7 +22,7 @@ const beforeAfter = [
 function Chapter({ index, item }: { index: number; item: typeof beforeAfter[number] }) {
   const chars = Array.from(item.label);
   return (
-    <article className="py-12 sm:py-16 first:pt-4 last:pb-0">
+    <article className="py-6 sm:py-8 first:pt-0 last:pb-0">
       <p className="font-mono text-[11px] tracking-[0.32em] uppercase text-cream/55 mb-4">
         Change 0{index + 1}
       </p>
