@@ -60,25 +60,34 @@ export async function POST(req: Request) {
   const resend = new Resend(resendKey);
 
   // === 1. 申込者宛: 確認メール ===
-  const customerSubject = "【ご予約完了】Claude Code 実践セミナー Vol.1";
+  const customerSubject = "【ご予約完了】Claude Code 実践セミナー";
   const customerBody = [
     `${customerName} 様`,
     "",
-    "この度はClaude Code 実践セミナーへお申し込みいただき、誠にありがとうございます。",
-    "決済が完了し、お席を確保いたしました。",
+    "この度は Claude Code 実践セミナーへお申し込みいただき、誠にありがとうございます。",
+    "決済が完了しましたので、ご参加が確定いたしました。",
+    "",
+    "当日、AI に「使われる側」ではなく「使う側」へ回るための実践的な視点を、",
+    `${customerName} 様と一緒に深めていけることを楽しみにしています。`,
+    "",
+    "詳細は以下の内容をご確認ください。",
     "",
     "─────────────────────",
     "  ご予約内容",
     "─────────────────────",
     "セミナー: 経営者・次期リーダーのための Claude Code 実践セミナー",
     "開催日時: 2026年5月31日（日）11:00〜13:00",
+    "開場: 10:50（開催10分前）",
     "形式: オンライン（Zoom）",
     `お支払い金額: ${amountTotal}（税込）`,
-    `決済番号: ${sessionId}`,
     "─────────────────────",
     "",
-    "■ 当日のご参加について",
-    "Zoom URL と事前資料は、開催日前日までに本メールアドレス宛にお送りいたします。",
+    "■ Zoom 参加情報",
+    "下記URLから当日ご参加ください。",
+    "",
+    "URL: https://us06web.zoom.us/j/89700877907?pwd=P11H7eaZ8iZJsQGI15DbeamxnEMCP0.1",
+    "ミーティングID: 897 0087 7907",
+    "パスコード: 453802",
     "",
     "■ 返金について",
     "本セミナーはライブ配信形式の役務のため、お申込み完了後のキャンセル・返金は",
@@ -87,16 +96,13 @@ export async function POST(req: Request) {
     "■ お問い合わせ",
     "ご質問は本メールへの返信、または noreply@isshin-ai.co.jp までお気軽にどうぞ。",
     "",
-    "当日お会いできることを楽しみにしております。",
-    "",
     "──",
-    "Claude Code Campus 運営事務局",
-    "株式会社ISSHIN",
+    "CCC運営事務局",
   ].join("\n");
 
   try {
     await resend.emails.send({
-      from: `Claude Code Campus <${from}>`,
+      from: `CCC運営事務局 <${from}>`,
       to: [customerEmail],
       replyTo: from,
       subject: customerSubject,
@@ -127,7 +133,7 @@ export async function POST(req: Request) {
 
   try {
     await resend.emails.send({
-      from: `CCC Seminar <${from}>`,
+      from: `CCC運営事務局 <${from}>`,
       to: [adminTo],
       replyTo: customerEmail,
       subject: adminSubject,

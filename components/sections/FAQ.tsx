@@ -1,69 +1,65 @@
 /**
- * FAQ — よくある質問
- * - <details> + <summary> でアコーディオン（JS 不要、a11y 良好）
- * - 質問は経営者・意思決定者目線で 6 項目
+ * FAQ — v3.2（「見せる/景色」軸、規制業種・過去セミナー失敗層対応）
  */
-import DarkSection from "@/components/ui/DarkSection";
 
 type Item = { q: string; a: React.ReactNode };
 
 const faqs: Item[] = [
   {
-    q: "プログラミングの経験がなくても参加できますか？",
+    q: "プログラミングの知識がないけど、参加できますか？",
     a: (
       <>
-        はい。本セミナーは <span className="font-medium">経営者・意思決定者向け</span> に
-        構成しています。コードを書く時間ではなく、Claude Code で
-        <span className="font-medium">何ができるか・自社で何が変わるか</span>
-        を判断するための時間です。
+        はい、参加できます。むしろ、コードを書かない経営者・実務家こそが対象です。
+        2 時間は「コードを書く」のではなく「AI が仕事をする景色を見る」時間です。
       </>
     ),
   },
   {
-    q: "自社の業務に応用できるか不安です。",
+    q: "うちの業種でも応用できる話ですか？",
     a: (
       <>
-        当日は複数業種の実例（マーケ・営業・バックオフィス）を交えて実演します。
-        Q&A では <span className="font-medium">事前にお寄せいただいた業務</span>
-        への適用イメージもお返しします。
+        はい、ほとんどの業種で応用例があります。
+        当日、参加された方の業種に合わせて、実際の画面でお見せします。
       </>
     ),
   },
   {
-    q: "Zoom の URL はいつ届きますか？",
+    q: "Zoom URL はいつもらえますか？",
     a: (
       <>
-        申込確認後、開催前日までに登録いただいたメールアドレス宛にお送りします。
-        前日 18:00 を過ぎても届かない場合は、お問い合わせ先までご連絡ください。
+        決済完了後、すぐにメールでお送りします。
+        開場は開催 10 分前です。
       </>
     ),
   },
   {
-    q: "当日参加できない場合、アーカイブは見られますか？",
+    q: "当日参加できなかった場合は？",
     a: (
       <>
-        参加者全員に、後日 <span className="font-medium">7 日間限定</span>
-        でアーカイブ動画を配信いたします。当日リアルタイム参加が難しい方も
-        申し込みいただけます。
+        申し訳ございません、本セミナーはライブ配信形式のため、
+        返金やアーカイブ視聴の対応はしておりません。
+        ご都合のよい日程をお選びください（複数日程あり）。
       </>
     ),
   },
   {
-    q: "領収書は発行できますか？",
+    q: "守秘義務のある業種（医療・士業・教育・自治体など）でも参加できますか？",
     a: (
       <>
-        はい。法人・個人事業主の方には、申込時にご指定いただいた宛名で
-        PDF 形式の領収書を発行いたします。
+        はい、もちろんです。
+        セミナーで「機密情報を扱う」ことはしません。
+        業種への応用は、当日業界規制も触れながら、景色としてお見せします。
       </>
     ),
   },
   {
-    q: "当日の資料はもらえますか？",
+    q: "AI 系のセミナーに何度か参加して、何も変わらなかった経験があります。今回は違いますか？",
     a: (
       <>
-        当日使用するスライドの PDF と、
-        <span className="font-medium">Claude Code 導入チェックリスト</span>
-        を後日配布します。社内共有や、導入判断の材料としてお使いいただけます。
+        はい、違います。
+        2 時間で「教える」のではなく、AI が実際に仕事をする景色を見ていただきます。
+        その景色を見た方が「やってみたい」と思った時に、初めて行動が変わります。
+        私たちはそれを大事にしています。
       </>
     ),
   },
@@ -71,53 +67,44 @@ const faqs: Item[] = [
 
 export default function FAQ() {
   return (
-    <DarkSection
+    <section
       id="faq"
       aria-labelledby="faq-heading"
-      bgImage="/images/backdrop/bd_a.jpg"
-      className="py-24 sm:py-32 px-6"
+      className="relative w-full bg-cream text-sumi-deep py-24 sm:py-32 px-6"
     >
       <div className="max-w-3xl mx-auto">
-
-        {/* 主見出し */}
+        <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-4 text-center">
+          FAQ
+        </p>
         <h2
           id="faq-heading"
-          className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center"
+          className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center mb-16"
+          style={{ letterSpacing: "-0.01em" }}
         >
-          よくある<span className="text-coral">ご質問</span>
+          よくある <span className="text-coral">ご質問</span>
         </h2>
 
-        <p className="mt-6 text-base leading-relaxed text-cream/75 text-center max-w-xl mx-auto">
-          ここにない疑問は、申込フォームの「事前質問」欄からどうぞ
-        </p>
-
-        {/* リスト */}
-        <ul className="mt-16 divide-y divide-sumi/15 border-t border-b border-cream/15">
+        <div className="space-y-3">
           {faqs.map((f, i) => (
-            <li key={i}>
-              <details className="group py-6">
-                <summary className="flex cursor-pointer items-start gap-6 list-none">
-                  <span className="font-mono text-sm tracking-[0.15em] text-coral font-semibold pt-1 shrink-0 w-8">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="font-serif text-lg sm:text-xl font-semibold leading-snug flex-1">
-                    {f.q}
-                  </h3>
-                  <span
-                    className="ml-2 mt-1.5 text-coral font-mono text-xl shrink-0 transition-transform duration-200 group-open:rotate-45"
-                    aria-hidden
-                  >
-                    +
-                  </span>
-                </summary>
-                <div className="mt-4 pl-14 pr-8 text-sm sm:text-base leading-relaxed text-cream/85">
-                  {f.a}
-                </div>
-              </details>
-            </li>
+            <details
+              key={i}
+              className="group rounded-lg border border-sumi/15 bg-white/60 p-5 sm:p-6 open:bg-white/90 transition-colors"
+            >
+              <summary className="cursor-pointer list-none flex items-start justify-between gap-4">
+                <span className="font-serif text-base sm:text-lg font-semibold leading-snug">
+                  {f.q}
+                </span>
+                <span className="shrink-0 mt-1 font-mono text-coral text-lg leading-none transition-transform group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <div className="mt-4 pt-4 border-t border-sumi/10 text-sm sm:text-base leading-relaxed text-sumi/80">
+                {f.a}
+              </div>
+            </details>
           ))}
-        </ul>
+        </div>
       </div>
-    </DarkSection>
+    </section>
   );
 }

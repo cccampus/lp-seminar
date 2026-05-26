@@ -18,6 +18,10 @@ export default function SuccessPage() {
           決済が完了しました。
           <br />
           ご登録のメールアドレス宛に確認メールをお送りしています。
+          <br />
+          <span className="text-sm text-sumi/60">
+            （Zoom URL も本メールに記載しています）
+          </span>
         </p>
 
         <div className="rounded-2xl border border-sumi/15 bg-sumi/[0.02] p-8 sm:p-10 text-left space-y-5">
@@ -28,23 +32,15 @@ export default function SuccessPage() {
             <p className="font-serif text-xl font-semibold">
               2026年5月31日（日）11:00〜13:00
             </p>
+            <p className="mt-1.5 text-xs text-sumi/55">
+              開場 10:50（開催10分前）
+            </p>
           </div>
           <div>
             <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral font-semibold mb-1.5">
               形式
             </p>
             <p className="font-serif text-xl font-semibold">オンライン（Zoom）</p>
-            <p className="mt-1.5 text-xs text-sumi/55">
-              Zoom URL は開催日前日までに別途お送りします
-            </p>
-          </div>
-          <div>
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral font-semibold mb-1.5">
-              事前資料
-            </p>
-            <p className="text-sm text-sumi/80">
-              開催前日までにメールにて配布いたします
-            </p>
           </div>
         </div>
 

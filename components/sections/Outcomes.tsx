@@ -1,111 +1,110 @@
 /**
- * Outcomes — 2 時間後に持ち帰るもの
- * Stripe Sessions 方式: "After this 90min, you will be able to..." の3点 Outcome
- * 経営者は「思想」ではなく「判断の手応え」を持ち帰りたい
+ * Outcomes — v3.2（業種別8枠+「業種なくても大丈夫」H3 前面化）
  */
-import DarkSection from "@/components/ui/DarkSection";
-import RevealHeading from "@/components/ui/RevealHeading";
 
-type Outcome = {
-  k: string;
-  title: string;
-  body: React.ReactNode;
-};
-
-const outcomes: Outcome[] = [
+const outcomes = [
   {
-    k: "判断",
-    title: "Claude Code に何を任せ、何を任せないかの線引き",
-    body: (
-      <>
-        経営者として「自社のどの業務に AI を入れ、どこは人間で残すか」を
-        その場で言語化できるようになります。曖昧な「導入検討」から、
-        <span className="font-medium">具体的な判断軸</span>へ。
-      </>
-    ),
+    title: "マーケティング・SNS担当",
+    body: "SNS投稿の素案づくりが、月150投稿で半日 → 30分に。",
   },
   {
-    k: "見積",
-    title: "外注 vs 内製 — どちらが安いかの感覚",
-    body: (
-      <>
-        いま外注している領域のうち、Claude Code で内製した方が
-        早く・安くなるものを見極められます。
-        <span className="font-medium">月◯万円規模の判断</span>を持ち帰れます。
-      </>
-    ),
+    title: "HP・LP制作・Webデザイン",
+    body: "社内で作って、社内で直す。外注費が月◯万円ゼロに。",
   },
   {
-    k: "段取り",
-    title: "実装担当に渡せる「判断用ノート」",
-    body: (
-      <>
-        当日資料 + 導入チェックリストを後日配布。
-        社内の担当者・外部のパートナーと話す時に、
-        <span className="font-medium">そのまま渡せる形</span>でお持ち帰りいただけます。
-      </>
-    ),
+    title: "士業（税理士・社労士・行政書士）",
+    body: "契約書や規程の確認業務の8割を、AI に任せられる。",
+  },
+  {
+    title: "営業・コンサル",
+    body: "顧客ごとの提案資料・追客メモ・進捗管理が、その場で。",
+  },
+  {
+    title: "飲食・サービス業オーナー",
+    body: "予約電話の対応文、SNS発信、お客様への返信が一瞬で。",
+  },
+  {
+    title: "製造・建設・物流（中小経営）",
+    body: "見積書、現場日報、社内文書の作成補助。音声で話すだけで、要約が完成。",
+  },
+  {
+    title: "バックオフィス（経理・人事・総務）",
+    body: "請求書、議事録、社内連絡文、社内資料が一瞬で。",
+  },
+  {
+    title: "個人事業・フリーランス",
+    body: "請求書、見積書、メール、商談記録、すべて補助。",
   },
 ];
 
 export default function Outcomes() {
   return (
-    <DarkSection
+    <section
       id="outcomes"
       aria-labelledby="outcomes-heading"
-      bgImage="/images/backdrop/bd_a.jpg"
-      className="py-24 sm:py-32 px-6"
+      className="relative w-full bg-cream text-sumi-deep py-24 sm:py-32 px-6"
     >
-      <div className="max-w-6xl mx-auto">
-
-        {/* === コアメッセージ === */}
-        <RevealHeading
-          as="h2"
+      <div className="max-w-5xl mx-auto">
+        <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-4 text-center">
+          Outcomes
+        </p>
+        <h2
           id="outcomes-heading"
-          className="font-serif text-3xl sm:text-5xl md:text-6xl font-semibold leading-[1.15] text-center max-w-4xl mx-auto"
+          className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center mb-6"
           style={{ letterSpacing: "-0.01em" }}
         >
-          何の<span className="text-cream/50">ツールを使うか</span>じゃなくて、
-          <br />
-          <span className="text-coral">どう使うか</span> です。
-        </RevealHeading>
+          いま、いろんな業界で、
+          <br className="sm:hidden" />
+          こんな景色が見え始めています。
+        </h2>
 
-        <p className="mt-8 text-base leading-relaxed text-cream/75 text-center max-w-2xl mx-auto">
-          ツール紹介で 2 時間使うことはしません。
-          <br className="hidden sm:block" />
-          「自社の業務に、AI をどう乗せるか」 — その判断軸を持ち帰っていただきます。
-        </p>
+        {/* H3：業種無くても大丈夫 — 大きく前面化 */}
+        <div className="max-w-2xl mx-auto mt-10 mb-16 rounded-2xl bg-coral/8 border border-coral/30 p-6 sm:p-8 text-center">
+          <p className="font-serif text-lg sm:text-xl font-semibold leading-relaxed text-sumi-deep">
+            ここにあなたの業種が無くても大丈夫。
+          </p>
+          <p className="mt-3 text-sm sm:text-base leading-relaxed text-sumi/75">
+            当日、あなたの業種に合わせて、
+            <br className="sm:hidden" />
+            実際の画面で景色をお見せします。
+          </p>
+        </div>
 
-        {/* 3 outcomes — アイコンなし、番号 + 見出し + 本文 */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10">
+        {/* 業種別カード 8 種 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
           {outcomes.map((o, i) => (
-            <article key={i} className="flex flex-col">
-              {/* 番号 — large display */}
-              <p
-                className="font-serif text-6xl sm:text-7xl font-semibold text-coral/85 leading-none"
-                style={{ letterSpacing: "-0.04em" }}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </p>
-
-              {/* タグ */}
-              <p className="mt-5 font-mono text-[10px] tracking-[0.4em] uppercase text-cream/55">
-                {o.k}
-              </p>
-
-              {/* 見出し */}
-              <h3 className="mt-3 font-serif text-xl sm:text-2xl font-semibold leading-snug">
+            <div
+              key={i}
+              className="rounded-xl border border-sumi/12 bg-white/80 p-6 sm:p-7"
+            >
+              <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-coral font-semibold mb-3">
                 {o.title}
-              </h3>
-
-              {/* 本文 */}
-              <p className="mt-4 text-sm sm:text-base leading-relaxed text-cream/80">
+              </p>
+              <p className="text-sm sm:text-base leading-relaxed text-sumi/85">
                 {o.body}
               </p>
-            </article>
+            </div>
           ))}
         </div>
+
+        {/* 中盤 CTA */}
+        <div className="mt-16 flex flex-col items-center gap-3">
+          <a
+            href="#apply"
+            className="inline-flex items-center gap-2 px-7 py-3 bg-coral text-cream font-medium text-sm rounded-full
+              hover:bg-coral-deep transition-colors duration-200"
+          >
+            セミナー1回 ¥5,500（税込）で申し込む
+            <span className="font-mono text-xs tracking-[0.2em]">↗</span>
+          </a>
+          <a
+            href="#faq"
+            className="font-mono text-[10px] tracking-[0.2em] uppercase text-sumi/55 hover:text-coral"
+          >
+            自分の業種、応用できるか確認する ↓
+          </a>
+        </div>
       </div>
-    </DarkSection>
+    </section>
   );
 }

@@ -1,17 +1,39 @@
 "use client";
 
 /**
- * FinalCTA — 最後の申込導線（Stripe Checkout 連携）
- * - 申込ボタン → 同意チェック必須 → POST /api/checkout → Stripe Checkout へ
- * - 副 CTA: 法人 2 名以上の相談（mailto）
- * - Hero と対の dark セクション + cinematic 背景画像 + ambient coral 光 + grain
+ * FinalCTA — v3.2
+ * - 日程選択ラジオ（5/31 と 6/3）
+ * - 同意チェック（特商法・返金不可）
+ * - 法人参加削除、先着30名削除
+ * - セミナー1回 ¥5,500 明示
  */
 import Image from "next/image";
 import { useState } from "react";
 
-const CORPORATE_MAIL = "noreply@isshin-ai.co.jp";
+type Session = {
+  id: string;
+  label: string;
+  date: string;
+  time: string;
+};
+
+const sessions: Session[] = [
+  {
+    id: "2026-05-31",
+    label: "第1回",
+    date: "2026年5月31日（日）",
+    time: "11:00 – 13:00",
+  },
+  {
+    id: "2026-06-03",
+    label: "第2回",
+    date: "2026年6月3日（火）",
+    time: "19:00 – 21:00",
+  },
+];
 
 export default function FinalCTA() {
+  const [selectedSession, setSelectedSession] = useState<string>(sessions[0].id);
   const [agreed, setAgreed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +49,7 @@ export default function FinalCTA() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ agreedTerms: true }),
+        body: JSON.stringify({ agreedTerms: true, sessionDate: selectedSession }),
       });
       const data = await res.json();
       if (!res.ok || !data.url) {
@@ -61,7 +83,7 @@ export default function FinalCTA() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(31,31,31,0.55) 0%, rgba(31,31,31,0.15) 60%, transparent 100%)",
+            "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(31,31,31,0.65) 0%, rgba(31,31,31,0.25) 60%, transparent 100%)",
         }}
         aria-hidden
       />
@@ -88,47 +110,61 @@ export default function FinalCTA() {
         <h2
           id="apply-heading"
           className="font-serif text-3xl sm:text-5xl font-semibold leading-tight"
+          style={{ letterSpacing: "-0.01em" }}
         >
-          2 時間で、
+          半年後の <span className="text-coral italic font-normal">景色</span> を、
           <br />
-          自社の <span className="text-coral italic font-normal">次の一手</span> を持ち帰る
+          いま選ぶ。
         </h2>
 
         <p className="mt-8 text-base sm:text-lg leading-relaxed text-cream/75 max-w-xl mx-auto">
-          先着 30 名。
-          <br className="hidden sm:block" />
-          決済完了後、Zoom URL と事前資料をご登録メールへお送りします
+          決済完了後、Zoom URL をご登録メールへお送りします
         </p>
 
-        {/* メタ情報 */}
-        <div className="mt-14 grid grid-cols-1 sm:grid-cols-3 max-w-2xl mx-auto divide-y sm:divide-y-0 sm:divide-x divide-cream/12">
-          {[
-            { k: "DATE", v: "2026.05.31", sub: "日" },
-            { k: "TIME", v: "11:00–13:00", sub: "2時間" },
-            { k: "PRICE", v: "¥5,000", sub: "税抜・別途消費税" },
-          ].map((m) => (
-            <div key={m.k} className="py-5 sm:py-0 sm:px-6 flex flex-col items-center gap-2.5">
-              <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral font-semibold">
-                {m.k}
-              </span>
-              <span
-                className="font-serif text-2xl sm:text-3xl font-semibold text-cream leading-none [word-break:keep-all]"
-                style={{ letterSpacing: "-0.01em" }}
+        {/* === 日程選択ラジオ === */}
+        <div className="mt-12 max-w-xl mx-auto text-left">
+          <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral font-semibold mb-4">
+            ご希望の日程をお選びください
+          </p>
+          <div className="space-y-3">
+            {sessions.map((s) => (
+              <label
+                key={s.id}
+                htmlFor={`session-${s.id}`}
+                className={`flex items-center gap-4 cursor-pointer rounded-lg border p-4 transition-colors ${
+                  selectedSession === s.id
+                    ? "border-coral bg-coral/8"
+                    : "border-cream/15 hover:border-cream/30"
+                }`}
               >
-                {m.v}
-                <span className="ml-1.5 align-baseline text-base font-normal text-cream/50">
-                  （{m.sub}）
-                </span>
-              </span>
-            </div>
-          ))}
+                <input
+                  id={`session-${s.id}`}
+                  type="radio"
+                  name="session"
+                  value={s.id}
+                  checked={selectedSession === s.id}
+                  onChange={(e) => setSelectedSession(e.target.value)}
+                  className="h-5 w-5 shrink-0 appearance-none rounded-full border-2 border-cream/40 checked:border-coral relative
+                    checked:after:content-[''] checked:after:absolute checked:after:inset-[3px] checked:after:rounded-full checked:after:bg-coral"
+                />
+                <div className="flex-1">
+                  <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-coral/80">
+                    {s.label}
+                  </p>
+                  <p className="mt-1 font-serif text-base sm:text-lg font-semibold text-cream">
+                    {s.date} <span className="text-cream/65 font-normal">/ {s.time}</span>
+                  </p>
+                </div>
+              </label>
+            ))}
+          </div>
         </div>
 
         {/* === 同意チェック === */}
-        <div className="mt-14 max-w-xl mx-auto">
+        <div className="mt-10 max-w-xl mx-auto">
           <label
             htmlFor="agree-terms"
-            className="flex items-start gap-3 text-left cursor-pointer group"
+            className="flex items-start gap-3 text-left cursor-pointer"
           >
             <input
               id="agree-terms"
@@ -163,48 +199,30 @@ export default function FinalCTA() {
           </label>
         </div>
 
-        {/* エラー表示 */}
         {error && (
-          <p className="mt-5 text-sm text-coral-light max-w-xl mx-auto">
-            {error}
-          </p>
+          <p className="mt-5 text-sm text-coral-light max-w-xl mx-auto">{error}</p>
         )}
 
         {/* === 主 CTA === */}
         <button
           type="button"
           onClick={handleApply}
-          disabled={submitting}
-          className="mt-8 inline-flex items-center gap-3 px-10 py-4 bg-coral text-cream font-medium text-base rounded-full
-            hover:bg-coral-deep transition-colors duration-200 shadow-[0_12px_36px_rgba(217,119,87,0.4)]
-            disabled:opacity-60 disabled:cursor-not-allowed"
+          disabled={submitting || !agreed}
+          className={`mt-8 inline-flex items-center gap-3 px-10 py-4 font-medium text-base rounded-full
+            transition-all duration-200
+            ${
+              agreed && !submitting
+                ? "bg-coral text-cream hover:bg-coral-deep shadow-[0_12px_36px_rgba(217,119,87,0.4)]"
+                : "bg-coral/40 text-cream/60 cursor-not-allowed"
+            }`}
         >
-          {submitting ? "決済画面へ移動中…" : "申し込む"}
+          {submitting ? "決済画面へ移動中…" : "セミナー1回 ¥5,500（税込）で申し込む"}
           <span className="font-mono text-xs tracking-[0.2em]">↗</span>
         </button>
 
-        <p className="mt-5 font-mono text-[10px] tracking-[0.2em] uppercase text-cream/45">
-          Stripe 安全決済 · クレジットカード対応
+        <p className="mt-5 text-xs sm:text-sm text-cream/55">
+          お席に制限はありません。一人でも多くの方と、密度の濃い2時間を。
         </p>
-
-        {/* === 副 CTA — 法人2名以上 === */}
-        <div className="mt-16 pt-12 border-t border-cream/10 max-w-xl mx-auto">
-          <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-3">
-            法人で参加する
-          </p>
-          <p className="text-sm sm:text-base text-cream/80 leading-relaxed">
-            2 名以上での参加・社内勉強会としての共有・録画の社内配布など、
-            <br className="hidden sm:block" />
-            個別にご相談ください
-          </p>
-          <a
-            href={`mailto:${CORPORATE_MAIL}?subject=CCC%20%E3%82%BB%E3%83%9F%E3%83%8A%E3%83%BC%20%E6%B3%95%E4%BA%BA%E5%8F%82%E5%8A%A0%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87`}
-            className="mt-5 inline-flex items-center gap-2 text-coral-light hover:text-coral font-medium link-underline"
-          >
-            {CORPORATE_MAIL}
-            <span className="font-mono text-xs tracking-[0.2em]">↗</span>
-          </a>
-        </div>
       </div>
     </section>
   );

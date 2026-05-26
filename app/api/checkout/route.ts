@@ -6,12 +6,13 @@ export const runtime = "nodejs";
 
 const schema = z.object({
   agreedTerms: z.literal(true, { error: "特定商取引法・返金不可条件への同意が必要です" }),
+  sessionDate: z.string().optional(),
 });
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { agreedTerms } = schema.parse(body);
+    const { agreedTerms, sessionDate } = schema.parse(body);
 
     if (!agreedTerms) {
       return NextResponse.json(
@@ -61,12 +62,12 @@ export async function POST(req: Request) {
       custom_text: {
         submit: {
           message:
-            "決済完了後、Zoom URL と事前資料をご登録のメールアドレスへお送りします。",
+            "決済完了後、Zoom URL をご登録のメールアドレス宛にお送りします。",
         },
       },
       metadata: {
-        seminar: "CCC Seminar Vol.1",
-        date: "2026-05-31",
+        seminar: "CCC Seminar",
+        sessionDate: sessionDate || "unspecified",
       },
     });
 
