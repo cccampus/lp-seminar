@@ -7,12 +7,12 @@ import DarkSection from "@/components/ui/DarkSection";
 
 const SESSIONS = [
   {
-    date: "6/3 (火)",
+    date: "6/3 (水)",
     time: "19:00 – 21:00",
     status: "current",
   },
   {
-    date: "6/14 (土)",
+    date: "6/14 (日)",
     time: "11:00 – 13:00",
     status: "next",
   },
