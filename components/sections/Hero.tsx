@@ -50,16 +50,17 @@ export default function Hero() {
       <div className="relative z-10 w-full min-h-[80vh] flex flex-col items-center justify-center text-center px-6 pt-20">
         {/* 主タイトル */}
         <h1
-          className="font-serif text-3xl sm:text-5xl md:text-6xl font-semibold leading-tight max-w-3xl"
-          style={{ letterSpacing: "-0.01em" }}
+          className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.4] mx-auto"
+          style={{ letterSpacing: "0.02em", wordBreak: "keep-all" }}
         >
-          半年前、
-          <br className="sm:hidden" />
-          私も AI を使えませんでした。
-          <br />
-          いま、
-          <br className="sm:hidden" />
-          <span className="text-coral italic font-normal">AI で仕事をしています</span>。
+          <span className="block">半年前、私もAIを使えませんでした。</span>
+          <span className="block mt-2 sm:mt-3">
+            いま、
+            <span className="text-coral italic font-normal">
+              AIで仕事をしています
+            </span>
+            。
+          </span>
         </h1>
 
         {/* サブコピー */}
