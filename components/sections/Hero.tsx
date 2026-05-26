@@ -1,8 +1,10 @@
+import Image from "next/image";
+
 /**
- * Hero — v3.2（紀洋さんFB全反映版）
- * - 案A：6ヶ月変化軸
+ * Hero — v3.2 コピー / cinematic V2 ダークステージ
+ * - 案A: 6ヶ月変化軸
  * - 「半年前、私もAIを使えませんでした。いま、AI で仕事をしています」
- * - Claude Code 補足説明1行
+ * - cinematic_hero_bg.png (gpt-image-2 生成のダークステージ) を背景に統合
  */
 const APPLY_HREF = "#apply";
 const DETAIL_HREF = "#detail";
@@ -10,21 +12,34 @@ const DETAIL_HREF = "#detail";
 export default function Hero() {
   return (
     <section className="relative w-full min-h-screen overflow-hidden bg-sumi-deep text-cream py-20 sm:py-24">
+      {/* === cinematic 背景画像 (ダークステージ) === */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+        <Image
+          src="/images/hero/cinematic_hero_bg.png"
+          alt=""
+          fill
+          sizes="100vw"
+          priority
+          className="object-cover opacity-70"
+        />
+      </div>
+
       {/* === 暗グラデオーバーレイ === */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 80% 70% at 50% 40%, rgba(55,55,55,0.4) 0%, rgba(31,24,21,0.95) 100%)",
+            "radial-gradient(ellipse 80% 70% at 50% 40%, rgba(31,31,31,0.35) 0%, rgba(31,24,21,0.92) 100%)",
         }}
+        aria-hidden
       />
 
-      {/* === ambient コーラル光 === */}
+      {/* === コーラル スポット === */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 45% 35% at 80% 20%, rgba(217,119,87,0.18) 0%, transparent 60%)",
+            "radial-gradient(ellipse 35% 32% at 50% 38%, rgba(217,119,87,0.22) 0%, transparent 65%)",
         }}
         aria-hidden
       />
@@ -32,22 +47,38 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 40% 30% at 15% 80%, rgba(184,93,64,0.12) 0%, transparent 60%)",
+            "radial-gradient(ellipse 40% 30% at 15% 80%, rgba(184,93,64,0.14) 0%, transparent 60%)",
         }}
         aria-hidden
       />
 
       {/* === Grain === */}
       <div
-        className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-[0.05]"
+        className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-[0.06]"
         style={{
           backgroundImage:
             "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>\")",
         }}
+        aria-hidden
+      />
+
+      {/* === Bottom seam (次セクションへ繋ぐダークフェード) === */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-40 pointer-events-none z-[5]"
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent 0%, rgba(31,31,31,0.6) 55%, var(--color-sumi-deep) 100%)",
+        }}
+        aria-hidden
       />
 
       {/* === Content === */}
       <div className="relative z-10 w-full min-h-[80vh] flex flex-col items-center justify-center text-center px-6 pt-20">
+        {/* eyebrow */}
+        <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-coral/85 mb-8">
+          Claude Code 実践セミナー
+        </p>
+
         {/* 主タイトル */}
         <h1
           className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.4] mx-auto"
@@ -87,7 +118,7 @@ export default function Hero() {
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-coral font-semibold">PRICE</span>
-            <span>¥5,000（税抜）</span>
+            <span>¥5,000(税抜)</span>
           </div>
         </div>
 
@@ -96,9 +127,9 @@ export default function Hero() {
           <a
             href={APPLY_HREF}
             className="inline-flex items-center gap-3 px-9 py-4 bg-coral text-cream font-medium text-base rounded-full
-              hover:bg-coral-deep transition-colors duration-200 shadow-[0_12px_36px_rgba(217,119,87,0.4)]"
+              hover:bg-coral-deep transition-colors duration-200 shadow-[0_12px_40px_rgba(217,119,87,0.45)]"
           >
-            セミナー1回 ¥5,500（税込）で申し込む
+            セミナー1回 ¥5,500(税込)で申し込む
             <span className="font-mono text-xs tracking-[0.2em]">↗</span>
           </a>
           <a
