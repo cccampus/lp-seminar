@@ -1,23 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useCallback } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useReducedMotion,
-  type PanInfo,
-} from "motion/react";
+import { useEffect, useRef } from "react";
+import { useReducedMotion } from "motion/react";
 
 /**
  * Voices — v2（参加された方の、リアルな声）
  *
  * スマホ／PC で「別の作り」にする（縮小流用ではない）。
- *   - スマホ(< md): Tinder 風スワイプ・スタック。framer-motion(`motion/react`) の drag で
- *                   前面カードを指で掴み、左右に閾値を超えてスワイプすると
- *                   そのカードが飛んで次のカードが前面に出る。AnimatePresence で出入りを管理。
- *                   下にドット、左右に戻る/進む補助ボタン。
- *                   prefers-reduced-motion 時は drag 無効＋ボタンでの簡易切替にフォールバック。
+ *   - スマホ(< md): 横スクロール・カルーセル。カードを横一列に並べ、ゆっくり自動で左へ流れ続ける。
+ *                   ネイティブ横スクロール（overflow-x:auto + scroll-snap）なので指でスワイプ／
+ *                   ドラッグもでき、触れている間は自動送りを一時停止、離すと再開する。
+ *                   カード配列を2周分描画し、半分まで進んだら scrollLeft を巻き戻して
+ *                   シームレスにループ。スクロールバーは隠す。
+ *                   prefers-reduced-motion 時は自動送りを無効化（手動スワイプのみ）。
  *   - PC(>= md):   2〜3カラムの千鳥（masonry風）一覧。スワイプ無し・余白リッチな雑誌風。
  *
  * カード意匠（切り抜きレイヤー）:
@@ -233,9 +229,9 @@ export default function Voices() {
         </div>
       </div>
 
-      {/* スマホ: Tinder 風スワイプ・スタック */}
+      {/* スマホ: 横スクロール・自動カルーセル */}
       <div className="md:hidden">
-        <SwipeDeck voices={voices} />
+        <MarqueeCarousel voices={voices} />
       </div>
 
       {/* PC: 千鳥 masonry 雑誌スプレッド */}
@@ -258,185 +254,121 @@ export default function Voices() {
 }
 
 /* =================================================================
-   スマホ用: Tinder 風スワイプ・スタック
-   - 前面カードを drag。x の絶対値が閾値超 or 速度超で「飛ばして」次へ。
-   - 背面に次カードがちらりと見えるよう、奥行きを scale/translateY で表現。
-   - reduced-motion 時は drag 無効、左右ボタンで切替。
+   スマホ用: 横スクロール・自動カルーセル（マーキー）
+   - カードを横一列に並べ、requestAnimationFrame で scrollLeft を毎フレーム
+     ごく僅かに加算して、ゆっくり左へ自動で流し続ける。
+   - 中身はネイティブ横スクロール（overflow-x:auto + scroll-snap）なので、
+     指でスワイプ／ドラッグもできる。変な掴み挙動は一切無し（素直な横スクロール）。
+   - 触れている／ホバー中（pointerdown/touchstart/mouseenter）は自動送りを一時停止し、
+     離す（pointerup/touchend/mouseleave）と再開する。
+   - voices を2周ぶん描画し、1周ぶん（前半）を超えたら scrollLeft を巻き戻して
+     シームレスにループ（カードが飛んで見えない）。
+   - prefers-reduced-motion 時は自動送りを無効化（手動スワイプのみ）。
+   - スクロールバーは .voices-swipe（globals.css）で非表示。
    ================================================================= */
-const SWIPE_THRESHOLD = 90; // px
-const SWIPE_VELOCITY = 450; // px/s
+const AUTO_SPEED_PX_PER_SEC = 28; // 自動送り速度。1カード(約300px)を約10秒で通過する穏やかな速さ。
 
-function SwipeDeck({ voices }: { voices: Voice[] }) {
+function MarqueeCarousel({ voices }: { voices: Voice[] }) {
   const prefersReduced = useReducedMotion();
-  const [index, setIndex] = useState(0);
-  // フライアウト方向（-1=左, 1=右）。AnimatePresence の exit に渡す。
-  const [exitDir, setExitDir] = useState(0);
-  const total = voices.length;
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(false);
+  // 内部で小数の現在位置を保持する。scrollLeft の getter は整数に丸められるため、
+  // 毎フレーム scrollLeft を読み戻すと 1px 未満の加算が消えて前進できない。
+  // そこで位置は posRef（float）で持ち、scrollLeft へは書き込むだけにする。
+  const posRef = useRef(0);
+  // 自分の書き込みで発火した scroll イベントを、ユーザー操作と区別するためのフラグ。
+  const selfScrollRef = useRef(false);
 
-  const advance = useCallback(
-    (dir: number) => {
-      setExitDir(dir);
-      setIndex((prev) => (prev + 1) % total);
-    },
-    [total]
-  );
+  useEffect(() => {
+    if (prefersReduced) return; // 自動送りなし（手動スワイプのみ）
+    const el = scrollerRef.current;
+    if (!el) return;
 
-  const goBack = useCallback(
-    (dir: number) => {
-      setExitDir(dir);
-      setIndex((prev) => (prev - 1 + total) % total);
-    },
-    [total]
-  );
+    posRef.current = el.scrollLeft;
+    let raf = 0;
+    let last = performance.now();
 
-  const onDragEnd = useCallback(
-    (_e: unknown, info: PanInfo) => {
-      const flung =
-        Math.abs(info.offset.x) > SWIPE_THRESHOLD ||
-        Math.abs(info.velocity.x) > SWIPE_VELOCITY;
-      if (!flung) return;
-      advance(info.offset.x < 0 ? -1 : 1);
-    },
-    [advance]
-  );
+    const tick = (now: number) => {
+      const dt = (now - last) / 1000;
+      last = now;
+      if (!pausedRef.current && el.scrollWidth > el.clientWidth) {
+        // 前半（voices 1周ぶん）の幅を超えたら、その幅だけ巻き戻して継ぎ目を消す。
+        const half = el.scrollWidth / 2;
+        let next = posRef.current + AUTO_SPEED_PX_PER_SEC * dt;
+        if (next >= half) next -= half;
+        posRef.current = next;
+        selfScrollRef.current = true;
+        el.scrollLeft = next;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
 
-  // 前面 + 背面2枚を重ねて表示（スタック感）。voiceIndex を持たせ persona を 1:1 で対応。
-  const stack = [0, 1, 2].map((d) => {
-    const vi = (index + d) % total;
-    return { voice: voices[vi], voiceIndex: vi };
-  });
-  const current = stack[0];
+    return () => cancelAnimationFrame(raf);
+  }, [prefersReduced]);
+
+  // 触れている間は止める。
+  const pause = () => {
+    pausedRef.current = true;
+  };
+  const resume = () => {
+    pausedRef.current = false;
+  };
+  // ユーザーの手動スクロール時は posRef を実値に同期し、継ぎ目を越えたら巻き戻す。
+  const onScroll = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    if (selfScrollRef.current) {
+      // 自動送りによる scroll。位置同期は不要。
+      selfScrollRef.current = false;
+      return;
+    }
+    const half = el.scrollWidth / 2;
+    if (el.scrollLeft >= half) el.scrollLeft -= half;
+    else if (el.scrollLeft < 0) el.scrollLeft += half;
+    posRef.current = el.scrollLeft;
+  };
+
+  // 2周ぶん描画してシームレスにループさせる。
+  const loop = [...voices, ...voices];
 
   return (
-    <div className="px-[7vw]">
+    <div>
       <p
         className="mb-6 text-center font-mono text-[10px] uppercase tracking-[0.35em] text-cream/45"
         aria-hidden
       >
-        {prefersReduced ? "← 切り替え →" : "← スワイプ →"}
+        ← スワイプ →
       </p>
 
-      {/* スタック領域。背面カードは静的に重ねる。 */}
-      <div className="relative mx-auto h-[480px] max-w-[400px]">
-        {/* 背面（奥から手前へ） */}
-        {stack
-          .slice(1)
-          .reverse()
-          .map((s, ri) => {
-            // ri: 0 が一番奥(d=2), 1 が d=1
-            const depth = ri === 0 ? 2 : 1;
-            return (
-              <div
-                key={`bg-${s.voice.initial}-${depth}`}
-                aria-hidden
-                className="absolute inset-0"
-                style={{
-                  transform: `translateY(${depth * 14}px) scale(${1 - depth * 0.05})`,
-                  opacity: depth === 2 ? 0.5 : 0.75,
-                  zIndex: 10 - depth,
-                }}
-              >
-                <Card voice={s.voice} voiceIndex={s.voiceIndex} dimmed />
-              </div>
-            );
-          })}
-
-        {/* 前面（操作対象） */}
-        <AnimatePresence initial={false} mode="popLayout">
-          <motion.div
-            key={`${index}-${current.voice.initial}`}
-            className="absolute inset-0 z-20"
-            style={{ zIndex: 20 }}
-            drag={prefersReduced ? false : "x"}
-            dragSnapToOrigin
-            dragElastic={0.5}
-            dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-            onDragEnd={prefersReduced ? undefined : onDragEnd}
-            whileTap={prefersReduced ? undefined : { cursor: "grabbing" }}
-            initial={
-              prefersReduced
-                ? { opacity: 0 }
-                : { scale: 0.96, y: 14, opacity: 0.6 }
-            }
-            animate={
-              prefersReduced
-                ? { opacity: 1 }
-                : { scale: 1, y: 0, opacity: 1 }
-            }
-            exit={
-              prefersReduced
-                ? { opacity: 0, transition: { duration: 0.15 } }
-                : {
-                    x: exitDir < 0 ? -520 : 520,
-                    rotate: exitDir < 0 ? -16 : 16,
-                    opacity: 0,
-                    transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] },
-                  }
-            }
-            transition={{ type: "spring", stiffness: 320, damping: 30 }}
-          >
-            <Card
-              voice={current.voice}
-              voiceIndex={current.voiceIndex}
-              grabbable={!prefersReduced}
-            />
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* 補助操作: 戻る / ドット / 進む */}
-      <div className="mt-7 flex items-center justify-center gap-5">
-        <button
-          type="button"
-          onClick={() => goBack(-1)}
-          aria-label="前の声へ"
-          className="flex h-10 w-10 items-center justify-center rounded-full text-cream/55 transition-colors hover:text-coral focus-visible:text-coral"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path
-              d="M15 18l-6-6 6-6"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-
-        <div className="flex max-w-[220px] flex-wrap items-center justify-center gap-1.5" aria-hidden>
-          {voices.map((_, i) => (
-            <span
+      <div
+        ref={scrollerRef}
+        onScroll={onScroll}
+        onPointerDown={pause}
+        onPointerUp={resume}
+        onPointerCancel={resume}
+        onTouchStart={pause}
+        onTouchEnd={resume}
+        onMouseEnter={pause}
+        onMouseLeave={resume}
+        className="voices-swipe flex gap-5 overflow-x-auto px-[7vw] pb-2"
+        role="list"
+        aria-label="参加された方の声"
+      >
+        {loop.map((v, i) => {
+          const vi = i % voices.length;
+          return (
+            <div
               key={i}
-              className={
-                "h-1.5 rounded-full transition-all duration-300 " +
-                (i === index ? "w-5 bg-coral" : "w-1.5 bg-cream/25")
-              }
-            />
-          ))}
-        </div>
-
-        <button
-          type="button"
-          onClick={() => advance(1)}
-          aria-label="次の声へ"
-          className="flex h-10 w-10 items-center justify-center rounded-full text-cream/55 transition-colors hover:text-coral focus-visible:text-coral"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path
-              d="M9 6l6 6-6 6"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+              role="listitem"
+              aria-hidden={i >= voices.length ? true : undefined}
+              className="h-[480px] w-[80vw] max-w-[340px] shrink-0"
+            >
+              <Card voice={v} voiceIndex={vi} priority={i < 2} />
+            </div>
+          );
+        })}
       </div>
-
-      {/* 進捗テキスト（番号） */}
-      <p className="mt-4 text-center font-mono text-[10px] tracking-[0.3em] text-cream/35">
-        {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-      </p>
     </div>
   );
 }
@@ -451,21 +383,14 @@ function SwipeDeck({ voices }: { voices: Voice[] }) {
 function Card({
   voice,
   voiceIndex,
-  dimmed = false,
-  grabbable = false,
+  priority = false,
 }: {
   voice: Voice;
   voiceIndex: number;
-  dimmed?: boolean;
-  grabbable?: boolean;
+  priority?: boolean;
 }) {
   return (
-    <article
-      className={
-        "relative flex h-full select-none flex-col overflow-hidden rounded-[30px] bg-sumi shadow-[0_30px_70px_-24px_rgba(0,0,0,0.65)] " +
-        (grabbable ? "cursor-grab" : "")
-      }
-    >
+    <article className="relative flex h-full select-none flex-col overflow-hidden rounded-[30px] bg-sumi shadow-[0_30px_70px_-24px_rgba(0,0,0,0.65)]">
       {/* 上部・明色帯（人物の座面）。帯自体は overflow-hidden で角丸内に収める。 */}
       <div className="relative h-[224px] shrink-0">
         <div className="absolute inset-x-0 bottom-0 top-7 overflow-hidden rounded-b-[18px] bg-cream-warm" />
@@ -478,7 +403,8 @@ function Card({
           height={576}
           draggable={false}
           className="pointer-events-none absolute bottom-0 left-1/2 h-[244px] w-auto -translate-x-1/2 object-contain object-bottom"
-          priority={!dimmed}
+          priority={priority}
+          loading={priority ? undefined : "lazy"}
         />
       </div>
 
