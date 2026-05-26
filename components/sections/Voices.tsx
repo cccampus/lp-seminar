@@ -136,7 +136,7 @@ export default function Voices() {
             style={{ letterSpacing: "-0.01em" }}
           >
             参加された方の、
-            <br className="sm:hidden" />
+            <br />
             リアルな声。
           </h2>
           <p className="mt-5 text-sm sm:text-base text-cream/55 text-center">

@@ -112,7 +112,7 @@ export default function FinalCTA() {
           className="font-serif text-3xl sm:text-5xl font-semibold leading-tight"
           style={{ letterSpacing: "-0.01em" }}
         >
-          半年後の <span className="text-coral italic font-normal">景色</span> を、
+          半年後の<span className="text-coral italic font-normal">景色</span>を、
           <br />
           いま選ぶ。
         </h2>

@@ -59,7 +59,7 @@ export default function Speaker() {
           style={{ letterSpacing: "-0.01em" }}
         >
           教えるのは、
-          <br className="sm:hidden" />
+          <br />
           半年前まで AI を使えなかった2人です。
         </h2>
 

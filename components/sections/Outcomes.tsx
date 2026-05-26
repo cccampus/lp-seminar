@@ -54,7 +54,7 @@ export default function Outcomes() {
           style={{ letterSpacing: "-0.01em" }}
         >
           いま、いろんな業界で、
-          <br className="sm:hidden" />
+          <br />
           こんな景色が見え始めています。
         </h2>
 

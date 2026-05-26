@@ -48,7 +48,9 @@ export default function SixMonths() {
           className="font-serif text-3xl sm:text-5xl font-semibold leading-tight mb-10"
           style={{ letterSpacing: "-0.01em" }}
         >
-          半年で、毎日の仕事が、ここまで変わる。
+          半年で、毎日の仕事が、
+          <br />
+          ここまで変わる。
         </h2>
 
         <div className="prose-stub text-cream/85 text-base sm:text-lg leading-loose space-y-5">

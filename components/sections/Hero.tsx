@@ -53,13 +53,13 @@ export default function Hero() {
           className="font-serif text-3xl sm:text-5xl md:text-6xl font-semibold leading-tight max-w-3xl"
           style={{ letterSpacing: "-0.01em" }}
         >
-          半年前、私も
+          半年前、
           <br className="sm:hidden" />
-          AIを使えませんでした。
+          私も AI を使えませんでした。
           <br />
           いま、
-          <span className="text-coral italic font-normal">AI で仕事</span>
-          を、しています。
+          <br className="sm:hidden" />
+          <span className="text-coral italic font-normal">AI で仕事をしています</span>。
         </h1>
 
         {/* サブコピー */}
