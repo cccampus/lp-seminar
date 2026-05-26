@@ -1,10 +1,17 @@
+"use client";
+
 /**
- * Outcomes — v3.2 コピー / cinematic V2 ダークトーン
- * 業種別8枠 + 「業種なくても大丈夫」H3 前面化
+ * Outcomes (Cases) — v3.2 コピー / cinematic V2 ダークトーン
+ * 業種別8章 + 「業種なくても大丈夫」H3 前面化
+ *
+ * デザイン: SixMonths と同じく hp-ai/about Chapter 流用 (TracingBeam + Chapter)
  */
 import DarkSection from "@/components/ui/DarkSection";
+import { motion } from "motion/react";
+import type { ReactNode } from "react";
+import { TracingBeam } from "@/components/aceternity/TracingBeam";
 
-const outcomes = [
+const outcomes: { title: string; body: ReactNode }[] = [
   {
     title: "マーケティング・SNS担当",
     body: "SNS投稿の素案づくりが、月150投稿で半日 → 30分に。",
@@ -14,7 +21,7 @@ const outcomes = [
     body: "社内で作って、社内で直す。外注費が月◯万円ゼロに。",
   },
   {
-    title: "士業（税理士・社労士・行政書士）",
+    title: "士業(税理士・社労士・行政書士)",
     body: "契約書や規程の確認業務の8割を、AI に任せられる。",
   },
   {
@@ -45,6 +52,57 @@ const outcomes = [
   },
 ];
 
+function Chapter({ index, item }: { index: number; item: typeof outcomes[number] }) {
+  const chars = Array.from(item.title);
+  return (
+    <article className="py-6 sm:py-8 first:pt-0 last:pb-0">
+      <p className="font-mono text-[11px] tracking-[0.32em] uppercase text-cream/55 mb-3">
+        Case 0{index + 1}
+      </p>
+      <h3
+        className="font-serif font-semibold text-cream"
+        style={{
+          fontSize: "clamp(18px, 2.4vw, 28px)",
+          letterSpacing: "-0.015em",
+          lineHeight: 1.4,
+          wordBreak: "keep-all",
+          lineBreak: "strict",
+        }}
+      >
+        {chars.map((c, ci) => (
+          <motion.span
+            key={ci}
+            initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.5, delay: ci * 0.02, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-block"
+            style={{ whiteSpace: c === " " ? "pre" : "normal" }}
+          >
+            {c}
+          </motion.span>
+        ))}
+      </h3>
+      <motion.p
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.6, delay: 0.25 }}
+        className="mt-3 sm:mt-4 text-sm sm:text-base leading-relaxed text-cream/85"
+      >
+        {item.body}
+      </motion.p>
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 1.0, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="mt-5 sm:mt-6 h-px bg-gradient-to-r from-coral/70 via-coral/20 to-transparent origin-left"
+      />
+    </article>
+  );
+}
+
 export default function Outcomes() {
   return (
     <DarkSection
@@ -53,13 +111,13 @@ export default function Outcomes() {
       bgImage="/images/backdrop/bd_b.jpg"
       className="py-24 sm:py-32 px-6"
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-4 text-center">
           Cases
         </p>
         <h2
           id="cases-heading"
-          className="font-serif text-xl sm:text-5xl font-semibold leading-tight text-center text-cream mb-6"
+          className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center text-cream mb-8"
           style={{ letterSpacing: "-0.01em" }}
         >
           いま、いろんな業界で、
@@ -68,7 +126,7 @@ export default function Outcomes() {
         </h2>
 
         {/* H3: 業種無くても大丈夫 — 大きく前面化 */}
-        <div className="max-w-2xl mx-auto mt-10 mb-16 rounded-2xl border border-coral/40 bg-coral/[0.08] p-6 sm:p-8 text-center">
+        <div className="max-w-2xl mx-auto mt-10 mb-14 sm:mb-20 rounded-2xl border border-coral/40 bg-coral/[0.08] p-6 sm:p-8 text-center">
           <p className="font-serif text-lg sm:text-xl font-semibold leading-relaxed text-cream">
             ここにあなたの業種が無くても大丈夫。
           </p>
@@ -79,32 +137,24 @@ export default function Outcomes() {
           </p>
         </div>
 
-        {/* 業種別カード 8種 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-          {outcomes.map((o, i) => (
-            <div
-              key={i}
-              className="rounded-xl border border-cream/15 bg-cream/[0.04] p-6 sm:p-7"
-            >
-              <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-coral font-semibold mb-3">
-                {o.title}
-              </p>
-              <p className="text-sm sm:text-base leading-relaxed text-cream/85">
-                {o.body}
-              </p>
-            </div>
-          ))}
-        </div>
+        {/* 業種別8章 — TracingBeam + Chapter (SixMonths と統一) */}
+        <TracingBeam className="pl-10 sm:pl-16">
+          <div>
+            {outcomes.map((item, i) => (
+              <Chapter key={i} index={i} item={item} />
+            ))}
+          </div>
+        </TracingBeam>
 
         {/* 中盤 CTA */}
-        <div className="mt-16 flex flex-col items-center gap-3">
+        <div className="mt-16 sm:mt-20 flex flex-col items-center gap-3">
           <a
             href="#apply"
-            className="inline-flex items-center gap-2 px-7 py-3 bg-coral text-cream font-medium text-sm rounded-full
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-coral text-cream font-medium text-sm sm:text-base rounded-full
               hover:bg-coral-deep transition-colors duration-200 shadow-[0_12px_36px_rgba(217,119,87,0.4)]"
           >
-            セミナー1回 ¥5,500(税込)で申し込む
-            <span className="font-mono text-xs tracking-[0.2em]">↗</span>
+            お申込みへ進む
+            <span className="font-mono text-xs tracking-[0.2em]">→</span>
           </a>
           <a
             href="#faq"
