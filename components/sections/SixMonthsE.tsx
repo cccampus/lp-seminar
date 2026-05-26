@@ -40,15 +40,15 @@ function EditorialRow({ index, item }: { index: number; item: typeof beforeAfter
   const chars = splitChars(item.label);
 
   return (
-    <div ref={ref} className="relative pl-12 sm:pl-20 py-10 sm:py-14">
-      {/* 巨大背景番号 (parallax) */}
+    <div ref={ref} className="relative pl-10 sm:pl-16 py-7 sm:py-10">
+      {/* 背景番号 (parallax)・控えめサイズ */}
       <motion.span
         aria-hidden
         className="absolute right-2 sm:right-6 top-0 font-serif font-bold text-coral select-none pointer-events-none leading-none"
         style={{
           y: numberY,
           opacity: numberOpacity,
-          fontSize: "clamp(120px, 22vw, 280px)",
+          fontSize: "clamp(72px, 14vw, 180px)",
           letterSpacing: "-0.05em",
         }}
       >
@@ -56,10 +56,10 @@ function EditorialRow({ index, item }: { index: number; item: typeof beforeAfter
       </motion.span>
 
       {/* 左 glow line track */}
-      <div className="absolute left-3 sm:left-6 top-4 bottom-4 w-px bg-cream/12" aria-hidden />
+      <div className="absolute left-3 sm:left-5 top-3 bottom-3 w-px bg-cream/12" aria-hidden />
       <motion.div
         aria-hidden
-        className="absolute left-3 sm:left-6 top-4 w-px"
+        className="absolute left-3 sm:left-5 top-3 w-px"
         style={{
           height: lineHeight,
           background: "linear-gradient(to bottom, var(--color-coral) 0%, rgba(217,119,87,0.2) 100%)",
@@ -72,7 +72,7 @@ function EditorialRow({ index, item }: { index: number; item: typeof beforeAfter
         {`0${index + 1}` /* 視認性のため番号小型も併記 */}
       </p>
       <h3
-        className="font-serif text-2xl sm:text-4xl font-semibold leading-snug text-cream"
+        className="font-serif text-xl sm:text-3xl font-semibold leading-snug text-cream"
         style={{ letterSpacing: "-0.015em" }}
       >
         {chars.map((c, j) => (
@@ -90,13 +90,13 @@ function EditorialRow({ index, item }: { index: number; item: typeof beforeAfter
       </h3>
 
       {/* Before → After */}
-      <div className="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-2">
-        <span className="font-serif text-base sm:text-lg text-cream/55 line-through decoration-coral/40 decoration-1 underline-offset-4">
+      <div className="mt-3 sm:mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-2">
+        <span className="font-serif text-sm sm:text-base text-cream/55 line-through decoration-coral/40 decoration-1 underline-offset-4">
           {item.before}
         </span>
-        <span className="font-mono text-coral text-base sm:text-lg">→</span>
+        <span className="font-mono text-coral text-sm sm:text-base">→</span>
         <span
-          className="font-serif text-lg sm:text-2xl font-semibold text-coral"
+          className="font-serif text-base sm:text-xl font-semibold text-coral"
           style={{ letterSpacing: "-0.01em" }}
         >
           {item.after}
@@ -106,7 +106,7 @@ function EditorialRow({ index, item }: { index: number; item: typeof beforeAfter
       {/* 終端 coral line draw */}
       <motion.div
         aria-hidden
-        className="mt-6 h-px bg-coral origin-left"
+        className="mt-4 sm:mt-5 h-px bg-coral origin-left"
         style={{ width: endLineWidth, boxShadow: "0 0 6px rgba(217,119,87,0.5)" }}
       />
     </div>
