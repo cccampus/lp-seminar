@@ -45,13 +45,10 @@ const speakers = [
     closing: [
       "AI を “ツール” ではなく「表現言語」として捉えています。",
       "複数の AI を統合し、映像・ブランド・体験を横断して作っています。",
+      "日本コロムビア COLOTEK 優秀賞、Chroma Awards 佳作受賞、デジタルハリウッド大学 講師。",
       "ふつうの会社員が、どう変わったのか。リアルにお話しします。",
     ],
-    achievements: [
-      "日本コロムビア「COLOTEK」優秀賞（美空ひばり MV 制作参加）",
-      "国際アワード「Chroma Awards」佳作（ElevenLabs 主催／Google Cloud 協賛）",
-      "デジタルハリウッド大学 講師（CG・映像制作）",
-    ] as string[],
+    achievements: [] as string[],
   },
 ];
 
