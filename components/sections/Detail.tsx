@@ -20,15 +20,15 @@ import DarkSection from "@/components/ui/DarkSection";
 const sessions = [
   {
     label: "第1回",
-    day: "05 / 31",
-    weekday: "日",
-    time: "11:00 – 13:00",
-  },
-  {
-    label: "第2回",
     day: "06 / 03",
     weekday: "火",
     time: "19:00 – 21:00",
+  },
+  {
+    label: "第2回",
+    day: "06 / 14",
+    weekday: "土",
+    time: "11:00 – 13:00",
   },
 ];
 

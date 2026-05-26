@@ -1,19 +1,19 @@
 /**
  * NextSession — 開催スケジュールの告知
- * 昼の回 (5/31 日 11-13時) / 夜の回 (6/3 火 19-21時)。
+ * 第1回 (6/3 火 19-21時) / 第2回 (6/14 土 11-13時)。
  * 「Vol.◯」表記は使わない（初開催であることを訴求しない方針）。時間帯の選択肢として見せる。
  */
 import DarkSection from "@/components/ui/DarkSection";
 
 const SESSIONS = [
   {
-    date: "5/31 (日)",
-    time: "11:00 – 13:00",
+    date: "6/3 (火)",
+    time: "19:00 – 21:00",
     status: "current",
   },
   {
-    date: "6/3 (火)",
-    time: "19:00 – 21:00",
+    date: "6/14 (土)",
+    time: "11:00 – 13:00",
     status: "next",
   },
 ];
@@ -76,7 +76,7 @@ export default function NextSession() {
         </div>
 
         <p className="mt-8 text-xs text-cream/55 text-center">
-          ※ 6/3 の回のお申込みは、5/31 の回の終了後に開始予定です。日程は変更になる可能性があります。
+          ※ 日程は変更になる可能性があります。確定情報は申込フォームをご確認ください。
         </p>
       </div>
     </DarkSection>

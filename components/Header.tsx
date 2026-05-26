@@ -5,20 +5,18 @@
  *
  * - 上部固定。Hero 上では透明、スクロールで sumi 半透明 + blur に
  * - セクションへジャンプするナビ（Lenis でスムーズスクロール）
- * - 右に申込 CTA。日付は変動しうるので出さない（Hero 上部メタは廃止）
- * reel_aligned_design_spec_v2.md §3-3（共通クローム）。
+ * - 右に申込 CTA
  */
 
 import { useState } from "react";
 import { useLenis } from "lenis/react";
 
-const FORM_URL = "#apply";
-
 const NAV = [
-  { label: "なぜ今", id: "about" },
-  { label: "成果物", id: "showcase" },
-  { label: "講師", id: "speaker" },
-  { label: "詳細", id: "detail" },
+  { label: "Vision", id: "six-months" },
+  { label: "Outcomes", id: "outcomes" },
+  { label: "Voices", id: "voices" },
+  { label: "Speakers", id: "speaker" },
+  { label: "Detail", id: "detail" },
   { label: "FAQ", id: "faq" },
 ];
 
@@ -32,7 +30,7 @@ export default function Header() {
     e.preventDefault();
     const el = document.getElementById(id);
     if (!el) return;
-    if (lenis) lenis.scrollTo(el, { offset: -64 });
+    if (lenis) lenis.scrollTo(el, { offset: -72 });
     else el.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -40,32 +38,33 @@ export default function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
         scrolled
-          ? "bg-sumi-deep/80 backdrop-blur-md border-b border-cream/10"
+          ? "bg-sumi-deep/85 backdrop-blur-md border-b border-cream/10"
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6 sm:h-16 sm:px-10">
-        {/* 左: セミナー識別（小） */}
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 sm:h-[72px] sm:px-10">
+        {/* 左: ブランド */}
         <a
           href="#"
           onClick={(e) => {
             e.preventDefault();
             lenis ? lenis.scrollTo(0) : window.scrollTo({ top: 0, behavior: "smooth" });
           }}
-          className="flex items-center gap-2.5 font-mono text-[10px] tracking-[0.28em] uppercase text-cream/85 transition-colors hover:text-coral-light"
+          className="flex items-center gap-2.5 font-mono text-[13px] tracking-[0.22em] uppercase text-cream transition-colors hover:text-coral-light"
         >
-          <span className="text-coral text-[8px]">●</span>
-          Claude&nbsp;Code 実践セミナー
+          <span className="text-coral text-[10px]">●</span>
+          <span className="font-semibold">Claude&nbsp;Code</span>
+          <span className="hidden text-cream/55 sm:inline">Seminar</span>
         </a>
 
         {/* 中央〜右: ナビ（PC のみ） */}
-        <nav className="hidden items-center gap-7 md:flex" aria-label="セクション">
+        <nav className="hidden items-center gap-8 md:flex" aria-label="Sections">
           {NAV.map((n) => (
             <a
               key={n.id}
               href={`#${n.id}`}
               onClick={goTo(n.id)}
-              className="font-mono text-[10px] tracking-[0.2em] uppercase text-cream/55 transition-colors hover:text-coral-light"
+              className="font-mono text-[13px] tracking-[0.16em] uppercase text-cream/75 transition-colors hover:text-coral-light"
             >
               {n.label}
             </a>
@@ -74,12 +73,12 @@ export default function Header() {
 
         {/* 右: 申込 CTA */}
         <a
-          href={FORM_URL}
+          href="#apply"
           onClick={goTo("apply")}
-          className="inline-flex items-center gap-2 rounded-full bg-coral px-4 py-2 font-mono text-[10px] tracking-[0.2em] uppercase text-cream transition-transform duration-200 hover:scale-[1.04] sm:px-5"
+          className="inline-flex items-center gap-2 rounded-full bg-coral px-5 py-2.5 font-mono text-[12px] font-semibold tracking-[0.18em] uppercase text-cream shadow-[0_8px_24px_rgba(217,119,87,0.35)] transition-transform duration-200 hover:scale-[1.04] sm:px-6"
         >
-          申込
-          <span className="translate-y-[-1px] text-xs">→</span>
+          Apply
+          <span className="translate-y-[-1px] text-sm">→</span>
         </a>
       </div>
     </header>

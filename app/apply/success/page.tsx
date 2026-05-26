@@ -1,10 +1,54 @@
 import Link from "next/link";
+import Stripe from "stripe";
 
 export const metadata = {
   title: "お申込み完了 — Claude Code 実践セミナー",
 };
 
-export default function SuccessPage() {
+export const dynamic = "force-dynamic";
+
+type SessionInfo = {
+  label: string;
+  dateText: string;
+  openText: string;
+};
+
+const SESSION_MAP: Record<string, SessionInfo> = {
+  "2026-06-03": {
+    label: "第1回",
+    dateText: "2026年6月3日（火）19:00〜21:00",
+    openText: "開場 18:50（開催10分前）",
+  },
+  "2026-06-14": {
+    label: "第2回",
+    dateText: "2026年6月14日（土）11:00〜13:00",
+    openText: "開場 10:50（開催10分前）",
+  },
+};
+
+async function resolveSessionDate(stripeSessionId: string | undefined) {
+  if (!stripeSessionId) return null;
+  const apiKey = process.env.STRIPE_SECRET_KEY;
+  if (!apiKey) return null;
+  try {
+    const stripe = new Stripe(apiKey, { apiVersion: "2026-04-22.dahlia" });
+    const session = await stripe.checkout.sessions.retrieve(stripeSessionId);
+    const key = session.metadata?.sessionDate;
+    if (key && SESSION_MAP[key]) return SESSION_MAP[key];
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+export default async function SuccessPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ session_id?: string }>;
+}) {
+  const { session_id } = await searchParams;
+  const info = await resolveSessionDate(session_id);
+
   return (
     <main className="min-h-screen bg-cream text-sumi-deep flex items-center justify-center px-6 py-20">
       <div className="max-w-2xl w-full text-center">
@@ -29,12 +73,21 @@ export default function SuccessPage() {
             <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral font-semibold mb-1.5">
               開催日時
             </p>
-            <p className="font-serif text-xl font-semibold">
-              2026年5月31日（日）11:00〜13:00
-            </p>
-            <p className="mt-1.5 text-xs text-sumi/55">
-              開場 10:50（開催10分前）
-            </p>
+            {info ? (
+              <>
+                <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-coral/80 mb-1">
+                  {info.label}
+                </p>
+                <p className="font-serif text-xl font-semibold">
+                  {info.dateText}
+                </p>
+                <p className="mt-1.5 text-xs text-sumi/55">{info.openText}</p>
+              </>
+            ) : (
+              <p className="font-serif text-base text-sumi/80">
+                確認メールに記載しております
+              </p>
+            )}
           </div>
           <div>
             <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral font-semibold mb-1.5">

@@ -4,6 +4,36 @@ import { Resend } from "resend";
 
 export const runtime = "nodejs";
 
+type SessionMeta = {
+  label: string;
+  dateText: string;
+  openText: string;
+  zoomUrl: string;
+  zoomId: string;
+  zoomPw: string;
+};
+
+function buildSessionMap(): Record<string, SessionMeta> {
+  return {
+    "2026-06-03": {
+      label: "第1回",
+      dateText: "2026年6月3日（火）19:00〜21:00",
+      openText: "開場 18:50（開催10分前）",
+      zoomUrl: process.env.ZOOM_URL_20260603 || "",
+      zoomId: process.env.ZOOM_ID_20260603 || "",
+      zoomPw: process.env.ZOOM_PW_20260603 || "",
+    },
+    "2026-06-14": {
+      label: "第2回",
+      dateText: "2026年6月14日（土）11:00〜13:00",
+      openText: "開場 10:50（開催10分前）",
+      zoomUrl: process.env.ZOOM_URL_20260614 || "",
+      zoomId: process.env.ZOOM_ID_20260614 || "",
+      zoomPw: process.env.ZOOM_PW_20260614 || "",
+    },
+  };
+}
+
 export async function POST(req: Request) {
   const apiKey = process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -51,6 +81,10 @@ export async function POST(req: Request) {
     : "（不明）";
   const paymentStatus = session.payment_status;
   const sessionId = session.id;
+  const sessionDateKey = session.metadata?.sessionDate || "";
+
+  const sessionMap = buildSessionMap();
+  const meta = sessionMap[sessionDateKey];
 
   if (!resendKey) {
     console.error("RESEND_API_KEY missing — emails not sent");
@@ -60,7 +94,29 @@ export async function POST(req: Request) {
   const resend = new Resend(resendKey);
 
   // === 1. 申込者宛: 確認メール ===
-  const customerSubject = "【ご予約完了】Claude Code 実践セミナー";
+  const dateText = meta?.dateText || "ご選択いただいた日程（事務局から個別連絡いたします）";
+  const openText = meta?.openText || "";
+  const zoomUrl = meta?.zoomUrl || "";
+  const zoomId = meta?.zoomId || "";
+  const zoomPw = meta?.zoomPw || "";
+  const labelText = meta?.label ? `（${meta.label}）` : "";
+
+  const customerSubject = `【ご予約完了】Claude Code 実践セミナー${labelText}`;
+  const zoomBlock =
+    zoomUrl && zoomId && zoomPw
+      ? [
+          "■ Zoom 参加情報",
+          "下記URLから当日ご参加ください。",
+          "",
+          `URL: ${zoomUrl}`,
+          `ミーティングID: ${zoomId}`,
+          `パスコード: ${zoomPw}`,
+        ]
+      : [
+          "■ Zoom 参加情報",
+          "Zoom URL は開催前日までに、別途このメールアドレス宛にお送りいたします。",
+        ];
+
   const customerBody = [
     `${customerName} 様`,
     "",
@@ -76,18 +132,13 @@ export async function POST(req: Request) {
     "  ご予約内容",
     "─────────────────────",
     "セミナー: 経営者・次期リーダーのための Claude Code 実践セミナー",
-    "開催日時: 2026年5月31日（日）11:00〜13:00",
-    "開場: 10:50（開催10分前）",
+    `開催日時: ${dateText}${labelText}`,
+    ...(openText ? [openText] : []),
     "形式: オンライン（Zoom）",
     `お支払い金額: ${amountTotal}（税込）`,
     "─────────────────────",
     "",
-    "■ Zoom 参加情報",
-    "下記URLから当日ご参加ください。",
-    "",
-    "URL: https://us06web.zoom.us/j/89700877907?pwd=P11H7eaZ8iZJsQGI15DbeamxnEMCP0.1",
-    "ミーティングID: 897 0087 7907",
-    "パスコード: 453802",
+    ...zoomBlock,
     "",
     "■ 返金について",
     "本セミナーはライブ配信形式の役務のため、お申込み完了後のキャンセル・返金は",
@@ -113,7 +164,7 @@ export async function POST(req: Request) {
   }
 
   // === 2. 管理者宛: 申込通知 ===
-  const adminSubject = `[CCC セミナー申込] ${customerName} 様 / ${amountTotal}`;
+  const adminSubject = `[CCC セミナー申込] ${customerName} 様 / ${amountTotal} / ${meta?.label || "日程未確定"}`;
   const adminBody = [
     "セミナーLPから新規申込がありました。",
     "",
@@ -123,7 +174,15 @@ export async function POST(req: Request) {
     `電話: ${customerPhone}`,
     `お支払い: ${amountTotal}（${paymentStatus}）`,
     `決済番号: ${sessionId}`,
+    `選択日程: ${meta?.label || "未確定"} / ${dateText}`,
     "",
+    ...(meta
+      ? []
+      : [
+          "⚠️ sessionDate metadata が SESSION_MAP に未登録です。Zoom情報を手動で送付してください。",
+          `   metadata.sessionDate = "${sessionDateKey}"`,
+          "",
+        ]),
     "Stripe ダッシュボード:",
     `https://dashboard.stripe.com/payments/${session.payment_intent}`,
     "",
