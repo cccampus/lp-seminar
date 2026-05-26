@@ -53,7 +53,7 @@ export default function Detail() {
       bgImage="/images/backdrop/bd_b.jpg"
       bgOpacity={0.26}
       spotX={50}
-      className="py-28 sm:py-40 px-6"
+      className="pt-12 pb-28 sm:pt-16 sm:pb-40 px-6"
     >
       {/* 料金ブロックの奥に忍ばせる、ごく淡いコーラルのアンビエント光。
           奥行きを与えるためだけの "光" で、輪郭のある発光の塊にはしない。 */}
