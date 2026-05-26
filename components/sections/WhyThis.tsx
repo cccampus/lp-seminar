@@ -27,13 +27,18 @@ export default function WhyThis() {
 
         <div className="space-y-7 text-base sm:text-lg leading-loose text-cream/85">
           <p>
-            世の中の大きな AI 教室は、いろんなツールを浅く広く教えます。
+            世の中の大きな AI 教室は、
+            <br className="sm:hidden" />
+            いろんなツールを浅く広く教えます。
             <br />
-            半日で終わる研修は、明日からは何も変わりません。
+            半日で終わる研修は、
+            <br className="sm:hidden" />
+            明日からは何も変わりません。
           </p>
 
           <p>
-            私たちは、毎日 Claude Code を使って自分の仕事を動かしている、
+            私たちは、毎日 Claude Code を使って
+            <span className="whitespace-nowrap">自分の仕事を動かしている、</span>
             <br />
             <strong className="text-cream">ただの経営者</strong>です。
           </p>
@@ -42,13 +47,17 @@ export default function WhyThis() {
             <p className="font-serif text-lg sm:text-xl leading-relaxed text-cream/70">
               教えるプロとしての経験を持ち、
               <br />
-              そして毎日 AI を使ってきた経営者として。
+              そして毎日 AI を使ってきた
+              <br className="sm:hidden" />
+              経営者として。
             </p>
             <p
-              className="mt-6 font-serif text-2xl sm:text-3xl font-semibold leading-snug text-cream"
+              className="mt-6 font-serif text-xl sm:text-3xl font-semibold leading-snug text-cream"
               style={{ letterSpacing: "-0.01em" }}
             >
-              経営者の言葉で、経営の判断軸に乗せられる景色を、
+              経営者の言葉で、
+              <br />
+              経営の判断軸に乗せられる景色を、
               <br />
               <span className="text-coral">2 時間で</span>お見せします。
             </p>
@@ -57,7 +66,8 @@ export default function WhyThis() {
           <p className="pt-4 text-cream/80">
             このセミナーは「教える場」ではありません。
             <br />
-            2 時間、AI が本当に仕事をする景色を、目の前で見ていただく場です。
+            2 時間、AI が本当に仕事をする景色を、
+            <span className="whitespace-nowrap">目の前で見ていただく場です。</span>
           </p>
         </div>
       </div>

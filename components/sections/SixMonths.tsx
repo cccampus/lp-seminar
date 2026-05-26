@@ -157,12 +157,17 @@ export default function SixMonths() {
               <p>
                 ほんの半年前まで、私は AI をほとんど触っていませんでした。
                 <br />
-                店舗経営をしながら、「ChatGPT って便利らしいね」程度の理解で。
+                店舗経営をしながら、「ChatGPT って便利らしいね」程度の理解。
               </p>
 
               <p>
-                <span className="text-coral font-semibold">
-                  Claude Code に出会って、6ヶ月。
+                <span
+                  className="block font-serif text-2xl sm:text-4xl font-semibold text-coral leading-snug mt-2"
+                  style={{ letterSpacing: "-0.01em" }}
+                >
+                  Claude Code に出会って、
+                  <br className="sm:hidden" />
+                  6ヶ月。
                 </span>
               </p>
             </div>
@@ -204,10 +209,14 @@ export default function SixMonths() {
             <p>
               これは特別な才能でも、IT 知識でもありません。
               <br />
-              タイミングと、やる気と、行動力。それだけです。
+              タイミングと、やる気と、行動力。
+              <br className="sm:hidden" />
+              それだけです。
             </p>
             <p>
-              IT 革命は 20 年超えても、今もまだ日本で広がっている最中です。
+              IT 革命は 20 年超えても、
+              <br className="sm:hidden" />
+              今もまだ日本で広がっている最中です。
               <br />
               AI は、半年単位で景色が変わります。
               <br />

@@ -84,10 +84,14 @@ export default function Hero() {
         <RevealHeading
           as="h1"
           stagger={0.026}
-          className="font-serif text-xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.5] sm:leading-[1.4] mx-auto"
+          className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.45] sm:leading-[1.4] mx-auto"
           style={{ letterSpacing: "0.02em" }}
         >
-          <span className="block">半年前、私もAIを使えませんでした。</span>
+          <span className="block">
+            半年前、
+            <br className="sm:hidden" />
+            私もAIを使えませんでした。
+          </span>
           <span className="block mt-2 sm:mt-3">
             いま、
             <span className="text-coral italic font-normal">
@@ -113,8 +117,10 @@ export default function Hero() {
         <div className="mt-10 w-full max-w-2xl grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-cream/15 rounded-2xl border border-cream/15 bg-cream/[0.04] overflow-hidden">
           <div className="flex flex-col items-center gap-1.5 px-5 py-5">
             <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-coral">Date</span>
-            <span className="text-base sm:text-lg text-cream font-semibold">
-              5/31<span className="text-cream/60 text-sm">(日)</span> · 6/3<span className="text-cream/60 text-sm">(火)</span>
+            <span className="flex items-center gap-3 text-base sm:text-lg text-cream font-semibold">
+              <span className="whitespace-nowrap">5/31<span className="text-cream/60 text-sm">(日)</span></span>
+              <span className="text-cream/25 font-normal">/</span>
+              <span className="whitespace-nowrap">6/3<span className="text-cream/60 text-sm">(火)</span></span>
             </span>
           </div>
           <div className="flex flex-col items-center gap-1.5 px-5 py-5">

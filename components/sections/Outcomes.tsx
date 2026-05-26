@@ -27,7 +27,13 @@ const outcomes = [
   },
   {
     title: "製造・建設・物流(中小経営)",
-    body: "見積書、現場日報、社内文書の作成補助。音声で話すだけで、要約が完成。",
+    body: (
+      <>
+        見積書、現場日報、社内文書の作成補助。
+        <br />
+        音声で話すだけで、要約が完成。
+      </>
+    ),
   },
   {
     title: "バックオフィス(経理・人事・総務)",
@@ -53,7 +59,7 @@ export default function Outcomes() {
         </p>
         <h2
           id="outcomes-heading"
-          className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center text-cream mb-6"
+          className="font-serif text-xl sm:text-5xl font-semibold leading-tight text-center text-cream mb-6"
           style={{ letterSpacing: "-0.01em" }}
         >
           いま、いろんな業界で、
