@@ -30,13 +30,13 @@ type SessionDef = {
 const SESSIONS: SessionDef[] = [
   {
     key: "20260603",
-    topic: "Claude Code 実践セミナー 第1回（6/3 水 19:00）",
+    topic: "Claude Code 実践セミナー（6/3 水 19:00）",
     startISO: "2026-06-03T19:00:00",
     durationMin: 120,
   },
   {
     key: "20260614",
-    topic: "Claude Code 実践セミナー 第2回（6/14 日 11:00）",
+    topic: "Claude Code 実践セミナー（6/14 日 11:00）",
     startISO: "2026-06-14T11:00:00",
     durationMin: 120,
   },

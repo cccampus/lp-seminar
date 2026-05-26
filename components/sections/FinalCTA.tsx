@@ -216,8 +216,8 @@ export default function FinalCTA() {
                 : "bg-coral/40 text-cream/60 cursor-not-allowed"
             }`}
         >
-          {submitting ? "決済画面へ移動中…" : "セミナー1回 ¥5,500（税込）で申し込む"}
-          <span className="font-mono text-xs tracking-[0.2em]">↗</span>
+          {submitting ? "決済画面へ移動中…" : "お申込みへ進む"}
+          <span className="font-mono text-xs tracking-[0.2em]">→</span>
         </button>
 
         <p className="mt-5 text-xs sm:text-sm text-cream/55">

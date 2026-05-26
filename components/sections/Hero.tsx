@@ -144,8 +144,8 @@ export default function Hero() {
             className="inline-flex items-center gap-3 px-9 py-4 bg-coral text-cream font-medium text-base rounded-full
               hover:bg-coral-deep transition-colors duration-200 shadow-[0_12px_40px_rgba(217,119,87,0.45)]"
           >
-            セミナー1回 ¥5,500(税込)で申し込む
-            <span className="font-mono text-xs tracking-[0.2em]">↗</span>
+            お申込みへ進む
+            <span className="font-mono text-xs tracking-[0.2em]">→</span>
           </a>
           <a
             href={DETAIL_HREF}
