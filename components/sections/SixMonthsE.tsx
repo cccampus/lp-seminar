@@ -127,7 +127,7 @@ export default function SixMonthsE() {
           {/* Before / After — TracingBeam で章を貫通 (hp-ai/about 流用) */}
           <div className="mt-10 sm:mt-16">
             <TracingBeam className="pl-10 sm:pl-16">
-              <div className="divide-y divide-cream/10">
+              <div>
                 {beforeAfter.map((item, i) => (
                   <Chapter key={i} index={i} item={item} />
                 ))}
