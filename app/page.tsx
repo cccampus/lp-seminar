@@ -10,7 +10,6 @@ import Detail from "@/components/sections/Detail";
 import FAQ from "@/components/sections/FAQ";
 import FinalCTA from "@/components/sections/FinalCTA";
 import Footer from "@/components/sections/Footer";
-import MobileStickyCTA from "@/components/MobileStickyCTA";
 
 /**
  * Claude Code 実践セミナー LP（v3.2）
@@ -33,7 +32,6 @@ export default function Home() {
       <FAQ />
       <FinalCTA />
       <Footer />
-      <MobileStickyCTA />
     </>
   );
 }
