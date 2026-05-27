@@ -26,7 +26,12 @@ export default function CasesMobileA() {
         </p>
 
         {/* 8業種を縦に貫通する1本の coral 縦線 + 各 article 頭に dot */}
-        <ol className="relative pl-7 border-l border-coral/40">
+        <ol className="relative pl-8">
+          {/* 縦線 ol左端から12px位置 */}
+          <div
+            className="absolute left-[12px] top-4 bottom-4 w-px bg-coral/45"
+            aria-hidden
+          />
           {outcomes.map((o, i) => (
             <motion.li
               key={i}
@@ -36,10 +41,11 @@ export default function CasesMobileA() {
               transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
               className="relative py-5 first:pt-0 last:pb-0"
             >
-              {/* dot (縦線上に乗る) */}
+              {/* dot (縦線=ol左から12px位置に center 揃え)
+                 li 左 = pl-8 = 32px → dot left = -26px で dot center が 12px位置 */}
               <motion.span
                 aria-hidden
-                className="absolute -left-[33px] top-6 h-3 w-3 rounded-full bg-coral"
+                className="absolute -left-[26px] top-6 h-3 w-3 rounded-full bg-coral"
                 style={{ boxShadow: "0 0 10px rgba(217,119,87,0.7), 0 0 18px rgba(217,119,87,0.4)" }}
                 initial={{ scale: 0.4, opacity: 0.3 }}
                 whileInView={{ scale: 1, opacity: 1 }}
