@@ -11,7 +11,7 @@ import DarkSection from "@/components/ui/DarkSection";
 import { useState } from "react";
 import { voices } from "./voices-data";
 
-function VoiceCard({ v, i }: { v: typeof voices[number]; i: number }) {
+function VoiceCard({ v }: { v: typeof voices[number] }) {
   return (
     <article className="shrink-0 w-[320px] sm:w-[400px] flex flex-col py-5 sm:py-6 px-5 sm:px-6 border-y border-coral/30 bg-cream/[0.03] relative overflow-hidden">
       {/* 大引用符 (decorative) */}
@@ -22,9 +22,6 @@ function VoiceCard({ v, i }: { v: typeof voices[number]; i: number }) {
       >
         "
       </span>
-      <p className="font-mono text-[10px] tracking-[0.28em] uppercase text-coral/85 mb-2 relative z-10">
-        Voice {String(i + 1).padStart(2, "0")}
-      </p>
       <p className="font-serif text-sm sm:text-base text-cream leading-relaxed relative z-10">
         {v.quote}
       </p>
@@ -82,7 +79,7 @@ export default function VoicesC() {
                 }}
               >
                 {doubled.map((v, i) => (
-                  <VoiceCard key={`${ri}-${i}`} v={v} i={i % rowData.length} />
+                  <VoiceCard key={`${ri}-${i}`} v={v} />
                 ))}
               </div>
             </div>
