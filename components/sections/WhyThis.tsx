@@ -19,8 +19,8 @@ export default function WhyThis() {
         </p>
         <h2
           id="why-us-heading"
-          className="font-serif text-3xl sm:text-5xl font-semibold leading-tight mb-12"
-          style={{ letterSpacing: "-0.01em" }}
+          className="font-serif font-semibold leading-tight mb-12 heading-ja"
+          style={{ fontSize: "clamp(24px, 5.8vw, 56px)", letterSpacing: "-0.01em" }}
         >
           なぜ、私たちが話すのか。
         </h2>

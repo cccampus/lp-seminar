@@ -598,3 +598,30 @@ button:focus-visible {
   z-index: 2;
   transform-origin: center top; /* 下半分カードの「上端（＝中央の継ぎ目）」を支点に落ちてくる */
 }
+
+/* ============================================================
+   日本語タイポ・改行ルール (HPLPスキル準拠)
+   - heading-ja: 見出し用 wordBreak: keep-all + lineBreak: strict
+   - body-ja: 本文用 同様 + 行間
+   - 日本語の単語途中・句読点前の不自然な折り返しを抑止
+   ============================================================ */
+.heading-ja {
+  word-break: keep-all;
+  line-break: strict;
+  overflow-wrap: break-word;
+}
+.body-ja {
+  word-break: keep-all;
+  line-break: strict;
+  overflow-wrap: break-word;
+}
+
+/* 全 section h2/h3/h4/p に日本語改行ルールを一括適用 */
+section h2,
+section h3,
+section h4,
+section p {
+  word-break: keep-all;
+  line-break: strict;
+  overflow-wrap: break-word;
+}

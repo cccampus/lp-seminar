@@ -61,8 +61,8 @@ export default function Speaker() {
         </p>
         <h2
           id="speaker-heading"
-          className="font-serif text-3xl sm:text-5xl font-semibold leading-tight text-center text-cream mb-16"
-          style={{ letterSpacing: "-0.01em" }}
+          className="font-serif font-semibold leading-tight text-center text-cream mb-16 heading-ja"
+          style={{ fontSize: "clamp(24px, 5.8vw, 56px)", letterSpacing: "-0.01em" }}
         >
           教えるのは、
           <br />
@@ -76,14 +76,14 @@ export default function Speaker() {
               key={s.name}
               className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-y-8 md:gap-x-12"
             >
-              {/* 写真 + 名前 */}
-              <div>
-                <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-[260px] md:h-[260px] border border-cream/15 bg-cream/[0.04] overflow-hidden">
+              {/* 写真 + 名前 (スマホ=中央揃え大型 / PC=左寄せ) */}
+              <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-[260px] md:h-[260px] border border-cream/15 bg-cream/[0.04] overflow-hidden">
                   <Image
                     src={s.photo}
                     alt={s.name}
                     fill
-                    sizes="(min-width: 768px) 260px, 224px"
+                    sizes="(min-width: 768px) 260px, 288px"
                     className="object-cover"
                   />
                   <span

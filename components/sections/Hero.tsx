@@ -85,8 +85,11 @@ export default function Hero() {
         <RevealHeading
           as="h1"
           stagger={0.026}
-          className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.45] sm:leading-[1.4] mx-auto"
-          style={{ letterSpacing: "0.02em" }}
+          className="font-serif font-semibold leading-[1.45] sm:leading-[1.4] mx-auto heading-ja"
+          style={{
+            fontSize: "clamp(22px, 6.2vw, 64px)",
+            letterSpacing: "0.02em",
+          }}
         >
           <span className="block">
             半年前、

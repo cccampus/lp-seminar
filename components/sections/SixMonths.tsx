@@ -93,7 +93,7 @@ export default function SixMonths() {
       <div className="absolute inset-0 z-0 hidden sm:block" aria-hidden>
         <Image src="/images/sixmonths/flood_pc.jpg" alt="" fill unoptimized sizes="100vw" className="object-cover object-center" />
       </div>
-      <div className="absolute inset-0 z-[1] pointer-events-none sm:hidden" style={{ background: "linear-gradient(to bottom, rgba(31,31,31,0.34) 0%, rgba(31,31,31,0.30) 28%, rgba(31,31,31,0.60) 56%, rgba(31,31,31,0.66) 80%, rgba(31,31,31,0.58) 100%)" }} aria-hidden />
+      <div className="absolute inset-0 z-[1] pointer-events-none sm:hidden" style={{ background: "linear-gradient(to bottom, rgba(31,31,31,0.72) 0%, rgba(31,31,31,0.78) 35%, rgba(31,31,31,0.85) 65%, rgba(31,31,31,0.82) 100%)" }} aria-hidden />
       <div className="absolute inset-0 z-[1] pointer-events-none hidden sm:block" style={{ background: "linear-gradient(to right, rgba(31,31,31,0.96) 0%, rgba(31,31,31,0.90) 30%, rgba(31,31,31,0.66) 55%, rgba(31,31,31,0.30) 78%, rgba(31,31,31,0) 100%)" }} aria-hidden />
       <div className="absolute inset-0 z-[1] pointer-events-none" style={{ background: "rgba(31,31,31,0.28)" }} aria-hidden />
       <div className="absolute inset-0 z-[2] pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 45% at 30% 0%, rgba(217,119,87,0.12) 0%, transparent 60%)" }} aria-hidden />
@@ -102,8 +102,8 @@ export default function SixMonths() {
         <div className="mx-auto w-full max-w-3xl">
           {/* 見出し */}
           <div>
-            <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-4">Six Months</p>
-            <h2 id="six-months-heading" className="font-serif text-3xl sm:text-5xl font-semibold leading-tight mb-10" style={{ letterSpacing: "-0.01em" }}>
+            <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-4">Change</p>
+            <h2 id="six-months-heading" className="font-serif font-semibold leading-tight mb-10 heading-ja" style={{ fontSize: "clamp(24px, 5.8vw, 56px)", letterSpacing: "-0.01em" }}>
               半年で、毎日の仕事が、
               <br />
               ここまで変わる。
