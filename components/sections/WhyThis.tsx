@@ -13,7 +13,7 @@ export default function WhyThis() {
       bgImage="/images/backdrop/bd_b.jpg"
       className="py-24 sm:py-32 px-6"
     >
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto text-center">
         <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-4">
           Why Us
         </p>

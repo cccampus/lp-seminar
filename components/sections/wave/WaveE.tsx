@@ -352,24 +352,57 @@ function DivergeChart() {
   // reduced-motion / 未表示時は最初から完成形（pathLength=1）で見せる
   const drawn = prefersReduced ? { pathLength: 1 } : { pathLength: inView ? 1 : 0 };
 
+  // 中間データポイント (drama用)
+  const accelPoints = [
+    { x: 60, y: 126 },
+    { x: 120, y: 116 },
+    { x: 180, y: 78 },
+    { x: 240, y: 38 },
+  ];
+
   return (
     <div className="relative w-full">
       <svg
         ref={ref}
-        viewBox="0 0 300 150"
+        viewBox="0 0 300 160"
         className="w-full h-auto"
         role="img"
         aria-label="今動く人は先行者として上昇し、待つ人は大きく出遅れる対比"
-        preserveAspectRatio="none"
       >
-        {/* 基準の時間軸 */}
-        <line
-          x1="8"
-          y1="138"
-          x2="292"
-          y2="138"
-          stroke="rgba(250,249,245,0.18)"
-          strokeWidth="1"
+        <defs>
+          <linearGradient id="coralArea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#d97757" stopOpacity="0.45" />
+            <stop offset="60%" stopColor="#d97757" stopOpacity="0.10" />
+            <stop offset="100%" stopColor="#d97757" stopOpacity="0" />
+          </linearGradient>
+          <filter id="coralGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* 背景グリッド */}
+        {[60, 120, 180, 240].map((x) => (
+          <line key={`v${x}`} x1={x} y1="12" x2={x} y2="138" stroke="rgba(250,249,245,0.06)" strokeWidth="0.5" strokeDasharray="2 4" />
+        ))}
+        {[36, 72, 108].map((y) => (
+          <line key={`h${y}`} x1="8" y1={y} x2="292" y2={y} stroke="rgba(250,249,245,0.06)" strokeWidth="0.5" strokeDasharray="2 4" />
+        ))}
+
+        {/* 基準軸 */}
+        <line x1="8" y1="138" x2="292" y2="138" stroke="rgba(250,249,245,0.22)" strokeWidth="1" />
+        <line x1="8" y1="12" x2="8" y2="138" stroke="rgba(250,249,245,0.22)" strokeWidth="1" />
+
+        {/* coral線下のエリアフィル */}
+        <motion.path
+          d="M8 130 C 110 124, 190 70, 292 14 L 292 138 L 8 138 Z"
+          fill="url(#coralArea)"
+          initial={prefersReduced ? false : { opacity: 0 }}
+          animate={{ opacity: inView ? 1 : 0 }}
+          transition={animateNow ? { duration: 1.0, delay: 1.0 } : { duration: 0 }}
         />
 
         {/* 待つ人：低空飛行（cream 破線・出遅れて描かれる） */}
@@ -389,49 +422,96 @@ function DivergeChart() {
           }
         />
 
-        {/* 今動く人：急上昇（coral 実線・左下→右上に描かれる） */}
+        {/* 今動く人：急上昇 (glow filter付き) */}
         <motion.path
           d="M8 130 C 110 124, 190 70, 292 14"
           fill="none"
           stroke="#d97757"
           strokeWidth="3.5"
           strokeLinecap="round"
+          filter="url(#coralGlow)"
           initial={prefersReduced ? false : { pathLength: 0 }}
           animate={drawn}
-          transition={
-            animateNow
-              ? { duration: 1.3, ease: easeOutQuint }
-              : { duration: 0 }
-          }
+          transition={animateNow ? { duration: 1.3, ease: easeOutQuint } : { duration: 0 }}
         />
 
-        {/* 今動く人の終点ドット（線が届いてから出す） */}
+        {/* 中間データポイント (順次pop) */}
+        {accelPoints.map((p, i) => (
+          <motion.circle
+            key={i}
+            cx={p.x}
+            cy={p.y}
+            r="2.5"
+            fill="#d97757"
+            initial={prefersReduced ? false : { opacity: 0, scale: 0 }}
+            animate={
+              prefersReduced
+                ? { opacity: 1, scale: 1 }
+                : { opacity: inView ? 1 : 0, scale: inView ? 1 : 0 }
+            }
+            transition={animateNow ? { duration: 0.3, delay: 0.7 + i * 0.15 } : { duration: 0 }}
+            style={{ transformOrigin: `${p.x}px ${p.y}px` }}
+          />
+        ))}
+
+        {/* 今動く人の終点ドット (glow + pulse halo) */}
         <motion.circle
           cx="292"
           cy="14"
-          r="5"
+          r="6"
           fill="#d97757"
+          filter="url(#coralGlow)"
           initial={prefersReduced ? false : { opacity: 0, scale: 0 }}
           animate={
             prefersReduced
               ? { opacity: 1, scale: 1 }
               : { opacity: inView ? 1 : 0, scale: inView ? 1 : 0 }
           }
-          transition={animateNow ? { duration: 0.4, delay: 1.2 } : { duration: 0 }}
+          transition={animateNow ? { duration: 0.5, delay: 1.4, ease: "backOut" } : { duration: 0 }}
           style={{ transformOrigin: "292px 14px" }}
         />
+        {animateNow && (
+          <motion.circle
+            cx="292" cy="14" r="6"
+            fill="none" stroke="#d97757" strokeWidth="1.5"
+            initial={{ opacity: 0, scale: 1 }}
+            animate={{ opacity: [0.6, 0], scale: [1, 2.8] }}
+            transition={{ duration: 1.8, delay: 1.6, repeat: Infinity, ease: "easeOut" }}
+            style={{ transformOrigin: "292px 14px" }}
+          />
+        )}
         {/* 待つ人の終点ドット */}
         <circle cx="292" cy="120" r="4" fill="rgba(250,249,245,0.45)" />
         {/* 起点 NOW マーカー */}
         <circle cx="8" cy="130" r="3.5" fill="rgba(250,249,245,0.7)" />
+
+        {/* svg内ラベル */}
+        <motion.text
+          x="285" y="155" fontSize="6" fontFamily="ui-monospace, monospace"
+          fill="rgba(250,249,245,0.65)" textAnchor="end" letterSpacing="0.15em"
+          initial={prefersReduced ? false : { opacity: 0 }}
+          animate={{ opacity: inView ? 1 : 0 }}
+          transition={animateNow ? { duration: 0.5, delay: 1.5 } : { duration: 0 }}
+        >
+          OUTPACED
+        </motion.text>
+        <motion.text
+          x="285" y="9" fontSize="7" fontFamily="ui-monospace, monospace"
+          fill="#d97757" textAnchor="end" letterSpacing="0.15em" fontWeight="bold"
+          initial={prefersReduced ? false : { opacity: 0 }}
+          animate={{ opacity: inView ? 1 : 0 }}
+          transition={animateNow ? { duration: 0.5, delay: 1.5 } : { duration: 0 }}
+        >
+          ACCELERATED
+        </motion.text>
       </svg>
       {/* 軸ラベル */}
-      <div className="flex justify-between mt-1">
-        <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-cream/40">
-          いま
+      <div className="flex justify-between items-baseline mt-2">
+        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-cream/55">
+          NOW · いま
         </span>
-        <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-cream/40">
-          5年後
+        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-coral/85 font-semibold">
+          +5 YEARS
         </span>
       </div>
     </div>

@@ -2,35 +2,32 @@ import Image from "next/image";
 import DarkSection from "@/components/ui/DarkSection";
 
 /**
- * Speaker — v3.2 コピー / cinematic V2 ダークトーン
- * 紀洋: 34歳/店舗経営、たっか: TVCM制作+大学講師
- * 「使う側 ＋ 教えるプロ」両軸
+ * Speaker — v3.3 紀洋さん指定本文(2026-05-27)
+ * reading (きよう/たっか) を廃止、name のみ Kiyo / Takka 表記
+ * intro → body → closing の3ブロック構成、closing は「---」で区切る形に統一
  */
 const speakers = [
   {
     name: "Kiyo",
-    reading: "きよう",
     photo: "/images/kiyo.jpg",
     role: "Speaker 01",
     intro: [
-      "店舗経営をしている、34歳の経営者です。",
-      "半年前まで AI をほとんど触っていなかった人間です。",
+      "店舗経営からスタートした、34歳の経営者。",
+      "半年前まではChatGPTぐらいしか触っていなかった人間です。",
       "エンジニアでも、IT が得意でも、ありません。",
     ],
     body: [
       "そんな私が Claude Code に出会って6ヶ月。",
-      "集客・広告運用・書類づくり・SNS、すべての仕事が変わりました。",
+      "店舗集客・広告運用・書類づくり・SNS、すべての仕事が変わりました。",
     ],
     closing: [
-      "経営者へのコーチングを何十名と。",
+      "同じ経営者へのAI活用コーチングを数十名と行い、",
       "大手企業の研修講師としても、現場に立ってきました。",
       "「使ってきた経営者」と「教えるプロ」、両方の視点で、あなたの2時間を設計します。",
     ],
-    achievements: [] as string[],
   },
   {
     name: "Takka",
-    reading: "たっか",
     photo: "/images/takka.jpg",
     role: "Speaker 02",
     intro: [
@@ -44,11 +41,9 @@ const speakers = [
     ],
     closing: [
       "AI を “ツール” ではなく「表現言語」として捉えています。",
-      "複数の AI を統合し、映像・ブランド・体験を横断して作っています。",
       "日本コロムビア COLOTEK 優秀賞、Chroma Awards 佳作受賞、デジタルハリウッド大学 講師。",
       "ふつうの会社員が、どう変わったのか。リアルにお話しします。",
     ],
-    achievements: [] as string[],
   },
 ];
 
@@ -86,7 +81,7 @@ export default function Speaker() {
                 <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-[260px] md:h-[260px] border border-cream/15 bg-cream/[0.04] overflow-hidden">
                   <Image
                     src={s.photo}
-                    alt={`${s.name}(${s.reading})`}
+                    alt={s.name}
                     fill
                     sizes="(min-width: 768px) 260px, 224px"
                     className="object-cover"
@@ -106,9 +101,6 @@ export default function Speaker() {
                   >
                     {s.name}
                   </p>
-                  <p className="mt-1 font-mono text-[10px] tracking-[0.4em] uppercase text-cream/55">
-                    {s.reading}
-                  </p>
                 </div>
               </div>
 
@@ -124,23 +116,7 @@ export default function Speaker() {
                     <p key={j}>{p}</p>
                   ))}
                 </div>
-                {s.achievements.length > 0 && (
-                  <ul className="border-t border-cream/10 pt-6 space-y-2.5">
-                    {s.achievements.map((a, j) => (
-                      <li
-                        key={j}
-                        className="flex gap-3 text-sm leading-relaxed text-cream/85"
-                      >
-                        <span
-                          className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-coral"
-                          aria-hidden
-                        />
-                        <span>{a}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                <div className="border-t border-cream/10 pt-6 space-y-2 text-cream/80">
+                <div className="border-t border-cream/10 pt-6 space-y-2 text-cream/85">
                   {s.closing.map((p, j) => (
                     <p key={j}>{p}</p>
                   ))}
