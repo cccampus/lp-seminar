@@ -104,8 +104,8 @@ export default function Speaker() {
                 </div>
               </div>
 
-              {/* 本文 */}
-              <div className="space-y-6 text-base leading-loose text-cream">
+              {/* 本文 (スマホは text-sm 14px、PCは text-base 16px で改行余裕を確保) */}
+              <div className="space-y-6 text-sm sm:text-base leading-[1.9] sm:leading-loose text-cream">
                 <div className="space-y-2">
                   {s.intro.map((p, j) => (
                     <p key={j}>{p}</p>

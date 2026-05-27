@@ -24,9 +24,10 @@ export default function CasesMobileA() {
           当日、業種に合わせて景色をお見せします。
         </p>
 
-        <TracingBeam className="pl-8">
-          <div>
-            {outcomes.map((o, i) => (
+        <div className="relative pl-8">
+          <TracingBeam>
+            <div>
+              {outcomes.map((o, i) => (
               <motion.article
                 key={i}
                 initial={{ opacity: 0, y: 14 }}
@@ -46,9 +47,10 @@ export default function CasesMobileA() {
                 </p>
                 <div className="mt-4 h-px bg-gradient-to-r from-coral/60 via-coral/15 to-transparent" />
               </motion.article>
-            ))}
-          </div>
-        </TracingBeam>
+              ))}
+            </div>
+          </TracingBeam>
+        </div>
 
         <div className="mt-12 text-center">
           <a href="#apply" className="inline-flex items-center gap-2 px-7 py-3 bg-coral text-cream font-medium text-sm rounded-full hover:bg-coral-deep transition-colors duration-200 shadow-[0_12px_36px_rgba(217,119,87,0.4)]">
