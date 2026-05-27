@@ -13,7 +13,7 @@ import { voices } from "./voices-data";
 
 function VoiceCard({ v }: { v: typeof voices[number] }) {
   return (
-    <article className="shrink-0 w-[320px] sm:w-[400px] flex flex-col py-5 sm:py-6 px-5 sm:px-6 border-y border-coral/30 bg-cream/[0.03] relative overflow-hidden">
+    <article className="shrink-0 w-[320px] sm:w-[400px] min-h-[200px] sm:min-h-[210px] flex flex-col py-5 sm:py-6 px-5 sm:px-6 border-y border-coral/30 bg-cream/[0.03] relative overflow-hidden">
       {/* 右上の大引用符 (サイズ縮小・本文と被らないよう pr-10 で右余白確保) */}
       <span
         aria-hidden
