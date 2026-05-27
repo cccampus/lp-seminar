@@ -1,11 +1,12 @@
 "use client";
 
 /**
- * Cases Mobile A — 縦stack + TracingBeam (8業種を1本の貫通縦線で繋ぐ)
+ * Cases Mobile A — 縦stack + 1本貫通縦線(border) + dot + motion fade-in
+ * TracingBeam は計測タイミング問題でスマホ短いビューポートで動かないことがあるため、
+ * CSS 罫線 + 各カードに dot で確実に表示。
  */
 import DarkSection from "@/components/ui/DarkSection";
 import { motion } from "motion/react";
-import { TracingBeam } from "@/components/aceternity/TracingBeam";
 import { outcomes } from "../cases-data";
 
 export default function CasesMobileA() {
@@ -24,33 +25,47 @@ export default function CasesMobileA() {
           当日、業種に合わせて景色をお見せします。
         </p>
 
-        <div className="relative pl-8">
-          <TracingBeam>
-            <div>
-              {outcomes.map((o, i) => (
-              <motion.article
-                key={i}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: i * 0.04 }}
-                className="py-5 first:pt-0 last:pb-0"
-              >
-                <p className="font-mono text-[10px] tracking-[0.32em] uppercase text-coral/85 mb-2">
-                  Case 0{i + 1}
-                </p>
-                <p className="font-serif text-base font-semibold text-cream leading-tight mb-2" style={{ letterSpacing: "-0.01em" }}>
-                  {o.title}
-                </p>
-                <p className="text-xs leading-relaxed text-cream/80">
-                  {o.body}
-                </p>
-                <div className="mt-4 h-px bg-gradient-to-r from-coral/60 via-coral/15 to-transparent" />
-              </motion.article>
-              ))}
-            </div>
-          </TracingBeam>
-        </div>
+        {/* 8業種を縦に貫通する1本の coral 縦線 + 各 article 頭に dot */}
+        <ol className="relative pl-7 border-l border-coral/40">
+          {outcomes.map((o, i) => (
+            <motion.li
+              key={i}
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-20px" }}
+              transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+              className="relative py-5 first:pt-0 last:pb-0"
+            >
+              {/* dot (縦線上に乗る) */}
+              <motion.span
+                aria-hidden
+                className="absolute -left-[33px] top-6 h-3 w-3 rounded-full bg-coral"
+                style={{ boxShadow: "0 0 10px rgba(217,119,87,0.7), 0 0 18px rgba(217,119,87,0.4)" }}
+                initial={{ scale: 0.4, opacity: 0.3 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ duration: 0.4, delay: i * 0.06 + 0.15 }}
+              />
+              <p className="font-mono text-[10px] tracking-[0.32em] uppercase text-coral/85 mb-2">
+                Case 0{i + 1}
+              </p>
+              <p className="font-serif text-base font-semibold text-cream leading-tight mb-2" style={{ letterSpacing: "-0.01em" }}>
+                {o.title}
+              </p>
+              <p className="text-xs leading-relaxed text-cream/80">
+                {o.body}
+              </p>
+              <motion.div
+                aria-hidden
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true, margin: "-20px" }}
+                transition={{ duration: 0.8, delay: i * 0.06 + 0.25 }}
+                className="mt-4 h-px bg-gradient-to-r from-coral/60 via-coral/15 to-transparent origin-left"
+              />
+            </motion.li>
+          ))}
+        </ol>
 
         <div className="mt-12 text-center">
           <a href="#apply" className="inline-flex items-center gap-2 px-7 py-3 bg-coral text-cream font-medium text-sm rounded-full hover:bg-coral-deep transition-colors duration-200 shadow-[0_12px_36px_rgba(217,119,87,0.4)]">

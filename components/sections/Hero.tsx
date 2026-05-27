@@ -85,19 +85,22 @@ export default function Hero() {
         <RevealHeading
           as="h1"
           stagger={0.026}
-          className="font-serif font-semibold leading-[1.5] sm:leading-[1.4] mx-auto heading-ja"
+          className="font-serif font-semibold leading-[1.5] sm:leading-[1.35] mx-auto heading-ja"
           style={{
-            fontSize: "clamp(17px, 4.6vw, 56px)",
+            fontSize: "clamp(20px, 5.4vw, 56px)",
             letterSpacing: "0em",
           }}
         >
           <span className="block">
             半年前、
             <br className="sm:hidden" />
-            私もAIを使えませんでした。
+            私もAIを
+            <br className="sm:hidden" />
+            使えませんでした。
           </span>
           <span className="block mt-2 sm:mt-3">
             いま、
+            <br className="sm:hidden" />
             <span className="text-coral italic font-normal">
               AIで仕事をしています
             </span>
@@ -106,15 +109,21 @@ export default function Hero() {
         </RevealHeading>
 
         {/* サブコピー */}
-        <p className="mt-8 max-w-xl text-base sm:text-lg leading-relaxed text-cream/80">
-          たった6ヶ月で、毎日の仕事がここまでラクになる。
+        <p className="mt-8 max-w-xl text-sm sm:text-lg leading-relaxed text-cream/80">
+          たった6ヶ月で、
+          <br className="sm:hidden" />
+          毎日の仕事がここまでラクになる。
           <br />
-          その景色を、2時間でお見せします。
+          その景色を、
+          <br className="sm:hidden" />
+          2時間でお見せします。
         </p>
 
         {/* Claude Code 補足説明 */}
         <p className="mt-6 max-w-md text-xs sm:text-sm leading-relaxed text-cream/55">
-          * Claude Code は、ChatGPT より仕事向けに進化した次世代の AI です。
+          * Claude Code は、ChatGPT より
+          <br className="sm:hidden" />
+          仕事向けに進化した次世代の AI です。
         </p>
 
         {/* メタ情報 — VariantSwitcher (?preview=1 で 5案切替) */}
