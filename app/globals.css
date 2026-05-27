@@ -616,12 +616,16 @@ button:focus-visible {
   overflow-wrap: break-word;
 }
 
-/* 全 section h2/h3/h4/p に日本語改行ルールを一括適用 */
+/* 見出しだけ keep-all (単語維持で大胆な折返し回避)、本文p は normal で文字単位の自然折返し */
 section h2,
 section h3,
-section h4,
-section p {
+section h4 {
   word-break: keep-all;
   line-break: strict;
+  overflow-wrap: break-word;
+}
+section p {
+  word-break: normal;
+  line-break: normal;
   overflow-wrap: break-word;
 }
