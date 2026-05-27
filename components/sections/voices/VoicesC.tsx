@@ -1,15 +1,49 @@
 "use client";
 
 /**
- * Voices (横スワイプカルーセル・採用版)
- * 紀洋さんFB 2026-05-27 反映:
- *   - 前のCases版とは違う装飾(Casesは上端dot+hairline、こちらは上下罫線+大引用符)
- *   - カード内の空白圧縮(min-h削除、padding圧縮、内側ボーダー排除)
+ * Voices (Marquee 2行自動横スクロール・採用版)
+ * 紀洋FB 2026-05-27 反映:
+ *   - PC でもスワイプの必要なく自動で流れる Marquee 形式に変更
+ *   - 装飾はVoices独自 (上下罫線 + 大引用符) でCasesと差別化
+ *   - hover/touch でpause
  */
 import DarkSection from "@/components/ui/DarkSection";
+import { useState } from "react";
 import { voices } from "./voices-data";
 
+function VoiceCard({ v, i }: { v: typeof voices[number]; i: number }) {
+  return (
+    <article className="shrink-0 w-[320px] sm:w-[400px] flex flex-col py-5 sm:py-6 px-5 sm:px-6 border-y border-coral/30 bg-cream/[0.03] relative overflow-hidden">
+      {/* 大引用符 (decorative) */}
+      <span
+        aria-hidden
+        className="absolute top-1 right-3 font-serif text-coral/25 leading-none select-none pointer-events-none"
+        style={{ fontSize: "72px" }}
+      >
+        "
+      </span>
+      <p className="font-mono text-[10px] tracking-[0.28em] uppercase text-coral/85 mb-2 relative z-10">
+        Voice {String(i + 1).padStart(2, "0")}
+      </p>
+      <p className="font-serif text-sm sm:text-base text-cream leading-relaxed relative z-10">
+        {v.quote}
+      </p>
+      <div className="mt-3 pt-3 border-t border-cream/10 flex items-baseline gap-2 relative z-10">
+        <span className="h-px w-5 bg-coral self-center" />
+        <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.15em] text-cream/70">
+          {v.initial} / {v.age} / {v.role}
+        </p>
+      </div>
+    </article>
+  );
+}
+
 export default function VoicesC() {
+  const [paused, setPaused] = useState(false);
+  const half = Math.ceil(voices.length / 2);
+  const row1 = voices.slice(0, half);
+  const row2 = voices.slice(half);
+
   return (
     <DarkSection
       id="voices"
@@ -17,7 +51,7 @@ export default function VoicesC() {
       bgImage="/images/backdrop/bd_a.jpg"
       className="py-24 sm:py-32 overflow-x-hidden"
     >
-      <div className="max-w-4xl mx-auto px-6 mb-10 text-center">
+      <div className="max-w-4xl mx-auto px-6 mb-12 text-center">
         <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-4">Voices</p>
         <h2
           id="voices-heading"
@@ -28,46 +62,48 @@ export default function VoicesC() {
           <br />
           リアルな声。
         </h2>
-        <p className="mt-5 font-mono text-[10px] tracking-[0.25em] uppercase text-cream/55">
-          ← Swipe to read all {voices.length} voices →
-        </p>
       </div>
 
       <div
-        className="snap-x snap-mandatory overflow-x-auto scroll-smooth pb-6 px-6"
-        style={{ scrollbarWidth: "none" }}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused(true)}
+        onTouchEnd={() => setPaused(false)}
       >
-        <div className="flex gap-4 sm:gap-5 w-max">
-          {voices.map((v, i) => (
-            <article
-              key={i}
-              className="snap-start shrink-0 w-[78vw] sm:w-[420px] flex flex-col py-5 sm:py-6 px-5 sm:px-6 border-y border-coral/30 bg-cream/[0.03] relative"
-            >
-              {/* 大引用符 (decorative) */}
-              <span
-                aria-hidden
-                className="absolute top-1 right-3 font-serif text-coral/25 leading-none select-none pointer-events-none"
-                style={{ fontSize: "72px" }}
+        {[row1, row2].map((rowData, ri) => {
+          const doubled = [...rowData, ...rowData];
+          return (
+            <div key={ri} className="relative w-full overflow-hidden py-3">
+              <div
+                className="flex w-max items-stretch gap-5 sm:gap-6"
+                style={{
+                  animation: `voicesmarq${ri === 0 ? "" : "Rev"} ${ri === 0 ? 70 : 85}s linear infinite`,
+                  animationPlayState: paused ? "paused" : "running",
+                }}
               >
-                "
-              </span>
-
-              <p className="font-mono text-[10px] tracking-[0.28em] uppercase text-coral/85 mb-2 relative z-10">
-                Voice {String(i + 1).padStart(2, "0")} / {String(voices.length).padStart(2, "0")}
-              </p>
-              <p className="font-serif text-sm sm:text-base text-cream leading-relaxed relative z-10">
-                {v.quote}
-              </p>
-              <div className="mt-3 pt-3 border-t border-cream/10 flex items-baseline gap-2 relative z-10">
-                <span className="h-px w-5 bg-coral self-center" />
-                <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.15em] text-cream/70">
-                  {v.initial} / {v.age} / {v.role}
-                </p>
+                {doubled.map((v, i) => (
+                  <VoiceCard key={`${ri}-${i}`} v={v} i={i % rowData.length} />
+                ))}
               </div>
-            </article>
-          ))}
-        </div>
+            </div>
+          );
+        })}
       </div>
+
+      <p className="mt-8 text-center font-mono text-[10px] tracking-[0.25em] uppercase text-cream/45">
+        {voices.length} voices · hover to pause
+      </p>
+
+      <style jsx>{`
+        @keyframes voicesmarq {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+        @keyframes voicesmarqRev {
+          from { transform: translateX(-50%); }
+          to { transform: translateX(0); }
+        }
+      `}</style>
     </DarkSection>
   );
 }

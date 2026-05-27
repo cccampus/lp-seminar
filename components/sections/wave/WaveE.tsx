@@ -648,21 +648,46 @@ export default function WaveE() {
                     - 文字を大きく（base→lg）・cream をしっかり不透明に（高コントラスト）
                     - 余白を広く（px/py 増）・チップ間 gap を広げて整列
                 */}
+                {/* 企業ロスター - リッチ化版: dot + 企業名 + 業種 + 順次pop in */}
+                <p className="font-mono text-[10px] tracking-[0.32em] uppercase text-coral/85 mt-7 mb-3">
+                  Recent AI Adopters in Japan
+                </p>
                 <ul
-                  className="flex flex-wrap gap-3 sm:gap-4 mt-6 mb-5"
+                  className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mb-5"
                   aria-label="AI 導入を発表した日本企業"
                 >
-                  {["NEC", "JR", "楽天", "メルカリ"].map((name) => (
-                    <li
-                      key={name}
-                      className="font-mono font-medium text-base sm:text-lg tracking-wide text-cream border border-cream/30 rounded-full px-5 py-2 sm:px-6 sm:py-2.5"
+                  {[
+                    { name: "NEC", sector: "Tech" },
+                    { name: "JR", sector: "Transit" },
+                    { name: "楽天", sector: "E-commerce" },
+                    { name: "メルカリ", sector: "Marketplace" },
+                  ].map((c, i) => (
+                    <motion.li
+                      key={c.name}
+                      initial={{ opacity: 0, y: 14 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-40px" }}
+                      transition={{ duration: 0.5, delay: 0.06 * i, ease: [0.22, 1, 0.36, 1] }}
+                      className="relative group border border-cream/15 hover:border-coral/60 bg-cream/[0.03] hover:bg-cream/[0.06] px-4 py-3 sm:px-5 sm:py-4 transition-colors duration-300"
                     >
-                      {name}
-                    </li>
+                      {/* 上端 coral hairline + dot */}
+                      <span className="absolute -top-px left-0 h-px w-1/3 bg-coral/70 group-hover:w-full transition-all duration-500" aria-hidden />
+                      <span
+                        className="absolute top-2.5 right-2.5 h-1.5 w-1.5 rounded-full bg-coral"
+                        style={{ boxShadow: "0 0 6px rgba(217,119,87,0.7)" }}
+                        aria-hidden
+                      />
+                      <p className="font-serif text-lg sm:text-xl font-bold text-cream leading-none tracking-wide" style={{ letterSpacing: "-0.005em" }}>
+                        {c.name}
+                      </p>
+                      <p className="mt-1.5 font-mono text-[9px] tracking-[0.25em] uppercase text-cream/55">
+                        {c.sector}
+                      </p>
+                    </motion.li>
                   ))}
                 </ul>
-                <p className="text-[13px] sm:text-sm lg:text-base leading-relaxed text-cream/45">
-                  日本の大手も一斉に、AI を業務に取り入れる発表をしている。
+                <p className="text-[13px] sm:text-sm lg:text-base leading-relaxed text-cream/55">
+                  大手も一斉に、AI を業務に取り入れる発表が相次いでいる。
                 </p>
               </div>
             </div>
