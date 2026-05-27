@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useLenis } from "lenis/react";
 
 const NAV = [
-  { label: "Vision", id: "six-months" },
+  { label: "Change", id: "six-months" },
   { label: "Cases", id: "cases" },
   { label: "Voices", id: "voices" },
   { label: "Speakers", id: "speaker" },
