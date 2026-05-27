@@ -435,25 +435,6 @@ function DivergeChart() {
           transition={animateNow ? { duration: 1.3, ease: easeOutQuint } : { duration: 0 }}
         />
 
-        {/* 中間データポイント (順次pop) */}
-        {accelPoints.map((p, i) => (
-          <motion.circle
-            key={i}
-            cx={p.x}
-            cy={p.y}
-            r="2.5"
-            fill="#d97757"
-            initial={prefersReduced ? false : { opacity: 0, scale: 0 }}
-            animate={
-              prefersReduced
-                ? { opacity: 1, scale: 1 }
-                : { opacity: inView ? 1 : 0, scale: inView ? 1 : 0 }
-            }
-            transition={animateNow ? { duration: 0.3, delay: 0.7 + i * 0.15 } : { duration: 0 }}
-            style={{ transformOrigin: `${p.x}px ${p.y}px` }}
-          />
-        ))}
-
         {/* 今動く人の終点ドット (glow + pulse halo) */}
         <motion.circle
           cx="292"
@@ -648,40 +629,32 @@ export default function WaveE() {
                     - 文字を大きく（base→lg）・cream をしっかり不透明に（高コントラスト）
                     - 余白を広く（px/py 増）・チップ間 gap を広げて整列
                 */}
-                {/* 企業ロスター - リッチ化版: dot + 企業名 + 業種 + 順次pop in */}
+                {/* 企業ロスター - 改良: 4社が改行されないよう whitespace-nowrap, 業種サブを削除し1行配置 */}
                 <p className="font-mono text-[10px] tracking-[0.32em] uppercase text-coral/85 mt-7 mb-3">
-                  Recent AI Adopters in Japan
+                  Recent AI Adopters · Japan
                 </p>
                 <ul
-                  className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mb-5"
+                  className="flex flex-wrap gap-2.5 sm:gap-3 mb-5"
                   aria-label="AI 導入を発表した日本企業"
                 >
-                  {[
-                    { name: "NEC", sector: "Tech" },
-                    { name: "JR", sector: "Transit" },
-                    { name: "楽天", sector: "E-commerce" },
-                    { name: "メルカリ", sector: "Marketplace" },
-                  ].map((c, i) => (
+                  {["NEC", "JR", "楽天", "メルカリ"].map((name, i) => (
                     <motion.li
-                      key={c.name}
+                      key={name}
                       initial={{ opacity: 0, y: 14 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: "-40px" }}
                       transition={{ duration: 0.5, delay: 0.06 * i, ease: [0.22, 1, 0.36, 1] }}
-                      className="relative group border border-cream/15 hover:border-coral/60 bg-cream/[0.03] hover:bg-cream/[0.06] px-4 py-3 sm:px-5 sm:py-4 transition-colors duration-300"
+                      className="relative group inline-flex items-center gap-2 border border-cream/15 hover:border-coral/60 bg-cream/[0.03] hover:bg-cream/[0.06] px-4 py-2.5 sm:px-5 sm:py-3 transition-colors duration-300 whitespace-nowrap"
                     >
-                      {/* 上端 coral hairline + dot */}
+                      {/* 上端 coral hairline */}
                       <span className="absolute -top-px left-0 h-px w-1/3 bg-coral/70 group-hover:w-full transition-all duration-500" aria-hidden />
                       <span
-                        className="absolute top-2.5 right-2.5 h-1.5 w-1.5 rounded-full bg-coral"
+                        className="h-1.5 w-1.5 rounded-full bg-coral shrink-0"
                         style={{ boxShadow: "0 0 6px rgba(217,119,87,0.7)" }}
                         aria-hidden
                       />
-                      <p className="font-serif text-lg sm:text-xl font-bold text-cream leading-none tracking-wide" style={{ letterSpacing: "-0.005em" }}>
-                        {c.name}
-                      </p>
-                      <p className="mt-1.5 font-mono text-[9px] tracking-[0.25em] uppercase text-cream/55">
-                        {c.sector}
+                      <p className="font-serif text-base sm:text-lg font-bold text-cream leading-none" style={{ letterSpacing: "-0.005em" }}>
+                        {name}
                       </p>
                     </motion.li>
                   ))}
