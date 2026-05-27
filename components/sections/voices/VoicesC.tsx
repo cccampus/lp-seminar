@@ -13,19 +13,19 @@ import { voices } from "./voices-data";
 
 function VoiceCard({ v }: { v: typeof voices[number] }) {
   return (
-    <article className="shrink-0 w-[320px] sm:w-[400px] flex flex-col py-5 sm:py-6 px-5 sm:px-6 border-y border-coral/30 bg-cream/[0.03] relative overflow-hidden">
-      {/* 大引用符 (decorative) */}
+    <article className="shrink-0 w-[320px] sm:w-[400px] flex flex-col py-5 sm:py-6 px-5 sm:px-6 border-y border-coral/30 bg-cream/[0.03]">
+      {/* 左肩に小さい引用符 (本文と被らないサイズ) */}
       <span
         aria-hidden
-        className="absolute top-1 right-3 font-serif text-coral/25 leading-none select-none pointer-events-none"
-        style={{ fontSize: "72px" }}
+        className="font-serif text-coral/55 leading-none select-none mb-1"
+        style={{ fontSize: "28px" }}
       >
-        "
+        “
       </span>
-      <p className="font-serif text-sm sm:text-base text-cream leading-relaxed relative z-10">
+      <p className="font-serif text-sm sm:text-base text-cream leading-relaxed">
         {v.quote}
       </p>
-      <div className="mt-3 pt-3 border-t border-cream/10 flex items-baseline gap-2 relative z-10">
+      <div className="mt-3 pt-3 border-t border-cream/10 flex items-baseline gap-2">
         <span className="h-px w-5 bg-coral self-center" />
         <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.15em] text-cream/70">
           {v.initial} / {v.age} / {v.role}
