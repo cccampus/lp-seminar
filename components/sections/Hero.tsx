@@ -1,5 +1,6 @@
 import Image from "next/image";
 import RevealHeading from "@/components/ui/RevealHeading";
+import HeroMetaSwitcher from "@/components/sections/hero-meta/HeroMetaSwitcher";
 
 /**
  * Hero — v3.2 コピー / cinematic V2 ダークステージ
@@ -113,29 +114,8 @@ export default function Hero() {
           * Claude Code は、ChatGPT より仕事向けに進化した次世代の AI です。
         </p>
 
-        {/* メタ情報 — カード型で整理（可読性UP） */}
-        <div className="mt-10 w-full max-w-2xl grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-cream/15 rounded-2xl border border-cream/15 bg-cream/[0.04] overflow-hidden">
-          <div className="flex flex-col items-center gap-1.5 px-5 py-5">
-            <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-coral">Date</span>
-            <span className="flex items-center gap-3 text-base sm:text-lg text-cream font-semibold">
-              <span className="whitespace-nowrap">6/3<span className="text-cream/60 text-sm">(水)</span></span>
-              <span className="text-cream/25 font-normal">/</span>
-              <span className="whitespace-nowrap">6/14<span className="text-cream/60 text-sm">(日)</span></span>
-            </span>
-          </div>
-          <div className="flex flex-col items-center gap-1.5 px-5 py-5">
-            <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-coral">Format</span>
-            <span className="text-base sm:text-lg text-cream font-semibold">
-              オンライン<span className="text-cream/60 text-sm">(Zoom)</span>
-            </span>
-          </div>
-          <div className="flex flex-col items-center gap-1.5 px-5 py-5">
-            <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-coral">Price</span>
-            <span className="text-base sm:text-lg text-cream font-semibold">
-              ¥5,000<span className="text-cream/60 text-sm">(税抜)</span>
-            </span>
-          </div>
-        </div>
+        {/* メタ情報 — VariantSwitcher (?preview=1 で 5案切替) */}
+        <HeroMetaSwitcher />
 
         {/* CTA */}
         <div className="mt-10 flex flex-col items-center gap-4">
