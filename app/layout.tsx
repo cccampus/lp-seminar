@@ -47,22 +47,22 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Claude Code Campus セミナー",
+  title: "Claude Code 実践セミナー — 半年で、仕事がここまで変わる",
   description:
-    "Claude Code Campus 主催の公開セミナー。経営者・意思決定者向けに、組織への AI 実装の具体像をお伝えします。",
+    "経営者・次期リーダーのための Claude Code 実践セミナー。半年前まで AI を使えなかった2人が、AI で業務がどう変わったかを2時間で実演します。2026/6/3(水) 19:00・6/14(日) 11:00 オンライン開催 / セミナー1回 ¥5,500(税込)。",
   openGraph: {
-    title: "Claude Code Campus セミナー",
+    title: "Claude Code 実践セミナー — 半年で、仕事がここまで変わる",
     description:
-      "Claude Code Campus 主催の公開セミナー。経営者・意思決定者向けに、組織への AI 実装の具体像をお伝えします。",
+      "経営者・次期リーダーのための Claude Code 実践セミナー。半年前まで AI を使えなかった2人が、AI で業務がどう変わったかを2時間で実演します。2026/6/3(水) 19:00・6/14(日) 11:00 オンライン開催 / セミナー1回 ¥5,500(税込)。",
     type: "website",
     locale: "ja_JP",
-    siteName: "Claude Code Campus",
+    siteName: "Claude Code 実践セミナー",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Claude Code Campus セミナー",
+    title: "Claude Code 実践セミナー — 半年で、仕事がここまで変わる",
     description:
-      "Claude Code Campus 主催の公開セミナー。経営者・意思決定者向けに、組織への AI 実装の具体像をお伝えします。",
+      "経営者・次期リーダーのための Claude Code 実践セミナー。半年前まで AI を使えなかった2人が、AI で業務がどう変わったかを2時間で実演します。2026/6/3(水) 19:00・6/14(日) 11:00 オンライン開催 / セミナー1回 ¥5,500(税込)。",
   },
   robots: { index: false, follow: false },
 };
