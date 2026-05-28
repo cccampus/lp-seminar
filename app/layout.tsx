@@ -46,23 +46,24 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+// layout.tsx は A案軸のデフォルト。/start (C案) は page.tsx で完全上書き
 export const metadata: Metadata = {
-  title: "Claude Code 実践セミナー — 半年で、仕事がここまで変わる",
+  title: "Claude Code 実践セミナー — 自分が止まっても回る事業へ、半年で。",
   description:
-    "経営者・次期リーダーのための Claude Code 実践セミナー。半年前まで AI を使えなかった2人が、AI で業務がどう変わったかを2時間で実演します。2026/6/3(水) 19:00・6/14(日) 11:00 オンライン開催 / セミナー1回 ¥5,500(税込)。",
+    "経営者のための Claude Code 実践セミナー。社員を増やさずに事業を伸ばす設計図を、AI を毎日使う経営者が実演を交えてお見せします。オンライン開催。",
   openGraph: {
-    title: "Claude Code 実践セミナー — 半年で、仕事がここまで変わる",
+    title: "Claude Code 実践セミナー — 自分が止まっても回る事業へ、半年で。",
     description:
-      "経営者・次期リーダーのための Claude Code 実践セミナー。半年前まで AI を使えなかった2人が、AI で業務がどう変わったかを2時間で実演します。2026/6/3(水) 19:00・6/14(日) 11:00 オンライン開催 / セミナー1回 ¥5,500(税込)。",
+      "経営者のための Claude Code 実践セミナー。社員を増やさずに事業を伸ばす設計図を、AI を毎日使う経営者が実演を交えてお見せします。オンライン開催。",
     type: "website",
     locale: "ja_JP",
     siteName: "Claude Code 実践セミナー",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Claude Code 実践セミナー — 半年で、仕事がここまで変わる",
+    title: "Claude Code 実践セミナー — 自分が止まっても回る事業へ、半年で。",
     description:
-      "経営者・次期リーダーのための Claude Code 実践セミナー。半年前まで AI を使えなかった2人が、AI で業務がどう変わったかを2時間で実演します。2026/6/3(水) 19:00・6/14(日) 11:00 オンライン開催 / セミナー1回 ¥5,500(税込)。",
+      "経営者のための Claude Code 実践セミナー。社員を増やさずに事業を伸ばす設計図を、AI を毎日使う経営者が実演を交えてお見せします。オンライン開催。",
   },
   robots: { index: false, follow: false },
 };
