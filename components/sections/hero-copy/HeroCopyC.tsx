@@ -14,6 +14,8 @@ export default function HeroCopyC() {
         style={{
           fontSize: "clamp(20px, 5.4vw, 56px)",
           letterSpacing: "0em",
+          textShadow:
+            "0 2px 12px rgba(31,24,21,0.85), 0 0 30px rgba(31,24,21,0.6)",
         }}
       >
         <span className="block">
@@ -33,7 +35,10 @@ export default function HeroCopyC() {
         </span>
       </RevealHeading>
 
-      <p className="mt-8 max-w-xl text-sm sm:text-lg leading-relaxed text-cream/80">
+      <p
+        className="mt-8 max-w-xl text-sm sm:text-lg leading-relaxed text-cream/90"
+        style={{ textShadow: "0 1px 8px rgba(31,24,21,0.85)" }}
+      >
         自分の手で動かしてきた経営者へ。
         <br />
         半年で起きた変化を、
@@ -41,7 +46,10 @@ export default function HeroCopyC() {
         2時間でお見せします。
       </p>
 
-      <p className="mt-6 max-w-md text-xs sm:text-sm leading-relaxed text-cream/55">
+      <p
+        className="mt-6 max-w-md text-xs sm:text-sm leading-relaxed text-cream/70"
+        style={{ textShadow: "0 1px 6px rgba(31,24,21,0.85)" }}
+      >
         * Claude Codeは、ビジネス活用に特化した次世代のAI です。
       </p>
     </>
