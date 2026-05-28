@@ -23,8 +23,11 @@ export default function HeroCopyC() {
         </span>
         <span className="block mt-2 sm:mt-3">
           いま、
+          <br className="sm:hidden" />
           <span className="text-coral italic font-normal">
-            社員を雇わずに事業が伸びています
+            社員を雇わずに
+            <br className="sm:hidden" />
+            事業が伸びています
           </span>
           。
         </span>
@@ -33,7 +36,9 @@ export default function HeroCopyC() {
       <p className="mt-8 max-w-xl text-sm sm:text-lg leading-relaxed text-cream/80">
         自分の手で動かしてきた経営者へ。
         <br />
-        半年で起きた変化を、2時間でお見せします。
+        半年で起きた変化を、
+        <br className="sm:hidden" />
+        2時間でお見せします。
       </p>
 
       <p className="mt-6 max-w-md text-xs sm:text-sm leading-relaxed text-cream/55">
