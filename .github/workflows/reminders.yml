@@ -1,0 +1,30 @@
+name: Seminar Reminders Cron
+
+# 30分ごとに Vercel の /api/cron/reminders を叩く
+# Vercel Hobby plan は cron 1日1回制限のため、GitHub Actions の cron で代替
+# 24時間前/1時間前メールを Stripe metadata で重複防止
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+jobs:
+  trigger-reminders:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invoke reminders endpoint
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          RESPONSE=$(curl -sS -w "\nHTTP_STATUS:%{http_code}" \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            https://ccc-seminar.vercel.app/api/cron/reminders)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          STATUS=$(echo "$RESPONSE" | tail -1 | sed 's/HTTP_STATUS://')
+          echo "Status: $STATUS"
+          echo "Body: $BODY"
+          if [ "$STATUS" != "200" ]; then
+            echo "::error::Cron call failed with status $STATUS"
+            exit 1
+          fi
