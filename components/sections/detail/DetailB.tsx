@@ -52,7 +52,12 @@ export default function DetailB() {
         <div className="mt-10">
           <p className="font-mono text-[10px] tracking-[0.32em] uppercase text-coral/85 mb-4">When You're There</p>
           <div className="flex flex-wrap items-center justify-center gap-2.5">
-            {["AIが業務に乗る景色 (実画面)", "あなたの業種への応用イメージ", "明日触りたくなる、最初の一歩"].map((t, i) => (
+            {[
+              "AIが業務に乗る景色 (実画面)",
+              "あなたの業種への応用イメージ",
+              "Q&A 時間あり (ライブのみ)",
+              "明日触りたくなる、最初の一歩",
+            ].map((t, i) => (
               <span key={i} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-coral/30 text-xs sm:text-sm text-cream/85">
                 <span className="h-1 w-1 rounded-full bg-coral" /> {t}
               </span>
@@ -65,6 +70,22 @@ export default function DetailB() {
             お申込みへ進む
             <span className="font-mono text-xs tracking-[0.2em]">→</span>
           </a>
+        </div>
+
+        {/* 日程合わない場合の対応 (機会損失防止 + ライブ優先設計) */}
+        <div className="mt-14 max-w-2xl mx-auto px-6 py-6 border-t border-cream/10">
+          <p className="font-mono text-[10px] tracking-[0.32em] uppercase text-coral/75 mb-3">
+            If Schedule Doesn't Fit
+          </p>
+          <p className="text-xs sm:text-sm leading-relaxed text-cream/65">
+            上記の日程がご都合つかない場合、月2-3回ペースで日程を順次追加していきます。
+            <br />
+            アーカイブ視聴 (限定URL / 7日間) でのご参加も個別にご相談いただけますので、
+            <a href="/contact" className="text-coral/85 hover:text-coral underline underline-offset-2 mx-1">
+              お問い合わせ
+            </a>
+            よりご連絡ください。
+          </p>
         </div>
       </div>
     </DarkSection>

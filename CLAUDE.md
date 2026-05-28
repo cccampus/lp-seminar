@@ -149,6 +149,12 @@ Webhook (`app/api/stripe/webhook/route.ts`) で `metadata.sessionDate` を見て
 - Speaker: Kiyo「店舗経営からスタートした、34歳の経営者。」/ Takka「ほんの少し前まで、AI で何ができるかも知らない、…」
 - CTA全部「お申込みへ進む →」 / ヘッダー「申込 →」
 
+## Metadata (OG / Twitter) 管理
+
+- `app/layout.tsx` = **A案軸のデフォルト** (本番 `/` 用) を title / description / openGraph / twitter 全て含める
+- `app/start/page.tsx` = **C案軸で完全上書き**。Next.js の metadata は page.tsx で title/description だけ書いても **openGraph / twitter は layout.tsx を継承**してしまうため、両方明示する必要あり (LINE/X シェア時の OG が間違って表示される事故防止)
+- **日付・価格は metadata に入れない**。「2026/6/3 19:00」「¥5,500」を入れるとセミナー日程変更で毎回 metadata 触る必要が出る → ターゲット軸の汎用表現で固定
+
 ## NGワード (毎回grep確認)
 
 ```bash
