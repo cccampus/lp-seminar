@@ -1,6 +1,6 @@
 import Image from "next/image";
 import HeroMetaSwitcher from "@/components/sections/hero-meta/HeroMetaSwitcher";
-import HeroCopyC from "@/components/sections/hero-copy/HeroCopyC";
+import HeroCopyA from "@/components/sections/hero-copy/HeroCopyA";
 
 /**
  * Hero — v3.2 コピー / cinematic V2 ダークステージ
@@ -81,8 +81,8 @@ export default function Hero() {
           Claude Code 実践セミナー
         </p>
 
-        {/* 主タイトル + サブコピー + 補足 — C案採用 (2026-05-28 ペルソナ100体テスト+本文整合性で確定) */}
-        <HeroCopyC />
+        {/* 主タイトル + サブコピー + 補足 — A案バリアント (feat/hero-copy-a-variant 専用、本番はC案) */}
+        <HeroCopyA />
 
         {/* メタ情報 — VariantSwitcher (?preview=1 で 5案切替) */}
         <HeroMetaSwitcher />
