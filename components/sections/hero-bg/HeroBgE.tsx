@@ -3,24 +3,25 @@ import { motion } from "motion/react";
 import { useMemo } from "react";
 
 /**
- * Hero Bg E — Sparkles 系
- * 粒子が暗背景に浮遊、AI/未来感の典型
+ * Hero Bg E — Particle Storm (大量粒子が嵐のように動く)
+ * 200個の粒子、サイズ大、動きも激しく、画面を埋める
  */
 export default function HeroBgE() {
-  // 粒子: 各位置/サイズ/遅延を deterministic (SSR/CSR一致)
   const particles = useMemo(() => {
     const arr = [];
-    for (let i = 0; i < 60; i++) {
-      // Linear Congruential pseudo-random (seed固定で SSR/CSR一致)
+    for (let i = 0; i < 200; i++) {
       const r1 = ((i * 9301 + 49297) % 233280) / 233280;
       const r2 = ((i * 4789 + 12345) % 65536) / 65536;
       const r3 = ((i * 2654 + 7777) % 16384) / 16384;
+      const r4 = ((i * 1597 + 3571) % 8192) / 8192;
       arr.push({
         x: r1 * 100,
         y: r2 * 100,
-        size: 0.8 + r3 * 2.2,
-        duration: 4 + r1 * 6,
-        delay: r2 * 8,
+        size: 1.5 + r3 * 5,
+        duration: 2 + r4 * 5,
+        delay: r2 * 5,
+        dx: (r3 - 0.5) * 40,
+        dy: (r4 - 0.5) * 40,
       });
     }
     return arr;
@@ -28,20 +29,24 @@ export default function HeroBgE() {
 
   return (
     <>
-      {/* base 黒 */}
       <div className="absolute inset-0 bg-sumi-deep" aria-hidden />
 
-      {/* 中央コーラル光 */}
-      <div
+      {/* 中央コーラル巨大光 (脈動) */}
+      <motion.div
         className="absolute inset-0 pointer-events-none"
+        animate={{
+          opacity: [0.5, 0.9, 0.5],
+          scale: [1, 1.12, 1],
+        }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         style={{
           background:
-            "radial-gradient(ellipse 50% 45% at 50% 45%, rgba(217,119,87,0.28) 0%, transparent 70%)",
+            "radial-gradient(ellipse 60% 55% at 50% 50%, rgba(217,119,87,0.55) 0%, transparent 65%)",
         }}
         aria-hidden
       />
 
-      {/* 粒子 (Sparkles) */}
+      {/* Particle Storm (200個粒子) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
         {particles.map((p, i) => (
           <motion.div
@@ -54,16 +59,22 @@ export default function HeroBgE() {
               height: `${p.size}px`,
               background:
                 i % 3 === 0
-                  ? "rgba(217,119,87,0.85)"
-                  : "rgba(250,249,245,0.6)",
+                  ? "rgba(217,119,87,1)"
+                  : i % 3 === 1
+                  ? "rgba(250,249,245,0.85)"
+                  : "rgba(184,93,64,0.95)",
               boxShadow:
                 i % 3 === 0
-                  ? "0 0 6px rgba(217,119,87,0.5)"
-                  : "0 0 4px rgba(250,249,245,0.3)",
+                  ? "0 0 12px rgba(217,119,87,0.9)"
+                  : i % 3 === 1
+                  ? "0 0 8px rgba(250,249,245,0.6)"
+                  : "0 0 10px rgba(184,93,64,0.7)",
             }}
             animate={{
+              x: [0, p.dx, 0],
+              y: [0, p.dy, 0],
               opacity: [0, 1, 0],
-              scale: [0.5, 1.2, 0.5],
+              scale: [0.3, 1.5, 0.3],
             }}
             transition={{
               duration: p.duration,
@@ -75,19 +86,19 @@ export default function HeroBgE() {
         ))}
       </div>
 
-      {/* 暗周辺 vignette */}
+      {/* コピー周辺だけ落とす */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 75% 70% at 50% 50%, transparent 25%, rgba(31,24,21,0.75) 100%)",
+            "radial-gradient(ellipse 45% 40% at 50% 50%, rgba(31,24,21,0.50) 0%, transparent 65%)",
         }}
         aria-hidden
       />
 
       {/* Grain */}
       <div
-        className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-[0.06]"
+        className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-[0.07]"
         style={{
           backgroundImage:
             "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>\")",

@@ -2,41 +2,65 @@
 import { motion } from "motion/react";
 
 /**
- * Hero Bg C — Spotlight 系
- * 中央巨大スポットライトが脈動、暗背景でコピーが浮き上がる
+ * Hero Bg C — Massive Spotlight (巨大光が回転+脈動)
+ * 中央の巨大スポットライトが激しく脈動、複数光柱が回転
  */
 export default function HeroBgC() {
   return (
     <>
-      {/* base ほぼ黒 */}
       <div className="absolute inset-0 bg-sumi-deep" aria-hidden />
 
-      {/* Spotlight main: 中央巨大コーラル光が脈動 */}
+      {/* Spotlight main: 巨大コーラル光が激しく脈動 */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         animate={{
-          opacity: [0.85, 1, 0.85],
-          scale: [1, 1.05, 1],
+          opacity: [0.7, 1.0, 0.7],
+          scale: [1, 1.18, 1],
         }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
         style={{
           background:
-            "radial-gradient(ellipse 55% 50% at 50% 45%, rgba(217,119,87,0.45) 0%, rgba(217,119,87,0.10) 35%, transparent 65%)",
+            "radial-gradient(ellipse 70% 65% at 50% 45%, rgba(217,119,87,0.85) 0%, rgba(217,119,87,0.30) 25%, rgba(184,93,64,0.15) 50%, transparent 75%)",
         }}
         aria-hidden
       />
 
-      {/* Spotlight cone: 上から斜めの光柱 (Aceternity Spotlight 風) */}
+      {/* 回転する光柱1 */}
       <motion.div
-        className="absolute -top-40 left-1/2 w-[800px] h-[600px] pointer-events-none"
+        className="absolute -top-32 left-1/2 w-[1200px] h-[1400px] pointer-events-none"
         style={{
-          transform: "translateX(-50%) rotate(-15deg)",
           background:
-            "radial-gradient(ellipse 50% 50% at center, rgba(250,249,245,0.10) 0%, transparent 70%)",
-          filter: "blur(40px)",
+            "radial-gradient(ellipse 40% 50% at center, rgba(250,249,245,0.18) 0%, transparent 65%)",
+          filter: "blur(50px)",
+          transformOrigin: "center",
         }}
-        animate={{ opacity: [0.6, 1, 0.6] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        animate={{
+          rotate: [0, 360],
+          x: "-50%",
+        }}
+        transition={{
+          rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+        }}
+        aria-hidden
+      />
+
+      {/* 回転する光柱2 (逆回転) */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 w-[900px] h-[900px] pointer-events-none rounded-full"
+        style={{
+          background:
+            "conic-gradient(from 0deg, transparent 0%, rgba(217,119,87,0.20) 20%, transparent 40%, rgba(250,249,245,0.10) 60%, transparent 80%, rgba(217,119,87,0.15) 100%)",
+          filter: "blur(40px)",
+          transform: "translate(-50%, -50%)",
+        }}
+        animate={{
+          rotate: [360, 0],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "linear",
+        }}
         aria-hidden
       />
 
@@ -45,14 +69,14 @@ export default function HeroBgC() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 70% at 50% 50%, transparent 30%, rgba(31,24,21,0.85) 100%)",
+            "radial-gradient(ellipse 75% 75% at 50% 50%, transparent 25%, rgba(31,24,21,0.92) 100%)",
         }}
         aria-hidden
       />
 
       {/* Grain */}
       <div
-        className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-[0.07]"
+        className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-[0.10]"
         style={{
           backgroundImage:
             "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>\")",
