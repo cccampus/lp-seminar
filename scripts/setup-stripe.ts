@@ -29,8 +29,6 @@ if (!apiKey.startsWith("sk_live_")) {
   await new Promise((resolve) => process.stdin.once("data", resolve));
 }
 
-// Stripe SDK の型は最新版を期待するが、本番動作は固定版を維持
-// @ts-expect-error apiVersion 文字列リテラル型が SDK 更新で狭くなったため、ランタイム動作優先で抑止
 const stripe = new Stripe(apiKey, { apiVersion: "2026-04-22.dahlia" });
 
 async function main() {

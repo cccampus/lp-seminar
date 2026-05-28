@@ -46,8 +46,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "not configured" }, { status: 500 });
   }
 
-  // Stripe SDK の型は最新版を期待するが、本番動作は固定版を維持
-  // @ts-expect-error apiVersion 文字列リテラル型が SDK 更新で狭くなったため、ランタイム動作優先で抑止
   const stripe = new Stripe(apiKey, { apiVersion: "2026-04-22.dahlia" });
 
   const sig = req.headers.get("stripe-signature");
