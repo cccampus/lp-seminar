@@ -102,23 +102,23 @@ export default function SixMonths() {
         <div className="mx-auto w-full max-w-3xl">
           {/* 見出し */}
           <div>
-            <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-4">Change</p>
+            <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-coral mb-4">Your Future</p>
             <h2 id="six-months-heading" className="font-serif font-semibold leading-tight mb-10 heading-ja" style={{ fontSize: "clamp(24px, 5.8vw, 56px)", letterSpacing: "-0.01em" }}>
-              半年で、毎日の仕事が、
+              あなたの会社にも、
               <br />
-              ここまで変わる。
+              半年でこの景色を。
             </h2>
             <div className="prose-stub text-cream/90 text-base sm:text-lg leading-loose space-y-5">
               <p>
-                ほんの半年前まで、私は AI をほとんど触っていませんでした。
+                これは、半年後のあなたの景色です。
                 <br />
-                店舗経営をしながら、「ChatGPT って便利らしいね」程度の理解。
+                私は半年前まで、AI をほとんど触っていませんでした。
               </p>
               <p>
                 <span className="block font-serif text-2xl sm:text-4xl font-semibold text-coral leading-snug mt-2" style={{ letterSpacing: "-0.01em" }}>
-                  Claude Code に出会って、
+                  いま、社員を雇わずに、
                   <br className="sm:hidden" />
-                  6ヶ月。
+                  ひとりで社員5人分の仕事を。
                 </span>
               </p>
             </div>
@@ -140,9 +140,7 @@ export default function SixMonths() {
             <p>
               これは特別な才能でも、IT 知識でもありません。
               <br />
-              タイミングと、やる気と、行動力。
-              <br className="sm:hidden" />
-              それだけです。
+              必要なのは、設計図だけです。
             </p>
             <p>
               IT 革命は 20 年超えても、
@@ -154,6 +152,11 @@ export default function SixMonths() {
               <span className="font-serif text-2xl sm:text-3xl font-semibold text-coral block mt-2" style={{ textShadow: "0 2px 24px rgba(31,31,31,0.85)" }}>
                 これは波ではなく、津波です。
               </span>
+            </p>
+            <p className="pt-4 font-serif text-xl sm:text-2xl text-cream">
+              あなたの会社にも、半年で。
+              <br className="sm:hidden" />
+              設計図さえあれば、必ず。
             </p>
           </div>
         </div>

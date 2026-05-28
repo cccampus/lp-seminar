@@ -57,17 +57,17 @@ export default function WhyThis() {
             >
               経営者の言葉で、
               <br />
-              経営の判断軸に乗せられる景色を、
+              経営の判断軸に乗せられる設計図を、
               <br />
-              <span className="text-coral">2 時間で</span>お見せします。
+              <span className="text-coral">2 時間で</span>お渡しします。
             </p>
           </div>
 
           <p className="pt-4 text-cream/80">
             このセミナーは「教える場」ではありません。
             <br />
-            2 時間、AI が本当に仕事をする景色を、
-            <span className="whitespace-nowrap">目の前で見ていただく場です。</span>
+            あなたの会社の半年後を作る設計図を、
+            <span className="whitespace-nowrap">目の前でお渡しする場です。</span>
           </p>
         </div>
       </div>
