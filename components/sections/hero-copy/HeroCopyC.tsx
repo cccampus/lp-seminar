@@ -26,11 +26,9 @@ export default function HeroCopyC() {
         <span className="block mt-2 sm:mt-3">
           いま、
           <br className="sm:hidden" />
-          <span className="text-coral italic font-normal">
-            社員を雇わずに
-            <br className="sm:hidden" />
-            事業が伸びています
-          </span>
+          <span className="text-coral italic font-normal">社員を雇わずに</span>
+          <br className="sm:hidden" />
+          <span className="text-coral italic font-normal">事業が伸びています</span>
           。
         </span>
       </RevealHeading>
