@@ -1,12 +1,11 @@
-import Image from "next/image";
 import HeroMetaSwitcher from "@/components/sections/hero-meta/HeroMetaSwitcher";
 import HeroCopyC from "@/components/sections/hero-copy/HeroCopyC";
+import HeroBgB from "@/components/sections/hero-bg/HeroBgB";
 
 /**
- * Hero — v3.2 コピー / cinematic V2 ダークステージ
- * - 案A: 6ヶ月変化軸
- * - 「半年前、私もAIを使えませんでした。いま、AI で仕事をしています」
- * - cinematic_hero_bg.png (gpt-image-2 生成のダークステージ) を背景に統合
+ * Hero — v3.4 採用版
+ * - Bg: B案 Beams Collision (光線が中央衝突、Aceternity Pro 風)
+ * - Copy: C案 物語改良型
  */
 const APPLY_HREF = "#apply";
 const DETAIL_HREF = "#detail";
@@ -14,55 +13,8 @@ const DETAIL_HREF = "#detail";
 export default function Hero() {
   return (
     <section className="relative w-full min-h-screen overflow-hidden bg-sumi-deep text-cream py-20 sm:py-24">
-      {/* === cinematic 背景画像 (ダークステージ) === */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden>
-        <Image
-          src="/images/hero/cinematic_hero_bg.png"
-          alt=""
-          fill
-          sizes="100vw"
-          priority
-          className="object-cover opacity-70"
-        />
-      </div>
-
-      {/* === 暗グラデオーバーレイ === */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 70% at 50% 40%, rgba(31,31,31,0.35) 0%, rgba(31,24,21,0.92) 100%)",
-        }}
-        aria-hidden
-      />
-
-      {/* === コーラル スポット === */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 35% 32% at 50% 38%, rgba(217,119,87,0.22) 0%, transparent 65%)",
-        }}
-        aria-hidden
-      />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 40% 30% at 15% 80%, rgba(184,93,64,0.14) 0%, transparent 60%)",
-        }}
-        aria-hidden
-      />
-
-      {/* === Grain === */}
-      <div
-        className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-[0.06]"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>\")",
-        }}
-        aria-hidden
-      />
+      {/* === 背景 (B案 Beams Collision 採用) === */}
+      <HeroBgB />
 
       {/* === Bottom seam (次セクションへ繋ぐダークフェード) === */}
       <div
@@ -81,10 +33,10 @@ export default function Hero() {
           Claude Code 実践セミナー
         </p>
 
-        {/* 主タイトル + サブコピー + 補足 — C案採用 (2026-05-28 ペルソナ100体テスト+本文整合性で確定) */}
+        {/* 主タイトル + サブコピー + 補足 — C案採用 */}
         <HeroCopyC />
 
-        {/* メタ情報 — VariantSwitcher (?preview=1 で 5案切替) */}
+        {/* メタ情報 */}
         <HeroMetaSwitcher />
 
         {/* CTA */}

@@ -42,7 +42,7 @@ export default function HeroCopyC() {
       </p>
 
       <p className="mt-6 max-w-md text-xs sm:text-sm leading-relaxed text-cream/55">
-        * Claude Code は、ChatGPT より仕事向けに進化した次世代の AI です。
+        * Claude Codeは、ビジネス活用に特化した次世代のAI です。
       </p>
     </>
   );
