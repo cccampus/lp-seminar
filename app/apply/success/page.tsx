@@ -31,6 +31,8 @@ async function resolveSessionDate(stripeSessionId: string | undefined) {
   const apiKey = process.env.STRIPE_SECRET_KEY;
   if (!apiKey) return null;
   try {
+    // Stripe SDK の型は最新版を期待するが、本番動作は固定版を維持
+    // @ts-expect-error apiVersion 文字列リテラル型が SDK 更新で狭くなったため、ランタイム動作優先で抑止
     const stripe = new Stripe(apiKey, { apiVersion: "2026-04-22.dahlia" });
     const session = await stripe.checkout.sessions.retrieve(stripeSessionId);
     const key = session.metadata?.sessionDate;
