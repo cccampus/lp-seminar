@@ -5,11 +5,11 @@
  */
 import DarkSection from "@/components/ui/DarkSection";
 
-export default function WhyThis() {
+export default function WhyThisStart() {
   return (
     <DarkSection
-      id="why-us"
-      aria-labelledby="why-us-heading"
+      id="why-us-start"
+      aria-labelledby="why-us-start-heading"
       bgImage="/images/backdrop/bd_b.jpg"
       className="py-24 sm:py-32 px-6"
     >
@@ -18,7 +18,7 @@ export default function WhyThis() {
           Why Us
         </p>
         <h2
-          id="why-us-heading"
+          id="why-us-start-heading"
           className="font-serif font-semibold leading-tight mb-12 heading-ja"
           style={{ fontSize: "clamp(24px, 5.8vw, 56px)", letterSpacing: "-0.01em" }}
         >
@@ -57,17 +57,17 @@ export default function WhyThis() {
             >
               経営者の言葉で、
               <br />
-              経営の判断軸に乗せられる設計図を、
+              経営の判断軸に乗せられる景色を、
               <br />
-              <span className="text-coral">2 時間で</span>お渡しします。
+              <span className="text-coral">2 時間で</span>お見せします。
             </p>
           </div>
 
           <p className="pt-4 text-cream/80">
             このセミナーは「教える場」ではありません。
             <br />
-            あなたの会社の半年後を作る設計図を、
-            <span className="whitespace-nowrap">目の前でお渡しする場です。</span>
+            2 時間、AI が本当に仕事をする景色を、
+            <span className="whitespace-nowrap">目の前で見ていただく場です。</span>
           </p>
         </div>
       </div>

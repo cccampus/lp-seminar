@@ -32,7 +32,7 @@ const sessions: Session[] = [
   },
 ];
 
-export default function FinalCTA() {
+export default function FinalCTAStart() {
   const [selectedSession, setSelectedSession] = useState<string>(sessions[0].id);
   const [agreed, setAgreed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -64,8 +64,8 @@ export default function FinalCTA() {
 
   return (
     <section
-      id="apply"
-      aria-labelledby="apply-heading"
+      id="apply-start"
+      aria-labelledby="apply-start-heading"
       className="relative w-full bg-sumi-deep text-cream overflow-hidden py-32 sm:py-40 px-6"
     >
       {/* cinematic 背景画像 */}
@@ -108,13 +108,13 @@ export default function FinalCTA() {
 
       <div className="relative max-w-3xl mx-auto text-center">
         <h2
-          id="apply-heading"
+          id="apply-start-heading"
           className="font-serif text-3xl sm:text-5xl font-semibold leading-tight"
           style={{ letterSpacing: "-0.01em" }}
         >
-          あなたの会社の<span className="text-coral italic font-normal">設計図</span>を、
+          半年後の<span className="text-coral italic font-normal">景色</span>を、
           <br />
-          いま受け取る。
+          いま選ぶ。
         </h2>
 
         <p className="mt-8 text-base sm:text-lg leading-relaxed text-cream/75 max-w-xl mx-auto">

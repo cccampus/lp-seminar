@@ -1,17 +1,16 @@
 import HeroMetaSwitcher from "@/components/sections/hero-meta/HeroMetaSwitcher";
-import HeroCopyA from "@/components/sections/hero-copy/HeroCopyA";
+import HeroCopyC from "@/components/sections/hero-copy/HeroCopyC";
 import HeroBgB from "@/components/sections/hero-bg/HeroBgB";
 
 /**
- * Hero — A案版 (デフォルト、本番 /)
- * - Bg: B案 Beams
- * - Copy: A案 ベネフィット型「あなたが寝ている間に、AIが社員5人分の仕事を終えている」
- * C案版は HeroStart.tsx (副業・サラリーマン層向け、/start URL)
+ * Hero — v3.4 採用版
+ * - Bg: B案 Beams Collision (光線が中央衝突、Aceternity Pro 風)
+ * - Copy: C案 物語改良型
  */
 const APPLY_HREF = "#apply";
 const DETAIL_HREF = "#detail";
 
-export default function Hero() {
+export default function HeroStart() {
   return (
     <section className="relative w-full min-h-screen overflow-hidden bg-sumi-deep text-cream py-20 sm:py-24">
       {/* === 背景 (B案 Beams Collision 採用) === */}
@@ -34,8 +33,8 @@ export default function Hero() {
           Claude Code 実践セミナー
         </p>
 
-        {/* 主タイトル + サブコピー + 補足 — A案採用 */}
-        <HeroCopyA />
+        {/* 主タイトル + サブコピー + 補足 — C案採用 */}
+        <HeroCopyC />
 
         {/* メタ情報 */}
         <HeroMetaSwitcher />
