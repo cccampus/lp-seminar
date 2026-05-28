@@ -1,6 +1,6 @@
 import Image from "next/image";
-import RevealHeading from "@/components/ui/RevealHeading";
 import HeroMetaSwitcher from "@/components/sections/hero-meta/HeroMetaSwitcher";
+import HeroCopySwitcher from "@/components/sections/hero-copy/HeroCopySwitcher";
 
 /**
  * Hero — v3.2 コピー / cinematic V2 ダークステージ
@@ -81,41 +81,8 @@ export default function Hero() {
           Claude Code 実践セミナー
         </p>
 
-        {/* 主タイトル */}
-        <RevealHeading
-          as="h1"
-          stagger={0.026}
-          className="font-serif font-semibold leading-[1.5] sm:leading-[1.35] mx-auto heading-ja"
-          style={{
-            fontSize: "clamp(20px, 5.4vw, 56px)",
-            letterSpacing: "0em",
-          }}
-        >
-          <span className="block">
-            半年前、私もAIを
-            <br className="sm:hidden" />
-            使えませんでした。
-          </span>
-          <span className="block mt-2 sm:mt-3">
-            いま、
-            <span className="text-coral italic font-normal">
-              AIで仕事をしています
-            </span>
-            。
-          </span>
-        </RevealHeading>
-
-        {/* サブコピー */}
-        <p className="mt-8 max-w-xl text-sm sm:text-lg leading-relaxed text-cream/80">
-          たった6ヶ月で、毎日の仕事がここまでラクになる。
-          <br />
-          その景色を、2時間でお見せします。
-        </p>
-
-        {/* Claude Code 補足説明 */}
-        <p className="mt-6 max-w-md text-xs sm:text-sm leading-relaxed text-cream/55">
-          * Claude Code は、ChatGPT より仕事向けに進化した次世代の AI です。
-        </p>
+        {/* 主タイトル + サブコピー + 補足 — VariantSwitcher (?preview=1 で 5案切替) */}
+        <HeroCopySwitcher />
 
         {/* メタ情報 — VariantSwitcher (?preview=1 で 5案切替) */}
         <HeroMetaSwitcher />
