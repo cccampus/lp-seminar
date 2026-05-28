@@ -11,6 +11,7 @@
  */
 import DarkSection from "@/components/ui/DarkSection";
 import { useState } from "react";
+import { motion } from "motion/react";
 
 const outcomes = [
   { title: "SNS運用代行", body: "月150投稿のSNS素案づくり〜自動投稿まで、半日 → 30分に。" },
@@ -75,30 +76,34 @@ export default function CasesC() {
         </p>
       </div>
 
-      {/* Marquee 2行 (上下逆方向) */}
+      {/* Marquee 2行 (上下逆方向) — motion.div で常時動作、viewport関係なし */}
       <div
         className="relative w-full"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {[0, 1].map((row) => (
-          <div key={row} className="relative w-full overflow-hidden py-4">
-            <div
-              className="flex w-max items-stretch gap-8 sm:gap-10"
-              style={{
-                animation: `casesmarq${row === 0 ? "" : "Rev"} ${row === 0 ? 60 : 75}s linear infinite`,
-                animationPlayState: paused ? "paused" : "running",
-              }}
-            >
-              {(row === 0 ? doubled.slice(0, 8) : doubled.slice(8, 16)).map((o, i) => (
-                <CaseCard key={`${row}-${i}`} o={o} />
-              ))}
-              {(row === 0 ? doubled.slice(0, 8) : doubled.slice(8, 16)).map((o, i) => (
-                <CaseCard key={`${row}-clone-${i}`} o={o} />
-              ))}
+        {[0, 1].map((row) => {
+          const items = row === 0 ? doubled.slice(0, 8) : doubled.slice(8, 16);
+          const duration = row === 0 ? 60 : 75;
+          const xRange: [string, string] = row === 0 ? ["0%", "-50%"] : ["-50%", "0%"];
+          return (
+            <div key={row} className="relative w-full overflow-hidden py-4">
+              <motion.div
+                className="flex w-max items-stretch gap-8 sm:gap-10"
+                style={{ willChange: "transform" }}
+                animate={paused ? {} : { x: xRange }}
+                transition={{ duration, repeat: Infinity, ease: "linear" }}
+              >
+                {items.map((o, i) => (
+                  <CaseCard key={`${row}-${i}`} o={o} />
+                ))}
+                {items.map((o, i) => (
+                  <CaseCard key={`${row}-clone-${i}`} o={o} />
+                ))}
+              </motion.div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="max-w-4xl mx-auto px-6 mt-14 sm:mt-16 flex flex-col items-center gap-3">
@@ -108,16 +113,6 @@ export default function CasesC() {
         </a>
       </div>
 
-      <style jsx>{`
-        @keyframes casesmarq {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        @keyframes casesmarqRev {
-          from { transform: translateX(-50%); }
-          to { transform: translateX(0); }
-        }
-      `}</style>
     </DarkSection>
   );
 }

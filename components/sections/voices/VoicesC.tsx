@@ -9,6 +9,7 @@
  */
 import DarkSection from "@/components/ui/DarkSection";
 import { useState } from "react";
+import { motion } from "motion/react";
 import { voices } from "./voices-data";
 
 function VoiceCard({ v }: { v: typeof voices[number] }) {
@@ -69,19 +70,20 @@ export default function VoicesC() {
       >
         {[row1, row2].map((rowData, ri) => {
           const doubled = [...rowData, ...rowData];
+          const duration = ri === 0 ? 70 : 85;
+          const xRange: [string, string] = ri === 0 ? ["0%", "-50%"] : ["-50%", "0%"];
           return (
             <div key={ri} className="relative w-full overflow-hidden py-3">
-              <div
+              <motion.div
                 className="flex w-max items-stretch gap-5 sm:gap-6"
-                style={{
-                  animation: `voicesmarq${ri === 0 ? "" : "Rev"} ${ri === 0 ? 70 : 85}s linear infinite`,
-                  animationPlayState: paused ? "paused" : "running",
-                }}
+                style={{ willChange: "transform" }}
+                animate={paused ? {} : { x: xRange }}
+                transition={{ duration, repeat: Infinity, ease: "linear" }}
               >
                 {doubled.map((v, i) => (
                   <VoiceCard key={`${ri}-${i}`} v={v} />
                 ))}
-              </div>
+              </motion.div>
             </div>
           );
         })}
@@ -91,16 +93,6 @@ export default function VoicesC() {
         {voices.length} voices · hover to pause
       </p>
 
-      <style jsx>{`
-        @keyframes voicesmarq {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        @keyframes voicesmarqRev {
-          from { transform: translateX(-50%); }
-          to { transform: translateX(0); }
-        }
-      `}</style>
     </DarkSection>
   );
 }
