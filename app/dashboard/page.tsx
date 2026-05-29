@@ -1,7 +1,15 @@
 import Stripe from "stripe";
+import { headers } from "next/headers";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+function maskEmail(email: string): string {
+  if (!email || !email.includes("@")) return "***";
+  const [local, domain] = email.split("@");
+  const head = local.slice(0, Math.min(2, local.length));
+  return `${head}${"*".repeat(Math.max(3, local.length - 2))}@${domain}`;
+}
 
 type Row = {
   id: string;
@@ -83,6 +91,9 @@ function formatJST(ms: number): string {
 }
 
 export default async function DashboardPage() {
+  const h = await headers();
+  const role = h.get("x-dashboard-role") || "guest";
+  const isGuest = role === "guest";
   const rows = await getRows();
   const totalRevenue = rows.reduce((s, r) => s + r.amount, 0);
   const totalCount = rows.length;
@@ -108,6 +119,11 @@ export default async function DashboardPage() {
           </h1>
           <p className="mt-3 text-xs text-cream/55">
             Stripe API 経由 / リロードで最新化 / 関係者限定
+            {isGuest && (
+              <span className="ml-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-coral/30 text-[10px] text-coral">
+                Guest View
+              </span>
+            )}
           </p>
         </div>
 
@@ -160,12 +176,16 @@ export default async function DashboardPage() {
                         </span>
                       </Td>
                       <Td mono>
-                        <a
-                          href={`mailto:${r.email}`}
-                          className="text-cream/75 hover:text-coral"
-                        >
-                          {r.email}
-                        </a>
+                        {isGuest ? (
+                          <span className="text-cream/55">{maskEmail(r.email)}</span>
+                        ) : (
+                          <a
+                            href={`mailto:${r.email}`}
+                            className="text-cream/75 hover:text-coral"
+                          >
+                            {r.email}
+                          </a>
+                        )}
                       </Td>
                     </tr>
                   ))
