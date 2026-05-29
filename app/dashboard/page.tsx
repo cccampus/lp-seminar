@@ -31,9 +31,20 @@ async function getRows(): Promise<Row[]> {
     const res: Stripe.ApiList<Stripe.Checkout.Session> = await stripe.checkout.sessions.list({
       limit: 100,
       starting_after,
+      expand: ["data.payment_intent.latest_charge"],
     });
     for (const s of res.data) {
       if (s.payment_status !== "paid") continue;
+
+      // 返金済みは非表示 (latest_charge.refunded または amount_refunded > 0)
+      const pi = s.payment_intent;
+      if (pi && typeof pi === "object") {
+        const ch = pi.latest_charge;
+        if (ch && typeof ch === "object") {
+          if (ch.refunded || (ch.amount_refunded ?? 0) > 0) continue;
+        }
+      }
+
       const sessionDate = s.metadata?.sessionDate || "";
       const companyField = s.custom_fields?.find((f) => f.key === "company");
       rows.push({
