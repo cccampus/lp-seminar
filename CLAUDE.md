@@ -149,6 +149,24 @@ Webhook (`app/api/stripe/webhook/route.ts`) で `metadata.sessionDate` を見て
 - Speaker: Kiyo「店舗経営からスタートした、34歳の経営者。」/ Takka「ほんの少し前まで、AI で何ができるかも知らない、…」
 - CTA全部「お申込みへ進む →」 / ヘッダー「申込 →」
 
+## お問い合わせフォーム
+
+- `app/contact/page.tsx` — フォームUI (name / email / 件名 / 本文、LegalPage ベース)
+- `app/api/contact/route.ts` — Resend で2通送信:
+  - **管理者通知**: 件名 `[CCC お問い合わせ] {名前} 様 / {件名}`、from `CCC運営事務局 <noreply@isshin-ai.co.jp>`、to `CONTACT_TO`、replyTo に問い合わせ者の email (返信が直接届く)
+  - **自動応答**: 件名 `【お問い合わせ受付】Claude Code 実践セミナー`、問い合わせ者宛、受付完了通知
+- Stripe webhook と同じフォーマット (rules/`isshin-ai-mail-pattern.md` 準拠)
+- バリデーション: 必須3項目 + メールアドレス正規表現 + 5000文字制限
+
+## ダッシュボード (/dashboard)
+
+- **`app/dashboard/page.tsx`** — Server Component で Stripe API 直叩き、KPI 4枠 (売上合計 / 申込数 / 第1回 / 第2回) + 1顧客1行リスト
+- **`proxy.ts`** — `/dashboard/*` と `/api/dashboard/*` を Basic Auth で保護、admin (kiyotakka) と guest (guest) の 2ロール
+- ゲストはメアドマスク表示 (例: `ma***@odschool.jp`)、ヘッダーに `Guest View` バッジ
+- **返金済み非表示**: `stripe.checkout.sessions.list({ expand: ["data.payment_intent.latest_charge"] })` で取得 → `latest_charge.refunded || amount_refunded > 0` を skip
+- env: `DASHBOARD_USER` `DASHBOARD_PASS` `DASHBOARD_GUEST_USER` `DASHBOARD_GUEST_PASS`
+- proxy → Server Component の role 受け渡し: `NextResponse.next({ request: { headers: fwd }})` で `x-dashboard-role` ヘッダー流す → page で `headers()` から読む
+
 ## Metadata (OG / Twitter) 管理
 
 - `app/layout.tsx` = **A案軸のデフォルト** (本番 `/` 用) を title / description / openGraph / twitter 全て含める

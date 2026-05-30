@@ -24,6 +24,34 @@ function ScrollTriggerSync() {
   return null;
 }
 
+// Lenis root 有効時、ネイティブの <a href="#..."> ハッシュジャンプは
+// Lenis のスクロール位置と同期せず「飛ばない」。ここで全アンカーを
+// 一括で lenis.scrollTo に委譲する（Header の goTo と同じ -72 オフセット）。
+function AnchorScroll() {
+  const lenis = useLenis();
+  useEffect(() => {
+    if (!lenis) return;
+    const onClick = (e: MouseEvent) => {
+      // Header 等が既に preventDefault 済み／修飾キー押下／中クリックは無視
+      if (e.defaultPrevented || e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const anchor = (e.target as HTMLElement | null)?.closest("a");
+      const href = anchor?.getAttribute("href");
+      if (!href || !href.startsWith("#")) return;
+      e.preventDefault();
+      if (href === "#") {
+        lenis.scrollTo(0);
+        return;
+      }
+      const el = document.getElementById(href.slice(1));
+      if (el) lenis.scrollTo(el, { offset: -72 });
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [lenis]);
+  return null;
+}
+
 export default function LenisProvider({ children }: { children: ReactNode }) {
   // SSR と初回ハイドレーションを一致させるため false 始まり → mount 後に判定
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -53,6 +81,7 @@ export default function LenisProvider({ children }: { children: ReactNode }) {
       }}
     >
       <ScrollTriggerSync />
+      <AnchorScroll />
       {children}
     </ReactLenis>
   );

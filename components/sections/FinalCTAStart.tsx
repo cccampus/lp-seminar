@@ -64,7 +64,7 @@ export default function FinalCTAStart() {
 
   return (
     <section
-      id="apply-start"
+      id="apply"
       aria-labelledby="apply-start-heading"
       className="relative w-full bg-sumi-deep text-cream overflow-hidden py-32 sm:py-40 px-6"
     >
