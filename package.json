@@ -6,10 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "zoom:setup": "bun scripts/zoom-setup.ts"
+    "zoom:setup": "bun scripts/zoom-setup.ts",
+    "zoom:chat": "bun scripts/zoom-chat-listener.ts",
+    "recall:receiver": "bun scripts/recall-chat-receiver.ts",
+    "recall:bot": "bun scripts/recall-bot-start.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@supabase/supabase-js": "^2.107.0",
     "clsx": "^2.1.1",
     "gsap": "^3.15.0",
     "lenis": "^1.3.23",

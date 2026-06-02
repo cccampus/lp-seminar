@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { z } from "zod";
+import { cookies } from "next/headers";
 
 export const runtime = "nodejs";
 
@@ -13,6 +14,11 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { agreedTerms, sessionDate } = schema.parse(body);
+
+    // CCC 会員の紹介Cookie を Stripe metadata に積む（webhook で member-app DB に反映）
+    const cookieStore = await cookies();
+    const rawRef = cookieStore.get("ccc_referral_code")?.value ?? "";
+    const referralCode = /^[a-zA-Z0-9_-]{6,12}$/.test(rawRef) ? rawRef : "";
 
     if (!agreedTerms) {
       return NextResponse.json(
@@ -68,6 +74,7 @@ export async function POST(req: Request) {
       metadata: {
         seminar: "CCC Seminar",
         sessionDate: sessionDate || "unspecified",
+        ...(referralCode ? { referral_code: referralCode } : {}),
       },
     });
 

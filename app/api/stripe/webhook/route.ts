@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { Resend } from "resend";
+import { recordSeminarPaidReferral } from "@/lib/ccc-referral";
 
 export const runtime = "nodejs";
 
@@ -85,6 +86,32 @@ export async function POST(req: Request) {
 
   const sessionMap = buildSessionMap();
   const meta = sessionMap[sessionDateKey];
+
+  // === CCC 紹介トラッキング（member-app DB に書き込み、referrer に 100pt） ===
+  // 失敗してもメール送信は続行（ユーザー影響なしの内部処理）
+  const referralCode = session.metadata?.referral_code;
+  let referralResult: string | null = null;
+  if (referralCode && customerEmail) {
+    try {
+      const result = await recordSeminarPaidReferral({
+        referralCode,
+        referredEmail: customerEmail,
+        stripeSessionId: sessionId,
+        amountTotal: session.amount_total ?? null,
+      });
+      if (result.ok) {
+        referralResult = result.alreadyRecorded
+          ? `already (${result.referrerId})`
+          : `+100pt → ${result.referrerId}`;
+      } else {
+        referralResult = `failed: ${result.reason}`;
+        console.warn("[ccc-referral]", result.reason);
+      }
+    } catch (e) {
+      referralResult = `exception: ${(e as Error).message}`;
+      console.error("[ccc-referral] exception:", e);
+    }
+  }
 
   if (!resendKey) {
     console.error("RESEND_API_KEY missing — emails not sent");
@@ -186,6 +213,9 @@ export async function POST(req: Request) {
     "Stripe ダッシュボード:",
     `https://dashboard.stripe.com/payments/${session.payment_intent}`,
     "",
+    ...(referralResult
+      ? [`紹介トラッキング: ${referralResult}`, ""]
+      : []),
     "──",
     "返信は本メールに返すと申込者に直接届きます。",
   ].join("\n");
