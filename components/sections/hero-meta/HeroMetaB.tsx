@@ -8,7 +8,7 @@ export default function HeroMetaB() {
       <div className="flex items-baseline justify-between border-b border-cream/15 pb-3">
         <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-coral/85">Date</span>
         <span className="font-serif text-xl sm:text-2xl text-cream font-semibold" style={{ letterSpacing: "-0.01em" }}>
-          6/3<span className="text-cream/60 text-base">(水)</span> · 6/14<span className="text-cream/60 text-base">(日)</span>
+          6/14<span className="text-cream/60 text-base">(日)</span> · 7/8<span className="text-cream/60 text-base">(水)</span>
         </span>
       </div>
       <div className="flex items-baseline justify-between border-b border-cream/15 pb-3">

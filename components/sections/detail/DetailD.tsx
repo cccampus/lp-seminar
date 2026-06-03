@@ -28,15 +28,15 @@ export default function DetailD() {
             <p className="font-mono text-[10px] tracking-[0.32em] uppercase text-coral/85 mb-2">Sessions</p>
             <div className="flex flex-wrap items-baseline justify-center gap-x-6 gap-y-2 border-y border-cream/20 py-5">
               <p className="font-serif font-semibold text-cream leading-none" style={{ fontSize: "clamp(36px, 7vw, 64px)", letterSpacing: "-0.03em" }}>
-                6/3 <span className="text-coral text-base sm:text-xl align-middle ml-1">水</span>
+                6/14 <span className="text-coral text-base sm:text-xl align-middle ml-1">日</span>
               </p>
               <p className="font-mono text-cream/45">·</p>
               <p className="font-serif font-semibold text-cream leading-none" style={{ fontSize: "clamp(36px, 7vw, 64px)", letterSpacing: "-0.03em" }}>
-                6/14 <span className="text-coral text-base sm:text-xl align-middle ml-1">日</span>
+                7/8 <span className="text-coral text-base sm:text-xl align-middle ml-1">水</span>
               </p>
             </div>
             <p className="mt-3 text-sm sm:text-base text-cream/65">
-              6/3 — 19:00〜21:00  ·  6/14 — 11:00〜13:00
+              6/14 — 11:00〜13:00  ·  7/8 — 19:00〜21:00
             </p>
           </div>
 

@@ -16,15 +16,27 @@ const baseInfo: [string, React.ReactNode][] = [
   ],
   [
     "メールアドレス",
+    <>
+      <a
+        key="mail"
+        href="mailto:noreply@isshin-ai.co.jp"
+        className="text-coral hover:underline"
+      >
+        noreply@isshin-ai.co.jp
+      </a>
+      （応答用・商業広告メールの送信元を兼ねます）
+    </>,
+  ],
+  [
+    "販売URL",
     <a
-      key="mail"
-      href="mailto:noreply@isshin-ai.co.jp"
+      key="url"
+      href="https://ccc-seminar.vercel.app/"
       className="text-coral hover:underline"
     >
-      noreply@isshin-ai.co.jp
+      https://ccc-seminar.vercel.app/
     </a>,
   ],
-  ["販売URL", "各セミナー申込ページ"],
   [
     "販売価格",
     "各セミナー申込ページに表示する金額（税抜価格を表示し、別途消費税相当額を申し受けます）",

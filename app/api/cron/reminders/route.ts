@@ -34,6 +34,15 @@ const SESSION_MAP: Record<string, SessionMeta> = {
     zoomPw: process.env.ZOOM_PW_20260614 || "",
     startISO: "2026-06-14T11:00:00+09:00",
   },
+  "2026-07-08": {
+    label: "第3回",
+    dateText: "2026年7月8日(水)",
+    time: "19:00 – 21:00",
+    zoomUrl: process.env.ZOOM_URL_20260708 || "",
+    zoomId: process.env.ZOOM_ID_20260708 || "",
+    zoomPw: process.env.ZOOM_PW_20260708 || "",
+    startISO: "2026-07-08T19:00:00+09:00",
+  },
 };
 
 const CONTACT_FROM = process.env.CONTACT_FROM || "noreply@isshin-ai.co.jp";

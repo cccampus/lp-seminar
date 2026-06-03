@@ -8,7 +8,7 @@ export default function HeroMetaC() {
       <span className="flex items-baseline gap-2">
         <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral/85">Date</span>
         <span className="text-sm sm:text-base text-cream font-semibold whitespace-nowrap">
-          6/3 (水) · 6/14 (日)
+          6/14 (日) · 7/8 (水)
         </span>
       </span>
       <span className="text-cream/25">·</span>

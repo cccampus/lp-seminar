@@ -32,6 +32,14 @@ function buildSessionMap(): Record<string, SessionMeta> {
       zoomId: process.env.ZOOM_ID_20260614 || "",
       zoomPw: process.env.ZOOM_PW_20260614 || "",
     },
+    "2026-07-08": {
+      label: "第3回",
+      dateText: "2026年7月8日（水）19:00〜21:00",
+      openText: "開場 18:50（開催10分前）",
+      zoomUrl: process.env.ZOOM_URL_20260708 || "",
+      zoomId: process.env.ZOOM_ID_20260708 || "",
+      zoomPw: process.env.ZOOM_PW_20260708 || "",
+    },
   };
 }
 

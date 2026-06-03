@@ -8,7 +8,7 @@ import DarkSection from "@/components/ui/DarkSection";
 import { motion } from "motion/react";
 
 const rows = [
-  { label: "Date", value: "6/3 (水) 19:00–21:00  ·  6/14 (日) 11:00–13:00" },
+  { label: "Date", value: "6/14 (日) 11:00–13:00  ·  7/8 (水) 19:00–21:00" },
   { label: "Format", value: "Online (Zoom)" },
   { label: "Price", value: "¥5,000 (税抜) / セミナー1回完結" },
   { label: "Open", value: "開始10分前" },

@@ -1,19 +1,19 @@
 /**
  * NextSession — 開催スケジュールの告知
- * 第1回 (6/3 火 19-21時) / 第2回 (6/14 土 11-13時)。
+ * 第2回 (6/14 日 11-13時) / 第3回 (7/8 水 19-21時)。
  * 「Vol.◯」表記は使わない（初開催であることを訴求しない方針）。時間帯の選択肢として見せる。
  */
 import DarkSection from "@/components/ui/DarkSection";
 
 const SESSIONS = [
   {
-    date: "6/3 (水)",
-    time: "19:00 – 21:00",
+    date: "6/14 (日)",
+    time: "11:00 – 13:00",
     status: "current",
   },
   {
-    date: "6/14 (日)",
-    time: "11:00 – 13:00",
+    date: "7/8 (水)",
+    time: "19:00 – 21:00",
     status: "next",
   },
 ];

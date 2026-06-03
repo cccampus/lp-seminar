@@ -25,6 +25,7 @@ type Row = {
 const SESSION_LABELS: Record<string, string> = {
   "2026-06-03": "第1回 (6/3 水 19:00)",
   "2026-06-14": "第2回 (6/14 日 11:00)",
+  "2026-07-08": "第3回 (7/8 水 19:00)",
 };
 
 async function getRows(): Promise<Row[]> {
@@ -99,8 +100,12 @@ export default async function DashboardPage() {
   const totalCount = rows.length;
   const session1Count = rows.filter((r) => r.sessionDate === "2026-06-03").length;
   const session2Count = rows.filter((r) => r.sessionDate === "2026-06-14").length;
+  const session3Count = rows.filter((r) => r.sessionDate === "2026-07-08").length;
   const otherCount = rows.filter(
-    (r) => r.sessionDate !== "2026-06-03" && r.sessionDate !== "2026-06-14",
+    (r) =>
+      r.sessionDate !== "2026-06-03" &&
+      r.sessionDate !== "2026-06-14" &&
+      r.sessionDate !== "2026-07-08",
   ).length;
 
   return (
@@ -128,11 +133,14 @@ export default async function DashboardPage() {
         </div>
 
         {/* KPI */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
           <KpiCard label="売上合計" value={formatJPY(totalRevenue)} />
           <KpiCard label="申込数" value={`${totalCount}名`} />
-          <KpiCard label="第1回 (6/3 水)" value={`${session1Count}名`} />
           <KpiCard label="第2回 (6/14 日)" value={`${session2Count}名`} />
+          <KpiCard label="第3回 (7/8 水)" value={`${session3Count}名`} />
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+          <KpiCard label="第1回 (6/3 水)" value={`${session1Count}名`} />
         </div>
 
         {otherCount > 0 && (

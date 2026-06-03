@@ -24,6 +24,11 @@ const SESSION_MAP: Record<string, SessionInfo> = {
     dateText: "2026年6月14日（日）11:00〜13:00",
     openText: "開場 10:50（開催10分前）",
   },
+  "2026-07-08": {
+    label: "第3回",
+    dateText: "2026年7月8日（水）19:00〜21:00",
+    openText: "開場 18:50（開催10分前）",
+  },
 };
 
 async function resolveSessionDate(stripeSessionId: string | undefined) {

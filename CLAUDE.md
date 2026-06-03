@@ -189,6 +189,20 @@ grep -rE "月10万|副業|主婦|学生|Earn with|人材プール|即稼働|収�
 - 日本語折返し・Stripe SDK等のNext.js quirks: `~/.claude/rules/nextjs-frontend-quirks.md`
 - Vercel Hobby cron制約 + GitHub Actions代替: `~/.claude/rules/vercel-cli-multi-account.md`
 
+## CCC 紹介トラッキング（2026-06-03〜）
+
+会員プラットフォーム member-app の紹介機能と連動。セミナー決済時に referrer に 100pt 付与（spec_v2 §14 準拠）。
+
+- `proxy.ts` の `handleReferral`: `?ref=xxx` を `ccc_referral_code` Cookie に30日保存しクエリ落としてリダイレクト（matcher は全パス）
+- `app/api/checkout/route.ts`: Cookie 読んで Stripe Checkout `metadata.referral_code` に積む
+- `app/api/stripe/webhook/route.ts`: `lib/ccc-referral.ts` の `recordSeminarPaidReferral` を呼ぶ。失敗してもメール送信は続行（ユーザー影響回避）
+- `lib/ccc-referral.ts`: member-app の Supabase に service_role キーで直接書き込み（referrals INSERT + users.referral_points 加算 + point_transactions ログ）
+- env (両方とも Production 投入済): `CCC_MEMBER_APP_SUPABASE_URL` / `CCC_MEMBER_APP_SERVICE_ROLE_KEY`
+- 冪等性: `referrals.meta->>stripe_session_id` で既存チェック → 二重発火しない
+- 管理者通知メール末尾に「紹介トラッキング: +100pt → {referrer_id}」を追記してトレース可能
+
+**注意**: member-app 側の `enrollment.ts` は status 遷移（seminar_paid→enrolled）のみで、CCC本入会時の追加 pt は付かない（仕様準拠）。
+
 ## 進捗
 
 - 2026-05-30: ヘッダー/CTAボタンが申込セクションへ飛ばない不具合を修正。原因2つ — (1)Lenis root有効でネイティブ`#hash`アンカーが飛ばない→`LenisProvider`に`AnchorScroll`(全アンカーを`lenis.scrollTo`委譲)追加 (2)`/start`の`FinalCTAStart` idが`apply-start`で共通Headerの`#apply`と不一致→`apply`に統一。詳細パターンは`~/.claude/rules/nextjs-frontend-quirks.md`「Lenis有効時...飛ばない」

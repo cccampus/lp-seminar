@@ -24,8 +24,8 @@ export default function DetailB() {
           className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto"
         >
           {[
-            { day: "6/3", weekday: "水", time: "19:00 – 21:00" },
             { day: "6/14", weekday: "日", time: "11:00 – 13:00" },
+            { day: "7/8", weekday: "水", time: "19:00 – 21:00" },
           ].map((t, i) => (
             <div key={i} className="relative bg-cream/[0.04] border border-cream/15 overflow-hidden">
               {/* ticket notch */}

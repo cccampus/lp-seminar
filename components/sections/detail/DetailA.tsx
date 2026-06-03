@@ -25,8 +25,8 @@ export default function DetailA() {
           className="grid grid-cols-2 sm:grid-cols-4 border-y border-cream/20 divide-x divide-cream/15"
         >
           {[
-            { label: "Date 1", value: "6/3 (水)", sub: "19:00 – 21:00" },
-            { label: "Date 2", value: "6/14 (日)", sub: "11:00 – 13:00" },
+            { label: "Date 1", value: "6/14 (日)", sub: "11:00 – 13:00" },
+            { label: "Date 2", value: "7/8 (水)", sub: "19:00 – 21:00" },
             { label: "Format", value: "Online", sub: "Zoom" },
             { label: "Price", value: "¥5,000", sub: "(税抜)" },
           ].map((c, i) => (
