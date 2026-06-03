@@ -120,3 +120,46 @@ export async function getZoomMeeting(meetingId: number): Promise<ZoomMeeting> {
   }
   return (await res.json()) as ZoomMeeting;
 }
+
+export async function listZoomMeetings(): Promise<ZoomMeeting[]> {
+  const token = await getZoomAccessToken();
+  const all: ZoomMeeting[] = [];
+  let nextPageToken = "";
+  do {
+    const url = `${API_BASE}/users/me/meetings?type=scheduled&page_size=100${nextPageToken ? `&next_page_token=${encodeURIComponent(nextPageToken)}` : ""}`;
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`Zoom list meetings failed: ${res.status} ${text}`);
+    }
+    const data = (await res.json()) as { meetings: ZoomMeeting[]; next_page_token?: string };
+    all.push(...(data.meetings || []));
+    nextPageToken = data.next_page_token || "";
+  } while (nextPageToken);
+  return all;
+}
+
+export async function patchZoomMeetingTopic(meetingId: number, topic: string): Promise<void> {
+  const token = await getZoomAccessToken();
+  const res = await fetch(`${API_BASE}/meetings/${meetingId}`, {
+    method: "PATCH",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ topic }),
+  });
+  if (!res.ok && res.status !== 204) {
+    const text = await res.text();
+    throw new Error(`Zoom patch meeting failed: ${res.status} ${text}`);
+  }
+}
+
+export async function deleteZoomMeeting(meetingId: number): Promise<void> {
+  const token = await getZoomAccessToken();
+  const res = await fetch(`${API_BASE}/meetings/${meetingId}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok && res.status !== 204) {
+    const text = await res.text();
+    throw new Error(`Zoom delete meeting failed: ${res.status} ${text}`);
+  }
+}
