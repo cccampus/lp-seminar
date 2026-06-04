@@ -209,3 +209,28 @@ grep -rE "月10万|副業|主婦|学生|Earn with|人材プール|即稼働|収�
 - 2026-05-28: 同居化(`/`=A案/`/start`=C案) + リマインダー実装(GitHub Actions cron) + 実LP100体テスト完了(A圧勝62%) + Marquee motion化(viewport外最適化対策) + Stripe SDK バージョン厳密固定
 - 2026-05-27: PC全セクション採用確定 + Mobile別UI Switcher経由で採用確定 + Zoom S2S OAuth統合 + Stripe日程別routing + metadata からCCC名称除去
 - 2026-05-26: v3.2 100体ペルソナテスト合格(61%→70%)、Stripe本番モード化、本番デプロイ完了
+
+## 本番 alias の deploy（**最重要・両 vercel team で別々に deploy 必要**）
+
+- `lp-seminar-iota.vercel.app` = **cccampus-projects team / lp-seminar project**
+- `ccc-seminar.vercel.app` = **hirochen4525 個人 / cc-seminar project**（紀洋さんが SNS / LP で配布中の本番URL）
+- 通常の `vercel --prod` は cccampus team の lp-seminar にしか行かない → ccc-seminar.vercel.app は古いまま
+- **ccc-seminar に反映する手順**:
+  1. `mv .vercel .vercel.cccampus.bak`
+  2. `vercel logout && vercel login` → hirochen4525 のOAuth Confirm（URLを紀洋さんに渡す）
+  3. `vercel link --project=cc-seminar --yes`
+  4. `vercel --prod --yes` → `vercel alias set <deploy-url> ccc-seminar.vercel.app`
+  5. **元に戻す**: `rm -rf .vercel && mv .vercel.cccampus.bak .vercel`（次回 cccampus deploy が誤って kiyos team に飛ぶのを防ぐ）
+- 統一論点: 紀洋さん戻り後に「ccc-seminar を捨てて lp-seminar-iota に一本化」or「両方更新スクリプト化」相談
+
+## 日程追加フロー（7/8 等）
+
+1. `scripts/zoom-setup.ts` の `SESSIONS` 配列に追加
+2. `bun run zoom:setup` 実行 — ただし `meeting:read:list_meetings:admin` スコープ不足で失敗するなら、新規作成だけのインラインスクリプトで回避:
+   ```ts
+   import { createZoomMeeting } from "@/lib/zoom";
+   const res = await createZoomMeeting({ topic, startISO, durationMin: 120 });
+   ```
+3. 出力 URL/ID/Pass を `ZOOM_URL_YYYYMMDD` / `ZOOM_ID_YYYYMMDD` / `ZOOM_PW_YYYYMMDD` で Vercel env 投入（`printf '%s' "$VAL" | vercel env add`、`echo` は末尾改行混入で禁止）
+4. SESSION_MAP (webhook/reminders/success/dashboard) + FinalCTA/NextSession/hero-meta の sessions 配列に追加
+5. **両 vercel project で再 deploy**（cccampus と kiyos）
