@@ -210,18 +210,21 @@ grep -rE "月10万|副業|主婦|学生|Earn with|人材プール|即稼働|収�
 - 2026-05-27: PC全セクション採用確定 + Mobile別UI Switcher経由で採用確定 + Zoom S2S OAuth統合 + Stripe日程別routing + metadata からCCC名称除去
 - 2026-05-26: v3.2 100体ペルソナテスト合格(61%→70%)、Stripe本番モード化、本番デプロイ完了
 
-## 本番 alias の deploy（**最重要・両 vercel team で別々に deploy 必要**）
+## 本番 alias（2026-06-07 統一済）
 
-- `lp-seminar-iota.vercel.app` = **cccampus-projects team / lp-seminar project**
-- `ccc-seminar.vercel.app` = **hirochen4525 個人 / cc-seminar project**（紀洋さんが SNS / LP で配布中の本番URL）
-- 通常の `vercel --prod` は cccampus team の lp-seminar にしか行かない → ccc-seminar.vercel.app は古いまま
-- **ccc-seminar に反映する手順**:
-  1. `mv .vercel .vercel.cccampus.bak`
-  2. `vercel logout && vercel login` → hirochen4525 のOAuth Confirm（URLを紀洋さんに渡す）
-  3. `vercel link --project=cc-seminar --yes`
-  4. `vercel --prod --yes` → `vercel alias set <deploy-url> ccc-seminar.vercel.app`
-  5. **元に戻す**: `rm -rf .vercel && mv .vercel.cccampus.bak .vercel`（次回 cccampus deploy が誤って kiyos team に飛ぶのを防ぐ）
-- 統一論点: 紀洋さん戻り後に「ccc-seminar を捨てて lp-seminar-iota に一本化」or「両方更新スクリプト化」相談
+- `lp-seminar-iota.vercel.app` = **cccampus-projects team / lp-seminar project**（自動生成 alias）
+- `ccc-seminar.vercel.app` = **同 project の手動 alias**（紀洋さんが SNS で配布中の本番URL）
+- 通常の `vercel --prod --yes` で両 URL に反映される（alias は project 単位なので別作業不要）
+- 旧 `hirochen4525 個人 / cc-seminar project` は 2026-06-07 に削除済。env は全件 cccampus-projects/lp-seminar に移送済
+
+### Vercel SSO Protection の罠
+新しい `*.vercel.app` alias を追加すると、cccampus-projects team の Deployment Protection が反映されて 401 になることがある。発生したら API で解除:
+```bash
+TOKEN=$(python3 -c "import json; print(json.load(open('/Users/hiro/Library/Application Support/com.vercel.cli/auth.json'))['token'])")
+curl -X PATCH -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+  -d '{"ssoProtection":null,"passwordProtection":null}' \
+  "https://api.vercel.com/v9/projects/<PID>?teamId=<TID>"
+```
 
 ## 日程追加フロー（7/8 等）
 
