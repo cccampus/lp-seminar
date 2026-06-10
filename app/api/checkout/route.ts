@@ -72,6 +72,7 @@ export async function POST(req: Request) {
         },
       },
       metadata: {
+        source: "ccc-seminar",
         seminar: "CCC Seminar",
         sessionDate: sessionDate || "unspecified",
         ...(referralCode ? { referral_code: referralCode } : {}),

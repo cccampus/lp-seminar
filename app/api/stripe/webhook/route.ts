@@ -77,6 +77,20 @@ export async function POST(req: Request) {
 
   const session = event.data.object as Stripe.Checkout.Session;
 
+  // 同じ Stripe アカウント上の他アプリ（cccampus.jp の Basic/Master/Founding 等）の決済も
+  // この endpoint に配信されるため、source で明示的にセミナー由来のみを処理する。
+  // 詳細: ~/.claude/rules/stripe-multi-webhook-isolation.md
+  const sourceMeta = (session.metadata?.source as string | undefined) || "";
+  const legacySeminarMeta = session.metadata?.seminar === "CCC Seminar";
+  const isOurs =
+    sourceMeta === "ccc-seminar" || (!sourceMeta && legacySeminarMeta);
+  if (!isOurs) {
+    return NextResponse.json({
+      received: true,
+      ignored: `source not handled: ${sourceMeta || "(none)"}`,
+    });
+  }
+
   // Stripe Checkout 完了情報を取り出し
   const customerEmail =
     session.customer_details?.email || session.customer_email || "";
