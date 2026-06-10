@@ -205,6 +205,7 @@ grep -rE "月10万|副業|主婦|学生|Earn with|人材プール|即稼働|収�
 
 ## 進捗
 
+- 2026-06-10: Stripe webhook が cccampus.jp Basic 申込を誤処理する事故を修正。`app/api/checkout/route.ts` に `metadata.source = "ccc-seminar"` 追加 + webhook で `source === "ccc-seminar"` のみ処理（既存 paid セッション救済として `source` 未設定 + `seminar=CCC Seminar` メタは継続）。並行で CCCFND26 締切リマインドを未Founding 46名に送信(Resend、1件テスト→46件本送信)。詳細パターン: `~/.claude/rules/stripe-multi-webhook-isolation.md`
 - 2026-05-30: ヘッダー/CTAボタンが申込セクションへ飛ばない不具合を修正。原因2つ — (1)Lenis root有効でネイティブ`#hash`アンカーが飛ばない→`LenisProvider`に`AnchorScroll`(全アンカーを`lenis.scrollTo`委譲)追加 (2)`/start`の`FinalCTAStart` idが`apply-start`で共通Headerの`#apply`と不一致→`apply`に統一。詳細パターンは`~/.claude/rules/nextjs-frontend-quirks.md`「Lenis有効時...飛ばない」
 - 2026-05-28: 同居化(`/`=A案/`/start`=C案) + リマインダー実装(GitHub Actions cron) + 実LP100体テスト完了(A圧勝62%) + Marquee motion化(viewport外最適化対策) + Stripe SDK バージョン厳密固定
 - 2026-05-27: PC全セクション採用確定 + Mobile別UI Switcher経由で採用確定 + Zoom S2S OAuth統合 + Stripe日程別routing + metadata からCCC名称除去
