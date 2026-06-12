@@ -31,7 +31,29 @@ C案の「社員雇わずに」「ひとり」は社員数人以上規模で**�
 - たっかさん(@takkaver2)と共同管理。GitHub Org `cccampus` 配下
 - main直push許容、PRレビュー必須化なし(2人運用＋非エンジニア前提)
 - メタディスクリプションから **CCC 名称完全除去済**(「Claude Code 実践セミナー」軸)
-- Vercel project は `cc-seminar` 1個に統一(cc-seminar-scale は A案バリアント別project、不要なので削除予定)
+- Vercel project は `cccampus-projects/lp-seminar`、alias `ccc-seminar.vercel.app`
+- **デプロイは必ず `cccampuskt-1995` でログイン**(hirochen4525 では env も alias も見えない)
+
+## Vercel deploy 運用 (2026-06-12 確立)
+
+- `git push origin main` で auto deploy 走るが **alias は自動更新されない**
+- 手動 alias 更新: `vercel ls` → 最新URL → `vercel alias set <new> ccc-seminar.vercel.app`
+- auto deploy が古いコードでビルドされた様子なら: `rm -rf .next tsconfig.tsbuildinfo` → `vercel --prod --yes --force` → alias set
+- Basic Auth 認証情報の取得: `vercel env pull /tmp/prod.env --environment production --yes` → `DASHBOARD_USER`/`DASHBOARD_PASS`
+
+## メール不達トラブル (2026-06-12 「Zoomリンク届かない多発」事案)
+
+- Resend は基本 delivered (技術側健全)、真因は受信側スパム振り分け
+- 構造的解決: `/apply/success` に Zoom URL/ID/PW 即表示 (実装済)
+- `lib/seminar-sessions.ts` で SESSION_MAP を webhook と success ページで共有
+- メール本文・success画面の両方に「迷惑メールフォルダ確認を」案内
+- 長期改善案: Resend Pro $20/月で dedicated IP に変更
+
+## dashboard はベーシック等を必ず source 判定で除外
+
+- `app/dashboard/page.tsx` は Stripe paid 全期間 list → `metadata.source/seminar` で filter
+- 同一メアドでベーシック＋セミナー両方申し込んでる人がいる (grepでは紛らわしい)
+- 検証時は HTML data 行で `¥5,500` (セミナー) のみ・`¥11,000` (ベーシック) 0件か確認
 
 ## スタック
 
