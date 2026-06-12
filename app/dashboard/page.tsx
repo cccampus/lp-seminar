@@ -45,6 +45,15 @@ async function getRows(): Promise<Row[]> {
     for (const s of res.data) {
       if (s.payment_status !== "paid") continue;
 
+      // 同じ Stripe アカウント上の他アプリ（cccampus.jp の Basic/Master/Founding 等）の
+      // 決済も list に含まれるため、source / legacy seminar metadata で明示的に絞り込む。
+      // 参考: ~/.claude/rules/stripe-multi-webhook-isolation.md
+      const meta = s.metadata || {};
+      const isSeminar =
+        meta.source === "ccc-seminar" ||
+        (!meta.source && meta.seminar === "CCC Seminar");
+      if (!isSeminar) continue;
+
       // 返金済みは非表示 (latest_charge.refunded または amount_refunded > 0)
       const pi = s.payment_intent;
       if (pi && typeof pi === "object") {
