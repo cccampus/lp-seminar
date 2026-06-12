@@ -2,46 +2,10 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { Resend } from "resend";
 import { recordSeminarPaidReferral } from "@/lib/ccc-referral";
+import { buildSeminarSessionMap } from "@/lib/seminar-sessions";
 
 export const runtime = "nodejs";
 
-type SessionMeta = {
-  label: string;
-  dateText: string;
-  openText: string;
-  zoomUrl: string;
-  zoomId: string;
-  zoomPw: string;
-};
-
-function buildSessionMap(): Record<string, SessionMeta> {
-  return {
-    "2026-06-03": {
-      label: "第1回",
-      dateText: "2026年6月3日（水）19:00〜21:00",
-      openText: "開場 18:50（開催10分前）",
-      zoomUrl: process.env.ZOOM_URL_20260603 || "",
-      zoomId: process.env.ZOOM_ID_20260603 || "",
-      zoomPw: process.env.ZOOM_PW_20260603 || "",
-    },
-    "2026-06-14": {
-      label: "第2回",
-      dateText: "2026年6月14日（日）11:00〜13:00",
-      openText: "開場 10:50（開催10分前）",
-      zoomUrl: process.env.ZOOM_URL_20260614 || "",
-      zoomId: process.env.ZOOM_ID_20260614 || "",
-      zoomPw: process.env.ZOOM_PW_20260614 || "",
-    },
-    "2026-07-08": {
-      label: "第3回",
-      dateText: "2026年7月8日（水）19:00〜21:00",
-      openText: "開場 18:50（開催10分前）",
-      zoomUrl: process.env.ZOOM_URL_20260708 || "",
-      zoomId: process.env.ZOOM_ID_20260708 || "",
-      zoomPw: process.env.ZOOM_PW_20260708 || "",
-    },
-  };
-}
 
 export async function POST(req: Request) {
   const apiKey = process.env.STRIPE_SECRET_KEY;
@@ -106,7 +70,7 @@ export async function POST(req: Request) {
   const sessionId = session.id;
   const sessionDateKey = session.metadata?.sessionDate || "";
 
-  const sessionMap = buildSessionMap();
+  const sessionMap = buildSeminarSessionMap();
   const meta = sessionMap[sessionDateKey];
 
   // === CCC 紹介トラッキング（member-app DB に書き込み、referrer に 100pt） ===
@@ -192,6 +156,12 @@ export async function POST(req: Request) {
     "■ 返金について",
     "本セミナーはライブ配信形式の役務のため、お申込み完了後のキャンセル・返金は",
     "お受けできません（特定商取引法に基づく表記をご確認ください）。",
+    "",
+    "■ メールが届かない方へ",
+    "本メールが受信箱に見当たらない場合は、迷惑メール / プロモーション /",
+    "ゴミ箱フォルダもご確認ください。",
+    "Zoom 参加情報は、お申込み完了画面にも同じ内容を表示しています",
+    "（ブラウザで申込完了画面をブックマークいただくと安心です）。",
     "",
     "■ お問い合わせ",
     "ご質問は本メールへの返信、または noreply@isshin-ai.co.jp までお気軽にどうぞ。",
