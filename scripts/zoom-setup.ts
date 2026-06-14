@@ -56,6 +56,12 @@ const SESSIONS: SessionDef[] = [
     startISO: "2026-07-08T19:00:00",
     durationMin: 120,
   },
+  {
+    key: "20260726",
+    topic: "Claude Code 実践セミナー（7/26 日 11:00）",
+    startISO: "2026-07-26T11:00:00",
+    durationMin: 120,
+  },
 ];
 
 function setVercelEnv(key: string, value: string) {

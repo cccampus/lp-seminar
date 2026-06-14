@@ -30,6 +30,12 @@ const sessions: Session[] = [
     date: "2026年7月8日（水）",
     time: "19:00 – 21:00",
   },
+  {
+    id: "2026-07-26",
+    label: "第4回",
+    date: "2026年7月26日（日）",
+    time: "11:00 – 13:00",
+  },
 ];
 
 export default function FinalCTAStart() {
