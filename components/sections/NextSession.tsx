@@ -9,11 +9,16 @@ const SESSIONS = [
   {
     date: "6/14 (日)",
     time: "11:00 – 13:00",
-    status: "current",
+    status: "done",
   },
   {
     date: "7/8 (水)",
     time: "19:00 – 21:00",
+    status: "current",
+  },
+  {
+    date: "7/26 (日)",
+    time: "11:00 – 13:00",
     status: "next",
   },
 ];
@@ -35,7 +40,7 @@ export default function NextSession() {
         </p>
 
         {/* 2 セッション横並び */}
-        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-px bg-cream/10 border border-cream/10">
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-px bg-cream/10 border border-cream/10">
           {SESSIONS.map((s) => (
             <div
               key={s.date}
