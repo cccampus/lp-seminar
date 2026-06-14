@@ -8,9 +8,9 @@ export default function HeroMetaA() {
       <div className="flex flex-col items-center gap-1.5 py-4 sm:py-0 sm:px-5">
         <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-coral">Date</span>
         <span className="flex items-center gap-3 text-base sm:text-lg text-cream font-semibold">
-          <span className="whitespace-nowrap">6/14<span className="text-cream/60 text-sm">(日)</span></span>
-          <span className="text-cream/25 font-normal">/</span>
           <span className="whitespace-nowrap">7/8<span className="text-cream/60 text-sm">(水)</span></span>
+          <span className="text-cream/25 font-normal">/</span>
+          <span className="whitespace-nowrap">7/26<span className="text-cream/60 text-sm">(日)</span></span>
         </span>
       </div>
       <div className="flex flex-col items-center gap-1.5 py-4 sm:py-0 sm:px-5">

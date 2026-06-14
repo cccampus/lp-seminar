@@ -19,12 +19,6 @@ type Session = {
 
 const sessions: Session[] = [
   {
-    id: "2026-06-14",
-    label: "第2回",
-    date: "2026年6月14日（日）",
-    time: "11:00 – 13:00",
-  },
-  {
     id: "2026-07-08",
     label: "第3回",
     date: "2026年7月8日（水）",
