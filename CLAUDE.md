@@ -227,6 +227,7 @@ grep -rE "月10万|副業|主婦|学生|Earn with|人材プール|即稼働|収�
 
 ## 進捗
 
+- 2026-06-15: 2026/7/26(日)開催回を追加（Zoom Meeting作成+`ZOOM_*_20260726` env投入、HeroMetaA/DetailB/FinalCTA/FinalCTAStart/dashboard/cron に反映、過去6/14は表示・申込から除外）。本番 ccc-seminar.vercel.app 反映済。**学び**: homepage の日程表示は HeroMetaA(採用)+DetailB(採用)+FinalCTA であって NextSession は死にコード（更新漏れ事故の原因）。本番 alias は手動 `vercel alias set` + 必要なら `--force` rebuild（上記「日程追加フロー」「本番alias」に反映済）
 - 2026-06-10: Stripe webhook が cccampus.jp Basic 申込を誤処理する事故を修正。`app/api/checkout/route.ts` に `metadata.source = "ccc-seminar"` 追加 + webhook で `source === "ccc-seminar"` のみ処理（既存 paid セッション救済として `source` 未設定 + `seminar=CCC Seminar` メタは継続）。並行で CCCFND26 締切リマインドを未Founding 46名に送信(Resend、1件テスト→46件本送信)。詳細パターン: `~/.claude/rules/stripe-multi-webhook-isolation.md`
 - 2026-05-30: ヘッダー/CTAボタンが申込セクションへ飛ばない不具合を修正。原因2つ — (1)Lenis root有効でネイティブ`#hash`アンカーが飛ばない→`LenisProvider`に`AnchorScroll`(全アンカーを`lenis.scrollTo`委譲)追加 (2)`/start`の`FinalCTAStart` idが`apply-start`で共通Headerの`#apply`と不一致→`apply`に統一。詳細パターンは`~/.claude/rules/nextjs-frontend-quirks.md`「Lenis有効時...飛ばない」
 - 2026-05-28: 同居化(`/`=A案/`/start`=C案) + リマインダー実装(GitHub Actions cron) + 実LP100体テスト完了(A圧勝62%) + Marquee motion化(viewport外最適化対策) + Stripe SDK バージョン厳密固定
@@ -237,7 +238,7 @@ grep -rE "月10万|副業|主婦|学生|Earn with|人材プール|即稼働|収�
 
 - `lp-seminar-iota.vercel.app` = **cccampus-projects team / lp-seminar project**（自動生成 alias）
 - `ccc-seminar.vercel.app` = **同 project の手動 alias**（紀洋さんが SNS で配布中の本番URL）
-- 通常の `vercel --prod --yes` で両 URL に反映される（alias は project 単位なので別作業不要）
+- ⚠️ 2026-06-15: `vercel --prod` で `ccc-seminar.vercel.app` が自動で新 deploy に張り替わらない事象あり（古い deploy を指したまま）。**新 deploy 後に `vercel alias set <deploy-url> ccc-seminar.vercel.app` を手動実行**。さらに `--prod` で stale build が配信されることもあり、その時は `rm -rf .next tsconfig.tsbuildinfo && vercel --prod --yes --force`
 - 旧 `hirochen4525 個人 / cc-seminar project` は 2026-06-07 に削除済。env は全件 cccampus-projects/lp-seminar に移送済
 
 ### Vercel SSO Protection の罠
@@ -258,5 +259,11 @@ curl -X PATCH -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/js
    const res = await createZoomMeeting({ topic, startISO, durationMin: 120 });
    ```
 3. 出力 URL/ID/Pass を `ZOOM_URL_YYYYMMDD` / `ZOOM_ID_YYYYMMDD` / `ZOOM_PW_YYYYMMDD` で Vercel env 投入（`printf '%s' "$VAL" | vercel env add`、`echo` は末尾改行混入で禁止）
-4. SESSION_MAP (webhook/reminders/success/dashboard) + FinalCTA/NextSession/hero-meta の sessions 配列に追加
-5. **両 vercel project で再 deploy**（cccampus と kiyos）
+4. **実表示される箇所を全部直す**（2026-06-15 追記・更新漏れ事故あり）:
+   - `lib/seminar-sessions.ts`（SESSION_MAP: webhook/reminders/success/dashboard が参照）
+   - `components/sections/hero-meta/HeroMetaA.tsx` ← **採用variant**（`HeroMetaSwitcher` が返す。homepage の Date 表記はここ）
+   - `components/sections/detail/DetailB.tsx` ← **採用variant**（`Detail.tsx` が返す。開催詳細カードはここ）
+   - `components/sections/FinalCTA.tsx` / `FinalCTAStart.tsx`（申込ラジオの `sessions` 配列。過去回は除外し既定選択を直近未来回に）
+   - `app/dashboard/page.tsx`（SESSION_LABELS + KPIカウント）/ `app/api/cron/reminders/route.ts`
+   - ⚠️ **`NextSession.tsx` は homepage 未使用の死にコード**（`app/page.tsx` が import してない）。ここだけ直しても表示は変わらない。`grep -rn import` で実際に使われてるか必ず確認
+5. **本番反映**: `rm -rf .next tsconfig.tsbuildinfo && vercel --prod --yes --force`（通常 `--prod` だと stale build が配信され反映されない事象あり）→ 新 deploy URL を `vercel alias set <deploy-url> ccc-seminar.vercel.app`（**本番 alias は自動で張り替わらない。手動 set 必須**）→ `curl -s "https://ccc-seminar.vercel.app/?cb=$RANDOM"` で実日程を grep 確認するまで完了扱いしない
