@@ -21,11 +21,10 @@ export default function DetailB() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto"
+          className="grid grid-cols-1 gap-5 max-w-md mx-auto"
         >
           {[
             { day: "7/8", weekday: "水", time: "19:00 – 21:00" },
-            { day: "7/26", weekday: "日", time: "11:00 – 13:00" },
           ].map((t, i) => (
             <div key={i} className="relative bg-cream/[0.04] border border-cream/15 overflow-hidden">
               {/* ticket notch */}

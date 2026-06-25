@@ -33,13 +33,5 @@ export function buildSeminarSessionMap(): Record<string, SeminarSessionInfo> {
       zoomId: process.env.ZOOM_ID_20260708 || "",
       zoomPw: process.env.ZOOM_PW_20260708 || "",
     },
-    "2026-07-26": {
-      label: "2026年7月26日（日）",
-      dateText: "2026年7月26日（日）11:00〜13:00",
-      openText: "開場 10:50（開催10分前）",
-      zoomUrl: process.env.ZOOM_URL_20260726 || "",
-      zoomId: process.env.ZOOM_ID_20260726 || "",
-      zoomPw: process.env.ZOOM_PW_20260726 || "",
-    },
   };
 }

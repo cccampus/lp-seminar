@@ -16,11 +16,6 @@ const SESSIONS = [
     time: "19:00 – 21:00",
     status: "current",
   },
-  {
-    date: "7/26 (日)",
-    time: "11:00 – 13:00",
-    status: "next",
-  },
 ];
 
 export default function NextSession() {
